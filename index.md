@@ -1,8 +1,4 @@
 <html>
-<head>
-<title>BLITZD.UK</title>
-
-</head>
 <body>
 <article> </article>
 <h1><img style="width: 1024px; height: 200px;" alt="Blitzd.uk logo"
