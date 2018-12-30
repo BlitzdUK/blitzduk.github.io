@@ -1,37 +1,26 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/BlitzdUK/blitzduk.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/BlitzdUK/blitzduk.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+<html>
+<head>
+<title>BLITZD.UK</title>
+<style>
+body { text-align: center; padding: 150px; }
+h1 { font-size: 50px; }
+body { font: 20px Helvetica, sans-serif; color: #333; }
+article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+a { color: #dc8100; text-decoration: none; }
+a:hover { color: #333; text-decoration: none; }
+</style>
+</head>
+<body>
+<article> </article>
+<h1><img style="width: 1024px; height: 200px;" alt="Blitzd.uk logo"
+src="http://i64.tinypic.com/2gsjz0p.jpg"></h1>
+<div>
+<h2><a href="https://blitzduk.tumblr.com/">Portfolio</a>&nbsp; <a
+href="https://www.google.com/maps/d/viewer?mid=1TM4wgZR8o2BOMg4C2Ht3ayOMYIs&amp;ll=53.47656600234123%2C-2.24911924768071&amp;z=16">Map&nbsp;
+</a><a href="http://m.me/blitzdmedia">Contact Us</a>&nbsp; <a
+href="http://fb.me/blitzdmedia">Like us on FB</a><br>
+</h2>
+<img src="https://iplogger.org/1OYYk"
+alt="iplogger.org - IP Logging Service" border="0"> </div>
+</body>
+</html>
