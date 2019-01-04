@@ -9,7 +9,5 @@ href="https://www.google.com/maps/d/viewer?mid=1TM4wgZR8o2BOMg4C2Ht3ayOMYIs&amp;
 </a><a href="http://m.me/blitzdmedia">Contact Us</a>&nbsp; <a
 href="http://fb.me/blitzdmedia">Like us on FB</a><br>
 </h2>
-<img src="https://iplogger.org/1OYYk"
-alt="iplogger.org - IP Logging Service" border="0"> </div>
 </body>
 </html>
