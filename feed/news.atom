@@ -1,0 +1,22 @@
+Content-Type: application/rss+xml
+...
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <ttl>30</ttl>
+    <item>
+      <title>Multi Item RSS (TTS)</title>
+      <link>https://www.amazon.com</link>
+      <pubDate>2016-05-23T00:00:00.0Z</pubDate>
+      <description>This channel has multiple TTS RSS items. This is item one.</description>
+      <guid>urn:uuid:b385254e-dc31-4c4a-afc5-0de97e43923c</guid>
+    </item>
+    <item>
+      <title>Multi Item RSS (TTS)</title>
+      <link>https://www.amazon.com</link>
+      <pubDate>2016-05-23T00:00:00.0Z</pubDate>
+      <description>This channel has multiple TTS RSS items. This is item two.</description>
+      <guid>urn:uuid:cf093eed-66f2-4dee-bdad-02ff0510194b</guid>
+    </item>
+  </channel>
+</rss>
