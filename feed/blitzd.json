@@ -1,9 +1,0 @@
-Content-Type: application/json
-...
-{
-  "uid": "urn:uuid:1335c695-cfb8-4ebb-abbd-80da344efa6b",
-  "updateDate": "2019-07-12T11:00:00.0Z",
-  "titleText": "BLITZD NEWS",
-  "mainText": "Meet Echosim. A new online community tool for developers that simulates the look and feel of an Amazon Echo.",
-  "redirectionUrl": "http://blitzd.uk"
-}
