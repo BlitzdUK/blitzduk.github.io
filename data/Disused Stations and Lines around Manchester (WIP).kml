@@ -1,0 +1,2166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Disused Stations and Lines around Manchester (WIP)</name>
+    <description/>
+    <Style id="icon-115-normal">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/115-rail.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-115-highlight">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/115-rail.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-115">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-115-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-115-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-115-nodesc-normal">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/115-rail.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-115-nodesc-highlight">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/115-rail.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-115-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-115-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-115-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-25-normal">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/25-bus.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-25-highlight">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/25-bus.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-25">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-25-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-25-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-0000FF-5000-nodesc-normal">
+      <LineStyle>
+        <color>ffff0000</color>
+        <width>5</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-0000FF-5000-nodesc-highlight">
+      <LineStyle>
+        <color>ffff0000</color>
+        <width>7.5</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-0000FF-5000-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-0000FF-5000-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-0000FF-5000-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF0000-5000-nodesc-normal">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>5</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF0000-5000-nodesc-highlight">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>7.5</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF0000-5000-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF0000-5000-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF0000-5000-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF0000-7000-normal">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>7</width>
+      </LineStyle>
+    </Style>
+    <Style id="line-FF0000-7000-highlight">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>10.5</width>
+      </LineStyle>
+    </Style>
+    <StyleMap id="line-FF0000-7000">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF0000-7000-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF0000-7000-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF0000-7000-nodesc-normal">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>7</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF0000-7000-nodesc-highlight">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>10.5</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF0000-7000-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF0000-7000-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF0000-7000-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="line-FF0000-8000-nodesc-normal">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>8</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-FF0000-8000-nodesc-highlight">
+      <LineStyle>
+        <color>ff0000ff</color>
+        <width>12</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-FF0000-8000-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-FF0000-8000-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-FF0000-8000-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>Untitled layer</name>
+      <Placemark>
+        <name>Manchester Exchange</name>
+        <description><![CDATA[Opened 1884, closed 1969.<br>http://www.disused-stations.org.uk/m/manchester_exchange/index.shtml  (http://www.disused-stations.org.uk/m/manchester_exchange/index.shtml)]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.247262,53.486181,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Manchester Oldham Road</name>
+        <description><![CDATA[Opened 1839, closed 1968<br><br>Manchester Oldham Road on Wikipedia (http://en.wikipedia.org/wiki/Manchester_Oldham_Road_railway_station)]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.226727,53.488748,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Manchester Liverpool Road</name>
+        <description><![CDATA[Opened 1830, closed 1975. <br><br> <br>Manchester Liverpool Road (http://www.disused-stations.org.uk/m/manchester_liverpool_road/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.257969,53.477438,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Manchester Central</name>
+        <description><![CDATA[Opened 1880, closed 1969.<br><br>Manchester Central station (http://www.disused-stations.org.uk/m/manchester_central/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.247498,53.476036,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Manchester Mayfield</name>
+        <description><![CDATA[Opened 1910, closed 1960<br><br> <br>Manchester Mayfield station (http://www.disused-stations.org.uk/m/manchester_mayfield/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.226695,53.475692,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Fallowfield</name>
+        <description><![CDATA[Opened 1891, closed 1958<br><br> <br>Fallowfield station  (http://www.disused-stations.org.uk/f/fallowfield/index.shtml)on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.218782,53.441021,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Levenshulme South</name>
+        <description><![CDATA[Opened 1892, closed 1958<br><br>Levenshulme South station (http://www.disused-stations.org.uk/l/levenshulme_south/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.188345,53.440763,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Hyde Road</name>
+        <description><![CDATA[Opened 1892, closed 1965.<br><br>Hyde Road station (http://www.disused-stations.org.uk/h/hyde_road/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.164382,53.459968,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Wilbraham Road</name>
+        <description><![CDATA[Opened 1892, closed 1958<br><br>Wilbraham Road station (http://www.disused-stations.org.uk/w/wilbraham_road/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.251162,53.440298,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Chorlton-cum-Hardy</name>
+        <description><![CDATA[Opened 1880, closed 1967. Metrolink station to open in 2011 on same site.<br><br>Chorlton-cum-Hardy station (http://www.disused-stations.org.uk/c/chorlton_cum_hardy/index.shtml) on disused-stations.org.uk.]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.274186,53.443414,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ordsall Lane</name>
+        <description><![CDATA[Opened 1849, closed 1957<br> <br>Ordsall Lane station (http://www.disused-stations.org.uk/o/ordsall_lane/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.264889,53.478565,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Weaste</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/proxy/5-bOEruTCdPaIsdzPOFkuVM-XCip2ABz2s86-SkIA-lmntBvm4k057t1vSLEdhOHFCSIEPmfOLFdg9DxGAeMzHvXVESPWN_iN4-CQi1PYpGZidIrSYhUcf3WnT5dCRMV-rxyeHQY6w" height="200" width="auto" /><br><br>Opened 1831, closed 1947http://www.disused-stations.org.uk/w/weaste/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/proxy/5-bOEruTCdPaIsdzPOFkuVM-XCip2ABz2s86-SkIA-lmntBvm4k057t1vSLEdhOHFCSIEPmfOLFdg9DxGAeMzHvXVESPWN_iN4-CQi1PYpGZidIrSYhUcf3WnT5dCRMV-rxyeHQY6w</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.30898,53.483332,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cross Lane</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/proxy/oDJHE_pbYjujGwfdKmulJjRbWiOcj7kJoub0FvWh8noECyBYX05iKYfUZEx6FeNqj3Jbc0VTBpF5iBaXe3zAPZ3-b4sXp9PieRNq0KJSbgspSqn_XpVI8yJeSsK_c7tzhlznsPcFlw" height="200" width="auto" /><br><br>Opened 1830, closed 1956http://www.disused-stations.org.uk/c/cross_lane/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/proxy/oDJHE_pbYjujGwfdKmulJjRbWiOcj7kJoub0FvWh8noECyBYX05iKYfUZEx6FeNqj3Jbc0VTBpF5iBaXe3zAPZ3-b4sXp9PieRNq0KJSbgspSqn_XpVI8yJeSsK_c7tzhlznsPcFlw</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.282118,53.479962,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Seedley</name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/proxy/G0xe-JFNFe5xJPslMZvSa8bW9txmRJbUH336t12jVqWkNkcURoZoQge5P0pHICGCmgyVTDHKcR5FmoUukdeUq_9tkoWIVMXVutQEYjDGMkRXdHveffw0T2ObUvQaGyGJYxJCIQHDKw" height="200" width="auto" /><br><br>Opened 1882, closed 1956.http://www.disused-stations.org.uk/s/seedley/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/proxy/G0xe-JFNFe5xJPslMZvSa8bW9txmRJbUH336t12jVqWkNkcURoZoQge5P0pHICGCmgyVTDHKcR5FmoUukdeUq_9tkoWIVMXVutQEYjDGMkRXdHveffw0T2ObUvQaGyGJYxJCIQHDKw</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.294886,53.481599,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Miles Platting</name>
+        <description><![CDATA[Opened 1884, closed 1995<br>Miles Platting station  (http://en.wikipedia.org/wiki/Miles_Platting_railway_station)article on Wikipedia]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.21268,53.496417,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Didsbury</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/proxy/bP6NYfOrDwOmgkMywG4AVBzvRASe1ywj2sQ2Lv-DZd-6dm-ekJ4jbFtPad_kExdfSjX9jD8EhPx0Z43Y1C3uogx1FdvjaCGEHLuzNK1DSen62b77t_7yfyiWG6ZsgtUyIQqUYxPTcQ" height="200" width="auto" /><br><br>Opened 1880, closed 1967http://www.disused-stations.org.uk/d/didsbury/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/proxy/bP6NYfOrDwOmgkMywG4AVBzvRASe1ywj2sQ2Lv-DZd-6dm-ekJ4jbFtPad_kExdfSjX9jD8EhPx0Z43Y1C3uogx1FdvjaCGEHLuzNK1DSen62b77t_7yfyiWG6ZsgtUyIQqUYxPTcQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.231498,53.418613,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Didsbury</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/proxy/bP6NYfOrDwOmgkMywG4AVBzvRASe1ywj2sQ2Lv-DZd-6dm-ekJ4jbFtPad_kExdfSjX9jD8EhPx0Z43Y1C3uogx1FdvjaCGEHLuzNK1DSen62b77t_7yfyiWG6ZsgtUyIQqUYxPTcQ" height="200" width="auto" /><br><br>Opened 1880, closed 1967http://www.disused-stations.org.uk/d/didsbury/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/proxy/bP6NYfOrDwOmgkMywG4AVBzvRASe1ywj2sQ2Lv-DZd-6dm-ekJ4jbFtPad_kExdfSjX9jD8EhPx0Z43Y1C3uogx1FdvjaCGEHLuzNK1DSen62b77t_7yfyiWG6ZsgtUyIQqUYxPTcQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.231498,53.418613,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Baguley</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/proxy/FAoanzYur-46gHGA9-9RNliKTWk7iuETjrFOusGJLdcQBOOiv1QsVIOHNTQV-qGFSrIEcnhg3mCSJKgh36dgQfxpnrqRkk3IRanEVnh2lVSsyJyEfT_Idu30cNLnVdHcOArNJM-E9g" height="200" width="auto" /><br><br>Opened 1866, closed 1964http://www.disused-stations.org.uk/b/baguley/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/proxy/FAoanzYur-46gHGA9-9RNliKTWk7iuETjrFOusGJLdcQBOOiv1QsVIOHNTQV-qGFSrIEcnhg3mCSJKgh36dgQfxpnrqRkk3IRanEVnh2lVSsyJyEfT_Idu30cNLnVdHcOArNJM-E9g</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.309532,53.398914,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Longsight</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/proxy/gLniTRva_xjH2vsEW9-ZBpBrinNluE3FlCe82xpQGoMlc1Anlihrj78rtS84bULK6A5oulk3ueHRmgPL9k83qgqwG8hKHCBXA3BEFM-ikH3t6WzZcbDU-0y_OG3x97jHhKX-rkJbQA" height="200" width="auto" /><br><br>Opened 1843, closed 1958http://en.wikipedia.org/wiki/Longsight_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/proxy/gLniTRva_xjH2vsEW9-ZBpBrinNluE3FlCe82xpQGoMlc1Anlihrj78rtS84bULK6A5oulk3ueHRmgPL9k83qgqwG8hKHCBXA3BEFM-ikH3t6WzZcbDU-0y_OG3x97jHhKX-rkJbQA</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.201389,53.460123,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Longsight</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/proxy/gLniTRva_xjH2vsEW9-ZBpBrinNluE3FlCe82xpQGoMlc1Anlihrj78rtS84bULK6A5oulk3ueHRmgPL9k83qgqwG8hKHCBXA3BEFM-ikH3t6WzZcbDU-0y_OG3x97jHhKX-rkJbQA" height="200" width="auto" /><br><br>Opened 1843, closed 1958<br> <br>Wikipedia article on Longsight station (http://en.wikipedia.org/wiki/Longsight_railway_station)]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/proxy/gLniTRva_xjH2vsEW9-ZBpBrinNluE3FlCe82xpQGoMlc1Anlihrj78rtS84bULK6A5oulk3ueHRmgPL9k83qgqwG8hKHCBXA3BEFM-ikH3t6WzZcbDU-0y_OG3x97jHhKX-rkJbQA</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.201389,53.460123,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Clayton Bridge</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/proxy/XFB5WJEAtMpog1lEcShcpJDiZJ8YrZASpVei9_oogfyFJDV4tw-NsmFNXiLw0Cl18Uqh5zXGXxcdNzAVLNmFFQ8sspeYJ_xWSh07AngvC0xBReyIJlr3Wr7IIok02aa9pgkVm8ziFw" height="200" width="auto" /><br><br>Opened 1846, closed 1968 <br>Clayton Bridge (http://en.wikipedia.org/wiki/Clayton_Bridge_railway_station) article on Wikipedia<br> <br><br> <br>Clayton Bridge station (http://en.wikipedia.org/wiki/Clayton_Bridge_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/proxy/XFB5WJEAtMpog1lEcShcpJDiZJ8YrZASpVei9_oogfyFJDV4tw-NsmFNXiLw0Cl18Uqh5zXGXxcdNzAVLNmFFQ8sspeYJ_xWSh07AngvC0xBReyIJlr3Wr7IIok02aa9pgkVm8ziFw</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.167751,53.493079,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dean Lane</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/proxy/U9wkDY9wzVW-SQcW5cV2MXAWqkz92AKmUBisNrJMtnfIa5JncKwno8KiK8_bB-6_vZDHgJvISEwBqyB7NrsGN7xQ_AlKEMryuN8ChyaI8_oeut2hgNRPZc-bUatKKgEeGew5kRN3rA" height="200" width="auto" /><br><br>Opened 1880, closed 2009http://www.disused-stations.org.uk/d/dean_lane/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/proxy/U9wkDY9wzVW-SQcW5cV2MXAWqkz92AKmUBisNrJMtnfIa5JncKwno8KiK8_bB-6_vZDHgJvISEwBqyB7NrsGN7xQ_AlKEMryuN8ChyaI8_oeut2hgNRPZc-bUatKKgEeGew5kRN3rA</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.183812,53.504199,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Withington and West Didsbury</name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/proxy/kb_J-HENZI3kyemKRPD6i8iqHGdYq67-C58OADNPPKW-hloCZVC0SoAlHTVEk-i-vjMlBh1S-pXkvI4mMb3V_LgL7Vi1LxXzpsy_RcJ5AN95-CCVcNpi9VFhH-yTzXqMhd7kE6mh7g" height="200" width="auto" /><br><br>Opened 1880, closed 1961Withington and West Didsbury station (http://www.disused-stations.org.uk/w/withington/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/proxy/kb_J-HENZI3kyemKRPD6i8iqHGdYq67-C58OADNPPKW-hloCZVC0SoAlHTVEk-i-vjMlBh1S-pXkvI4mMb3V_LgL7Vi1LxXzpsy_RcJ5AN95-CCVcNpi9VFhH-yTzXqMhd7kE6mh7g</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.237214,53.426046,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Heaton Mersey</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/proxy/EBhwDKLxqSJ6mjeEixyweTOzLt8EkqrvnlgIvDcv2LZMfTFPrrqlsyCqQ_0dJqb2lPNxgt2kqvtDw4vXHmN0tvYeUaaBBG0JNUwbhGD3aPm_Bg_E_lFTEAH2RVoTAnLH79_W_pubrQ" height="200" width="auto" /><br><br>Opened 1880, closed 1963http://www.disused-stations.org.uk/h/heaton_mersey/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/proxy/EBhwDKLxqSJ6mjeEixyweTOzLt8EkqrvnlgIvDcv2LZMfTFPrrqlsyCqQ_0dJqb2lPNxgt2kqvtDw4vXHmN0tvYeUaaBBG0JNUwbhGD3aPm_Bg_E_lFTEAH2RVoTAnLH79_W_pubrQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.202374,53.409336,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cheadle Heath</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/proxy/YZjWpSQ67EwbOc1qod3aY8SzeU1D7BMgTgfw8XY9afsyXDiQzuSNTJWfY3LY0PT1mAcNQX4JOQWPMgLXMfg0qKZJXG5oJAYwT2L_T3zvNb5h-GepdD-YGV-j37k083aafh8EfTvVkg" height="200" width="auto" /><br><br>Opened 1901, closed 1968http://www.disused-stations.org.uk/c/cheadle%20heath/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/proxy/YZjWpSQ67EwbOc1qod3aY8SzeU1D7BMgTgfw8XY9afsyXDiQzuSNTJWfY3LY0PT1mAcNQX4JOQWPMgLXMfg0qKZJXG5oJAYwT2L_T3zvNb5h-GepdD-YGV-j37k083aafh8EfTvVkg</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.188327,53.401535,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Stockport Tiviot Dale</name>
+        <description>Opened 1865, closed 1967http://en.wikipedia.org/wiki/Stockport_Tiviot_Dale_railway_station</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.156721,53.415267,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Stockport Tiviot Dale</name>
+        <description>Opened 1865, closed 1967http://en.wikipedia.org/wiki/Stockport_Tiviot_Dale_railway_station</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.156721,53.415267,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Northenden</name>
+        <description>Opened 1866, closed 1965http://www.disused-stations.org.uk/n/northenden/index.shtml</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.253605,53.398428,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Newton Heath</name>
+        <description>Opened 1853, closed 1966http://en.wikipedia.org/wiki/Newton_Heath_railway_station</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.185344,53.505347,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pendleton</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/proxy/U2K-L7bTPiN5yM8Q8AEaBe2EKs2EdMt4KtefyvJjVehOSYWn9O6sXooE2gKyapf9CdKr9-AodqFGjjFKPtS5_JfROr_dN09QnnXCI6GVXJUO5UZhM2x48PJi8F4PqFJGeZc31N0Acg" height="200" width="auto" /><br><br>Opened? closed 1998http://en.wikipedia.org/wiki/Pendleton_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/proxy/U2K-L7bTPiN5yM8Q8AEaBe2EKs2EdMt4KtefyvJjVehOSYWn9O6sXooE2gKyapf9CdKr9-AodqFGjjFKPtS5_JfROr_dN09QnnXCI6GVXJUO5UZhM2x48PJi8F4PqFJGeZc31N0Acg</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.28379,53.49228,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pendleton Bridge</name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/proxy/JrLnMivMTVX-wQkhOA4vgcqiLrVW8cbVAIi9II5w8QK-lX3h0p9kwPdIDp3jbYuu4pKUXTRtMJFqLZ6qRkO8aJSK2vHuujCn_-fm1N0di8GNMlrADXACNMgSozzvghWeAMmCSAeSlQ" height="200" width="auto" /><br><br>Opened 1843, closed 1966http://en.wikipedia.org/wiki/Pendleton_Bridge_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/proxy/JrLnMivMTVX-wQkhOA4vgcqiLrVW8cbVAIi9II5w8QK-lX3h0p9kwPdIDp3jbYuu4pKUXTRtMJFqLZ6qRkO8aJSK2vHuujCn_-fm1N0di8GNMlrADXACNMgSozzvghWeAMmCSAeSlQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.283273,53.493725,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ringley Road</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/proxy/DSv4u2Xm4blokmAx7pIOBBsBk5yxIEYFFYmcb-ppwFxdyFzmtPyWvoyx42afFrOS80XpJgzmSW0-ffGC_Cm19fKJOL2t2157uocjQCha4EQd_1J9RmhNo2fC-swmWpLjP_KZAmta7w" height="200" width="auto" /><br><br>Opened 1847, closed 1953http://www.disused-stations.org.uk/r/ringley_road/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/proxy/DSv4u2Xm4blokmAx7pIOBBsBk5yxIEYFFYmcb-ppwFxdyFzmtPyWvoyx42afFrOS80XpJgzmSW0-ffGC_Cm19fKJOL2t2157uocjQCha4EQd_1J9RmhNo2fC-swmWpLjP_KZAmta7w</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.340787,53.547488,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Radcliffe Bridge</name>
+        <description><![CDATA[Opened 1846, closed 1958<br><br> <br>http://www.disused-stations.org.uk/r/radcliffe_bridge/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.329659,53.558258,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Molyneux Brow</name>
+        <description><![CDATA[Opened 1853, closed 1931<br> <br>http://www.disused-stations.org.uk/m/molyneux_brow/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Molyneux_Brow_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.317225,53.531247,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Withins Lane</name>
+        <description><![CDATA[Opened 1847, closed 1951<br><br> <br>http://www.disused-stations.org.uk/w/withins_lane/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Withins_Lane_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.317075,53.569584,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bury Bolton Street</name>
+        <description><![CDATA[Opened 1846, closed to mainline traffic 1980. Now part of the East Lancs heritage railway.<br> <br><br> <br>http://www.disused-stations.org.uk/b/bury_bolton_street/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.300118,53.593189,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Baxenden</name>
+        <description><![CDATA[Opened 1848, closed 1951<br><br> <br>http://www.disused-stations.org.uk/b/baxenden/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Baxenden_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.339036,53.727167,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Stubbins</name>
+        <description><![CDATA[Opened 1846, closed 1972<br><br> <br>http://en.wikipedia.org/wiki/Stubbins_railway_station<br><br> <br>http://www.disused-stations.org.uk/s/stubbins/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.316678,53.657699,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ewood Bridge and Edenfield</name>
+        <description><![CDATA[Opened 1846, closed 1982<br><br><br>http://en.wikipedia.org/wiki/Ewood_Bridge_and_Edenfield_railway_station	<br><br> <br>http://www.disused-stations.org.uk/e/ewood_bridge/index.shtml]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.308856,53.683187,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Rawtenstall</name>
+        <description>Opened 1846, closed to mainline traffic 1980. Now part of the East Lancs heritage railway.</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.290231,53.698892,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Clough Fold</name>
+        <description><![CDATA[Open 1870, closed 1966<br> <br>http://www.disused-stations.org.uk/c/clough_fold/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Clough_Fold_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.271992,53.699431,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Waterford</name>
+        <description><![CDATA[Opened 1848, closed 1966<br><br> <br>http://www.disused-stations.org.uk/w/waterfoot/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Waterfoot_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.25209,53.691771,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Stacksteads</name>
+        <description><![CDATA[Opened 1852, closed 1966<br> <br>http://www.disused-stations.org.uk/s/stacksteads/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Stacksteads_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.225367,53.691046,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Britannia</name>
+        <description><![CDATA[Opened 1881, closed 1917<br> <br><br> <br><br> <br>http://en.wikipedia.org/wiki/Britannia_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.179016,53.689811,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bacup</name>
+        <description><![CDATA[Opened 1852, closed 1966<br><br> <br>http://www.disused-stations.org.uk/b/bacup/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Bacup_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.200345,53.697872,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Shawforth</name>
+        <description><![CDATA[Opened 1881, closed 1947<br> <br><br><br> <br>http://en.wikipedia.org/wiki/Shawforth_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.16635,53.681198,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Facit</name>
+        <description><![CDATA[Opened 1870, closed 1947<br> <br>http://en.wikipedia.org/wiki/Facit_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.173254,53.669015,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Whitworth</name>
+        <description><![CDATA[Opened 1870, closed 1947<br> <br>http://en.wikipedia.org/wiki/Whitworth_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.178281,53.655874,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Broadley</name>
+        <description><![CDATA[Opened 1870, closed 1947<br> <br>http://en.wikipedia.org/wiki/Broadley_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.183506,53.643458,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Shawclough and Healey</name>
+        <description><![CDATA[Opened 1870, closed 1947<br> <br>http://en.wikipedia.org/wiki/Shawclough_and_Healey_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.179145,53.63107,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Wardleworth</name>
+        <description><![CDATA[Opened 1870, closed 1947<br> <br>http://en.wikipedia.org/wiki/Wardleworth_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.149715,53.622973,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Helmshore</name>
+        <description><![CDATA[Opened 1848, closed 1966<br><br>http://www.disused-stations.org.uk/h/helmshore/index.shtml<br><br>http://en.wikipedia.org/wiki/Helmshore_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.33151,53.684544,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Haslingden</name>
+        <description><![CDATA[Opened 1848, closed 1966<br><br>http://www.disused-stations.org.uk/h/haslingden/index.shtml<br><br>http://en.wikipedia.org/wiki/Haslingden_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.327862,53.710949,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ramsbottom</name>
+        <description><![CDATA[Opened 1846, closed 1972. Re-opened in 1987 as part of the East Lancs heritage railway.<br><br>http://www.disused-stations.org.uk/r/ramsbottom/index.shtml<br><br>http://en.wikipedia.org/wiki/Ramsbottom_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.314615,53.647656,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Holcombe Brook</name>
+        <description><![CDATA[Opened 1882, closed 1952<br><br><br>http://en.wikipedia.org/wiki/Holcombe_Brook_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.334825,53.632431,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Greenmount </name>
+        <description><![CDATA[Opened 1882, closed 1952<br><br>http://en.wikipedia.org/wiki/Greenmount_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.336778,53.623113,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Knowles Level Crossing Halt</name>
+        <description><![CDATA[Opened 1905, closed 1952<br><br>http://en.wikipedia.org/wiki/Knowles_Level_Crossing_Halt_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.336703,53.620813,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Tottington</name>
+        <description><![CDATA[Opened 1882, closed 1963<br><br>http://en.wikipedia.org/wiki/Tottington_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.337384,53.61526,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Sunny Wood Halt </name>
+        <description><![CDATA[Opened 1905, closed 1952<br><br>http://en.wikipedia.org/wiki/Sunny_Wood_Halt_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.333543,53.611057,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Woolfold </name>
+        <description><![CDATA[Opened 1882, closed 1952<br><br>http://en.wikipedia.org/wiki/Woolfold_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.319478,53.605519,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Brandlesholme Road Halt</name>
+        <description><![CDATA[Opened 1905, closed 1952<br><br>http://en.wikipedia.org/wiki/Brandlesholme_Road_Halt_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.310015,53.601716,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Woodhill Road Halt</name>
+        <description><![CDATA[Opened 1905, closed 1952<br><br>http://en.wikipedia.org/wiki/Woodhill_Road_Halt_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.304919,53.601794,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bury Knowsley Street </name>
+        <description><![CDATA[Opened 1848, closed 1970<br> <br>http://en.wikipedia.org/wiki/Bury_Knowsley_Street_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.299911,53.589343,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Broadfield</name>
+        <description><![CDATA[Opened 1869, closed 1970<br> <br>http://en.wikipedia.org/wiki/Broadfield_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.231381,53.586749,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Radcliffe Black Lane</name>
+        <description><![CDATA[Opened 1848, closed 1970<br> <br>http://en.wikipedia.org/wiki/Radcliffe_Black_Lane_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.339573,53.57541,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bradley Fold</name>
+        <description><![CDATA[Opened 1848, closed 1970<br> <br>http://en.wikipedia.org/wiki/Bradley_Fold_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.367476,53.571534,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Darcy Lever</name>
+        <description><![CDATA[Opened 1848, closed 1951<br> <br>http://en.wikipedia.org/wiki/Darcy_Lever_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.408795,53.570575,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>The Oaks</name>
+        <description><![CDATA[Opened 1850, closed 1950<br> <br>http://en.wikipedia.org/wiki/The_Oaks_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.412121,53.604239,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Turton and Edgworth</name>
+        <description><![CDATA[Opened 1848, closed 1964<br> <br>http://en.wikipedia.org/wiki/Turton_and_Edgworth_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.4093,53.636716,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Spring Vale</name>
+        <description><![CDATA[Opened 1872, closed 1958<br> <br>http://en.wikipedia.org/wiki/Spring_Vale_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.456721,53.68664,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lower Darwen</name>
+        <styleUrl>#icon-115-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.472179,53.722756,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Middleton </name>
+        <description><![CDATA[Opened 1857, closed 1965.<br><br> <br>http://en.wikipedia.org/wiki/Middleton_Junction_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.191547,53.548831,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Middleton Junction</name>
+        <description><![CDATA[Opened 1842, closed 1966<br> <br>http://en.wikipedia.org/wiki/Middleton_Junction_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.171216,53.540792,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Summerseat</name>
+        <description><![CDATA[Opened 1846, closed to mainline traffic 1980. Reopened as part of the East Lancs heritage railway 1987.<br> <br>http://www.disused-stations.org.uk/s/summerseat/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Summerseat_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.313019,53.627447,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dixon Fold</name>
+        <description><![CDATA[Opened 1841, closed 1931<br> <br>http://en.wikipedia.org/wiki/Dixon_Fold_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.341322,53.530912,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Agecroft Bridge</name>
+        <description><![CDATA[Opened 1838, closed 1861<br><br> <br>http://en.wikipedia.org/wiki/Agecroft_Bridge_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.29978,53.510822,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Monton Green</name>
+        <description><![CDATA[Opened 1887, closed 1969<br>http://www.disused-stations.org.uk/m/monton_green/index.shtml<br><br> <br>http://en.wikipedia.org/wiki/Monton_Green_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.35631,53.491837,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ellenbrook</name>
+        <description><![CDATA[Opened 1864, closed 1961<br>Ellenbrook station (http://en.wikipedia.org/wiki/Ellenbrook_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.405802,53.51198,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Tyldesley </name>
+        <description><![CDATA[Opened 1864, closed 1969<br> <br>http://en.wikipedia.org/wiki/Tyldesley_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.467246,53.512449,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Fallowfield Loop line</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.277308,53.464873,0
+            -2.278225,53.464381,0
+            -2.278483,53.464254,0
+            -2.278655,53.4641,0
+            -2.278976,53.463781,0
+            -2.279255,53.463197,0
+            -2.279508,53.462401,0
+            -2.279773,53.461225,0
+            -2.280092,53.460038,0
+            -2.280049,53.459438,0
+            -2.279963,53.458843,0
+            -2.279277,53.456672,0
+            -2.27794,53.45212,0
+            -2.27668,53.44781,0
+            -2.27599,53.44593,0
+            -2.2747,53.44405,0
+            -2.27279,53.4422,0
+            -2.27039,53.44081,0
+            -2.26799,53.43964,0
+            -2.26537,53.43881,0
+            -2.26189,53.43872,0
+            -2.25844,53.43903,0
+            -2.25498,53.43949,0
+            -2.25155,53.44032,0
+            -2.24863,53.44067,0
+            -2.24567,53.44087,0
+            -2.23945,53.44115,0
+            -2.2273,53.44144,0
+            -2.21943,53.44135,0
+            -2.21559,53.44085,0
+            -2.21166,53.44078,0
+            -2.20325,53.44069,0
+            -2.19338,53.44053,0
+            -2.18943,53.44069,0
+            -2.18185,53.44157,0
+            -2.1749,53.44333,0
+            -2.1701,53.44597,0
+            -2.16789,53.44887,0
+            -2.16748,53.44984,0
+            -2.16531,53.45638,0
+            -2.16385,53.46016,0
+            -2.16106,53.46346,0
+            -2.15656,53.46572,0
+            -2.15115,53.4685,0
+            -2.14623,53.47119,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Ducie Street goods</name>
+        <description><![CDATA[Few details available online.<br><br> <br>http://www.artus-familyhistory.com/Manchester%201922/Manchester%201922.html<br><br> <br>http://www.locosheds.co.uk/index.php?n=Sheds.MANCHESTER-ANCOATSGOODS]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.232006,53.478881,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ducie Street goods line</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.231968,53.478906,0
+            -2.231319,53.478258,0
+            -2.231179,53.478099,0
+            -2.230954,53.478016,0
+            -2.23045,53.477901,0
+            -2.228411,53.477365,0
+            -2.225831,53.476589,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Ancoats goods</name>
+        <description><![CDATA[Opened 1860s (?), closed ?<br><br>http://manchesterhistory.net/manchester/gone/ancoatsstation.html]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.221642,53.477958,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 6</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.221513,53.47806,0
+            -2.218573,53.477537,0
+            -2.217801,53.47732,0
+            -2.21705,53.477013,0
+            -2.21389,53.475152,0
+            -2.211599,53.473833,0
+            -2.211052,53.473686,0
+            -2.210129,53.473572,0
+            -2.208123,53.473457,0
+            -2.206578,53.47338,0
+            -2.204572,53.473236,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Chorlton-cum-Hardy Junction</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.282238,53.463871,0
+            -2.281573,53.463858,0
+            -2.281246,53.463851,0
+            -2.280918,53.46381,0
+            -2.280564,53.463756,0
+            -2.280221,53.463657,0
+            -2.279851,53.463516,0
+            -2.279749,53.463452,0
+            -2.279658,53.463369,0
+            -2.279513,53.463066,0
+            -2.279427,53.462737,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Great Northern Warehouse</name>
+        <description><![CDATA[Opened 1898<br><br> <br>http://en.wikipedia.org/wiki/Great_Northern_Warehouse]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.249161,53.477224,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 8</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.254429,53.47505,0
+            -2.251484,53.475331,0
+            -2.251039,53.475391,0
+            -2.250754,53.475529,0
+            -2.250566,53.475609,0
+            -2.250411,53.475711,0
+            -2.249172,53.477237,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Goods Yard</name>
+        <description>http://www.artus-familyhistory.com/Manchester%201935/2a%201935%20Enl.html</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.273655,53.479612,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Sidings</name>
+        <description>http://www.artus-familyhistory.com/Manchester%201935/2a%201935%20Enl.html</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.279835,53.480793,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Docks line</name>
+        <description>http://www.artus-familyhistory.com/Manchester%201935/2a%201935%20Enl.html</description>
+        <styleUrl>#line-FF0000-7000</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.275554,53.484477,0
+            -2.275554,53.482817,0
+            -2.275575,53.481987,0
+            -2.27571,53.48115,0
+            -2.27685,53.47894,0
+            -2.279191,53.476043,0
+            -2.280564,53.474561,0
+            -2.2814,53.47383,0
+            -2.28227,53.47313,0
+            -2.28438,53.47251,0
+            -2.29073,53.4709,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Goods Yard</name>
+        <styleUrl>#icon-115-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.259943,53.480231,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Brindle Heath Goods Station</name>
+        <description>http://www.artus-familyhistory.com/Manchester%201935/1a%25201935%20Enl.html</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.289019,53.496257,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Park</name>
+        <description><![CDATA[Opened 1846. closed 1995<br> <br>Park station article on Wikipedia (http://en.wikipedia.org/wiki/Park_railway_station)]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.19418,53.492961,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Droylsden</name>
+        <description><![CDATA[Opened 1846, closed 1968<br><br> <br>Droylsden station (http://en.wikipedia.org/wiki/Droylsden_railway_station) article on Wikipedia]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.135661,53.489511,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 7</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.125694,53.472569,0
+            -2.126638,53.474319,0
+            -2.127024,53.475794,0
+            -2.128236,53.47716,0
+            -2.12918,53.479376,0
+            -2.130167,53.481323,0
+            -2.131294,53.483481,0
+            -2.132303,53.485377,0
+            -2.133118,53.487094,0
+            -2.134148,53.488543,0
+            -2.135049,53.489271,0
+            -2.135457,53.489507,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Hooley Hill</name>
+        <description><![CDATA[http://www.bikerides.dsracing.me.uk/railway/hooleyhill.htm<br> <br>http://en.wikipedia.org/wiki/Hooley_Hill_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.110362,53.471103,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>London and North-Western</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.063756,53.483934,0
+            -2.075772,53.481942,0
+            -2.082016,53.481521,0
+            -2.085149,53.481368,0
+            -2.088261,53.48147,0
+            -2.091351,53.482683,0
+            -2.09399,53.482466,0
+            -2.097573,53.481623,0
+            -2.100685,53.480219,0
+            -2.104118,53.477294,0
+            -2.11156,53.47056,0
+            -2.11314,53.46963,0
+            -2.11456,53.46891,0
+            -2.127271,53.461405,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Werneth</name>
+        <description><![CDATA[Opened 1842, closed 2009<br>Was originally planned to be re-opened as a Metrolink station, but the area will now be served by Westwood (http://en.wikipedia.org/wiki/Westwood_Metrolink_station).<br><br> <br>Oldham Werneth (http://www.disused-stations.org.uk/o/oldham_werneth/index.shtml) on disused-stations.org.uk<br> <br>Oldham Werneth station (http://en.wikipedia.org/wiki/Oldham_Werneth) article on Wikipedia.]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.128137,53.538897,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Mumps</name>
+        <description><![CDATA[Opened 1847, closed 2009. Will re-open as temporary Metrolink station only until Union Street station is completed.<br> <br>http://www.disused-stations.org.uk/o/oldham_mumps/index.shtml<br><br> <br>Oldham Mumps station article on Wikipedia (http://en.wikipedia.org/wiki/Oldham_Mumps_railway_station)]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.102315,53.540983,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Central</name>
+        <description><![CDATA[Opened 1847, closed 1966<br> <br>Oldham Centra (http://www.disused-stations.org.uk/o/oldham_central/index.shtml)l on disused-stations.org.uk<br>Oldham Central station (http://en.wikipedia.org/wiki/Oldham_Central_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.109944,53.538003,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Clegg Street</name>
+        <description><![CDATA[Opened 1861, closed 1959<br> <br>Oldham Clegg Street station (http://en.wikipedia.org/wiki/Oldham_Clegg_Street_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.109118,53.537834,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Park Bridge</name>
+        <description><![CDATA[Opened 1861, closed 1959<br> <br>Park Bridge station (http://en.wikipedia.org/wiki/Park_Bridge_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.094237,53.51733,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Oldham, Ashton and Guide Bridge Joint</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.099311,53.492412,0
+            -2.096586,53.494033,0
+            -2.095685,53.494875,0
+            -2.09517,53.495271,0
+            -2.094805,53.495782,0
+            -2.094848,53.496522,0
+            -2.095363,53.497428,0
+            -2.097423,53.50233,0
+            -2.09738,53.505265,0
+            -2.097015,53.508066,0
+            -2.093239,53.513649,0
+            -2.09296,53.514931,0
+            -2.09296,53.516213,0
+            -2.094086,53.518739,0
+            -2.094194,53.519824,0
+            -2.094558,53.520927,0
+            -2.095159,53.522401,0
+            -2.095159,53.523134,0
+            -2.095513,53.52388,0
+            -2.096039,53.524793,0
+            -2.096833,53.525596,0
+            -2.099097,53.526916,0
+            -2.101521,53.528434,0
+            -2.103732,53.530016,0
+            -2.108946,53.532579,0
+            -2.109976,53.533523,0
+            -2.110308,53.534314,0
+            -2.110437,53.536393,0
+            -2.109815,53.5374,0
+            -2.109053,53.538101,0
+            -2.108817,53.538216,0
+            -2.108645,53.538356,0
+            -2.108581,53.538395,0
+            -2.108431,53.53842,0
+            -2.108581,53.538382,0
+            -2.108452,53.538407,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Road (Ashton-under-Lyne)</name>
+        <description><![CDATA[Opened 1861, closed 1959<br><br> <br>Oldham Road station (http://en.wikipedia.org/wiki/Oldham_Road_railway_station_(Ashton-under-Lyne)) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.099429,53.492348,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ashton Moss</name>
+        <description><![CDATA[Opened ? closed 1862?<br> <br>Ashton Moss station (http://en.wikipedia.org/wiki/Ashton_Moss_railway_station) at Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.113667,53.484432,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Oldham Glodwick Road</name>
+        <description><![CDATA[Opened 1862, closed 1955<br> <br>Oldham Glodwick Road station (http://en.wikipedia.org/wiki/Glodwick_Road_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.09709,53.541238,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lees</name>
+        <description><![CDATA[Opened 1856, closed 1955<br> <br>Lees (http://en.wikipedia.org/wiki/Lees_railway_station) station on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.069936,53.539918,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>London and Northwestern</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.10856,53.538548,0
+            -2.106199,53.539428,0
+            -2.103581,53.540231,0
+            -2.100899,53.540792,0
+            -2.098281,53.541321,0
+            -2.097166,53.541257,0
+            -2.094226,53.541034,0
+            -2.09296,53.540792,0
+            -2.089731,53.539772,0
+            -2.087831,53.539294,0
+            -2.085707,53.539204,0
+            -2.08207,53.539389,0
+            -2.078551,53.540441,0
+            -2.076652,53.540868,0
+            -2.074528,53.540894,0
+            -2.072425,53.540639,0
+            -2.070032,53.540008,0
+            -2.068198,53.539268,0
+            -2.064443,53.537655,0
+            -2.060022,53.53601,0
+            -2.058799,53.535685,0
+            -2.057426,53.535544,0
+            -2.055994,53.535624,0
+            -2.054594,53.535761,0
+            -2.048736,53.536224,0
+            -2.037728,53.535972,0
+            -2.032503,53.53587,0
+            -2.029322,53.535962,0
+            -2.026227,53.536214,0
+            -2.022579,53.536679,0
+            -2.020036,53.537094,0
+            -2.017461,53.537406,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Grotton and Springhead</name>
+        <description><![CDATA[Opened 1856, closed 1955<br> <br>Grotton and Springhead station (http://en.wikipedia.org/wiki/Grotton_and_Springhead_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.054575,53.535723,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Grasscroft</name>
+        <description><![CDATA[Opened 1912, closed 1955<br> <br>Grasscroft station (http://en.wikipedia.org/wiki/Grasscroft_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.02613,53.536204,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dukinfield and Ashton </name>
+        <description>Dukinfield and Ashton station (http://en.wikipedia.org/wiki/Dukinfield_and_Ashton_railway_station) on Wikipedia</description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.093968,53.482453,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dukinfield Central</name>
+        <description><![CDATA[Opened 1864, closed 1959<br> <br>Dukinfield Central station (http://en.wikipedia.org/wiki/Dukinfield_Central_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.097962,53.481561,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ashton Park Parade</name>
+        <description><![CDATA[Opened 1845, closed 1956<br> <br>Ashton Park Parade station (http://en.wikipedia.org/wiki/Ashton_Park_Parade_(Ashton-under-Lyne)_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.092048,53.486124,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Staley and Millbrook</name>
+        <description><![CDATA[Opened 1886, closed 1909<br><br>Staley and Millbrook station (http://en.wikipedia.org/wiki/Staley_and_Millbrook_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.038264,53.49538,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 11</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.038522,53.495303,0
+            -2.042835,53.490139,0
+            -2.046064,53.487056,0
+            -2.047781,53.485888,0
+            -2.049605,53.485403,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Micklehurst </name>
+        <description><![CDATA[Opened 1886, closed 1907<br>Micklehurst station (http://en.wikipedia.org/wiki/Micklehurst_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.036515,53.514373,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Friezland </name>
+        <description><![CDATA[Opened 1886, closed 1917<br> <br>Friezland station (http://en.wikipedia.org/wiki/Friezland_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.01126,53.534046,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Uppermill</name>
+        <description><![CDATA[Opened 1886, closed 1917<br> <br>Uppermill station (http://en.wikipedia.org/wiki/Uppermill_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.002312,53.547177,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Diggle</name>
+        <description><![CDATA[Opened 1848, closed 1968<br> <br>Diggle station (http://en.wikipedia.org/wiki/Diggle_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -1.990526,53.569135,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Saddleworth</name>
+        <description><![CDATA[Opened? closed 1968<br> <br>Saddleworth station (http://en.wikipedia.org/wiki/Saddleworth_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.007354,53.554191,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Moorgate (Oldham) </name>
+        <description><![CDATA[Opened 1912, closed 1955<br> <br>Moorgate (Oldham) station (http://en.wikipedia.org/wiki/Moorgate_(Oldham)_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.009221,53.547234,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dobcross</name>
+        <description><![CDATA[Opened 1912, closed 1955<br> <br>Dobcross station (http://en.wikipedia.org/wiki/Dobcross_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.018743,53.552375,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Measurements</name>
+        <description><![CDATA[Opened 1932, closed 1955<br> <br>Measurements station (http://en.wikipedia.org/wiki/Measurements_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.025465,53.557662,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Delph</name>
+        <description><![CDATA[Opened 1851, closed 1955<br> <br>Delph station (http://en.wikipedia.org/wiki/Delph_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.021608,53.563403,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Royton</name>
+        <description><![CDATA[Opened 1864, closed 1966<br>Royton (http://www.disused-stations.org.uk/r/royton/index.shtml) on disused-stations.org.uk<br>Royton station (http://en.wikipedia.org/wiki/Royton_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.11895,53.565465,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Royton Junction</name>
+        <description><![CDATA[Opened 1864, closed 1987<br> <br>Royton Junction (http://www.disused-stations.org.uk/r/royton_junction/index.shtml) at disused-stations.org.uk<br>Royton Junction station (http://en.wikipedia.org/wiki/Royton_Junction_railway_station) at Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.101092,53.554816,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Royton Junction</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.118956,53.565516,0
+            -2.115244,53.564018,0
+            -2.112744,53.562878,0
+            -2.110748,53.561584,0
+            -2.10695,53.557952,0
+            -2.103989,53.556906,0
+            -2.102208,53.556078,0
+            -2.100964,53.555045,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 13</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.217597,53.494288,0
+            -2.228138,53.487934,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Ducie Bridge</name>
+        <description><![CDATA[Opened ? Closed 1884.<br><br> Seperate station just outside Victoria, accessed via steps from street level. <br>Noted in Tom Wray's Manchester Victoria Station and shown on Oldham Loop map here (http://www.disused-stations.org.uk/d/dean_lane/route_map.gif)<br>Very little info available online - appears to have been shortlived. Included on list of closed stations on Wikipedia (http://en.wikipedia.org/wiki/List_of_closed_railway_stations_in_Britain:_D-F), only notes date of closing.]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.240889,53.488863,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pendlebury</name>
+        <description><![CDATA[Opened 1888. closed 1960<br> <br>Pendlebury station (http://en.wikipedia.org/wiki/Pendlebury_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.320846,53.512047,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Irlams o' th' Height]]></name>
+        <description><![CDATA[Opened 1904, closed 1956<br> <br>Irlams 'o th' Height station (http://en.wikipedia.org/wiki/Irlams_o%27_th%27_Height_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.303218,53.503848,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Walkden Low Level</name>
+        <description><![CDATA[Opened 1875, closed 1954<br>Walkden Low Level (http://www.disused-stations.org.uk/w/walkden_low_level/index.shtml) on disused-stations.org.uk<br>Walkden Low Level station (http://en.wikipedia.org/wiki/Walkden_Low_Level_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.397509,53.518331,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Worsley</name>
+        <description><![CDATA[Opened 1864, closed 1969<br> <br>Worsley station (http://www.disused-stations.org.uk/w/worsley/index.shtml) on disused-stations.org.uk<br>Worsley station (http://en.wikipedia.org/wiki/Worsley_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.366722,53.501522,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Howe Bridge</name>
+        <description><![CDATA[Opened 1864, closed 1969<br> <br>Howe Bridge station (http://en.wikipedia.org/wiki/Howe_Bridge_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.505205,53.518207,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Hindley Green</name>
+        <description><![CDATA[Opened? Closed?<br> <br>http://www.churchofsaintjohn.com/index.php?navID=25]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.544394,53.520157,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Barton Moss (II)</name>
+        <description><![CDATA[Opened 1862, closed 1929<br>Barton Moss (2nd station) (http://www.disused-stations.org.uk/b/barton_moss/index10.shtml) on disused-stations.org.uk<br>Barton Moss station (http://en.wikipedia.org/wiki/Barton_Moss_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.405062,53.477754,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Barton Moss (I)</name>
+        <description><![CDATA[Opened 1831, closed 1862<br> <br>Barton Moss (1st station) (http://www.disused-stations.org.uk/b/barton_moss/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.422314,53.474357,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Lamb's Cottage]]></name>
+        <description><![CDATA[Opened 1832? Closed 1842<br> <br>Lamb's Cottage (http://www.disused-stations.org.uk/l/lambs_cottage/index.shtml) at disused-stations.org.uk]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.438729,53.471541,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Astley</name>
+        <description><![CDATA[Opened 1844/5, closed 1958<br> <br>Astley station (http://www.disused-stations.org.uk/a/astley/index.shtml) on disused-stations.org.uk<br>Astley station (http://en.wikipedia.org/wiki/Astley_railway_station) on Wikipedia]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.448417,53.470715,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Flow Moss</name>
+        <description><![CDATA[Opened 1832? Closed 1842<br> <br>Flow Moss station (http://www.disused-stations.org.uk/f/flow_moss/index.shtml) on disused-stations.org]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.464199,53.469759,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Glazebury and Bury Lane</name>
+        <description><![CDATA[Opened 1831? Closed 1958.<br> <br>Glazebury and Bury Lane (http://www.disused-stations.org.uk/g/glazebury/index.shtml) on disused-stations.org.uk]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.493703,53.467773,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Kenyon Junction</name>
+        <description><![CDATA[Opened 1831? Closed 1963<br><br> <br>Kenyon Junction (http://www.disused-stations.org.uk/k/kenyon_junction/index.shtml) at disused-stations.org.uk]]></description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.540342,53.463324,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 15</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.542262,53.463193,0
+            -2.537842,53.465876,0
+            -2.536597,53.473386,0
+            -2.535052,53.4823,0
+            -2.533507,53.485441,0
+            -2.530739,53.48756,0
+            -2.525525,53.489233,0
+            -2.520912,53.49028,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 16</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.590928,53.529544,0
+            -2.587066,53.527452,0
+            -2.583675,53.525003,0
+            -2.581358,53.522605,0
+            -2.578869,53.517145,0
+            -2.572517,53.500607,0
+            -2.566166,53.49111,0
+            -2.562647,53.484726,0
+            -2.547669,53.458978,0
+            -2.544537,53.455451,0
+            -2.538528,53.45218,0
+            -2.528272,53.449574,0
+            -2.510891,53.44712,0
+            -2.498145,53.444999,0
+            -2.494154,53.443874,0
+            -2.488532,53.441267,0
+            -2.478061,53.433469,0
+            -2.470465,53.428253,0
+            -2.467117,53.427077,0
+            -2.463512,53.42764,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 17</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.475057,53.424878,0
+            -2.473726,53.425389,0
+            -2.472911,53.42585,0
+            -2.471924,53.427115,0
+            -2.471795,53.428407,0
+            -2.47231,53.429519,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 18</name>
+        <styleUrl>#line-FF0000-7000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.581916,53.503555,0
+            -2.57771,53.501474,0
+            -2.573075,53.500198,0
+            -2.571101,53.498539,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Parkside (II)</name>
+        <description>Opened 1839, closed 1878</description>
+        <styleUrl>#icon-25</styleUrl>
+        <Point>
+          <coordinates>
+            -2.592269,53.455432,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 18</name>
+        <styleUrl>#line-FF0000-5000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.449608,53.431117,0
+            -2.377167,53.409583,0
+            -2.359314,53.40508,0
+            -2.339745,53.400731,0
+            -2.315283,53.399247,0
+            -2.290649,53.398326,0
+            -2.267475,53.398479,0
+            -2.241726,53.399042,0
+            -2.226276,53.400117,0
+            -2.207222,53.404364,0
+            -2.198896,53.405746,0
+            -2.194433,53.405592,0
+            -2.191858,53.404057,0
+            -2.190056,53.403187,0
+            -2.181129,53.393771,0
+            -2.175035,53.389267,0
+            -2.157784,53.38297,0
+            -2.128601,53.376929,0
+            -2.120361,53.375546,0
+            -2.118618,53.375204,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Oldfield Road</name>
+        <description><![CDATA[Opened 1852, closed 1872<br> <br>http://en.wikipedia.org/wiki/Oldfield_Road_railway_station]]></description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.265367,53.481147,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Windsor Bridge</name>
+        <description>Location uncertain</description>
+        <styleUrl>#icon-115</styleUrl>
+        <Point>
+          <coordinates>
+            -2.275608,53.485288,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Line 19</name>
+        <styleUrl>#line-FF0000-8000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.26579,53.43896,0
+            -2.26405,53.43824,0
+            -2.25301,53.43401,0
+            -2.24918,53.43261,0
+            -2.24635,53.43167,0
+            -2.24407,53.43082,0
+            -2.24197,53.42996,0
+            -2.24073,53.42922,0
+            -2.23864,53.4277,0
+            -2.23745,53.42658,0
+            -2.23678,53.42558,0
+            -2.23605,53.42437,0
+            -2.23497,53.42278,0
+            -2.23379,53.42117,0
+            -2.23275,53.41992,0
+            -2.23209,53.41932,0
+            -2.22898,53.41693,0
+            -2.22726,53.41592,0
+            -2.22494,53.41462,0
+            -2.22318,53.41395,0
+            -2.22101,53.41322,0
+            -2.21446,53.41136,0
+            -2.21349,53.41111,0
+            -2.2099,53.4106,0
+            -2.20808,53.41028,0
+            -2.206793,53.410069,0
+            -2.205248,53.409992,0
+            -2.201107,53.409238,0
+            -2.199218,53.408713,0
+            -2.196536,53.407664,0
+            -2.195206,53.406999,0
+            -2.192609,53.405029,0
+            -2.191687,53.404364,0
+            -2.190013,53.40311,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 20</name>
+        <styleUrl>#line-FF0000-8000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.165487,53.469216,0
+            -2.164639,53.469299,0
+            -2.163792,53.469197,0
+            -2.162483,53.468712,0
+            -2.161689,53.468009,0
+            -2.161174,53.467192,0
+            -2.160616,53.466349,0
+            -2.160337,53.465442,0
+            -2.160358,53.464496,0
+            -2.161024,53.463519,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 21</name>
+        <styleUrl>#line-0000FF-5000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.190973,53.486967,0
+            -2.190716,53.487375,0
+            -2.190362,53.487733,0
+            -2.189305,53.488422,0
+            -2.188629,53.488729,0
+            -2.187926,53.489,0
+            -2.186542,53.489549,0
+            -2.186193,53.489795,0
+            -2.185984,53.49005,0
+            -2.185839,53.490669,0
+            -2.185571,53.491761,0
+            -2.185335,53.492131,0
+            -2.18504,53.492297,0
+            -2.184654,53.49238,0
+            -2.183887,53.492418,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <name>Line 22</name>
+        <styleUrl>#line-0000FF-5000-nodesc</styleUrl>
+        <LineString>
+          <tessellate>1</tessellate>
+          <coordinates>
+            -2.186403,53.492389,0
+            -2.185845,53.492262,0
+            -2.185625,53.492144,0
+            -2.185534,53.49201,0
+            -2.185542,53.491828,0
+          </coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
