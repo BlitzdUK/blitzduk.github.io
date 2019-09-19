@@ -62,6 +62,29 @@
     </div>
     <div style="text-align: center;"><br>
     </div> <SCRIPT charset="utf-8" type="text/javascript" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&MarketPlace=GB&ID=V20070822%2FGB%2Fblitzduk-21%2F8009%2F7b522164-6b8f-493b-9a32-e54acacdf80a&Operation=GetScriptTemplate"> </SCRIPT> <NOSCRIPT><A rel="nofollow" HREF="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&MarketPlace=GB&ID=V20070822%2FGB%2Fblitzduk-21%2F8009%2F7b522164-6b8f-493b-9a32-e54acacdf80a&Operation=NoScript">Amazon.co.uk Widgets</A></NOSCRIPT>
+<!-- Load Facebook SDK for JavaScript -->
+      <div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            xfbml            : true,
+            version          : 'v4.0'
+          });
+        };
 
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_GB/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- Your customer chat code -->
+      <div class="fb-customerchat"
+        attribution=setup_tool
+        page_id="897358920340245"
+  theme_color="#13cf13">
+      </div>
   </body>
 </html>
