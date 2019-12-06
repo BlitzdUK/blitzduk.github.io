@@ -157,42 +157,6 @@
         <styleUrl>#icon-503-009D57-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="icon-503-DB4436-normal">
-      <IconStyle>
-        <color>ff3644db</color>
-        <scale>1.1</scale>
-        <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
-        </Icon>
-        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
-      </IconStyle>
-      <LabelStyle>
-        <scale>0</scale>
-      </LabelStyle>
-    </Style>
-    <Style id="icon-503-DB4436-highlight">
-      <IconStyle>
-        <color>ff3644db</color>
-        <scale>1.1</scale>
-        <Icon>
-          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
-        </Icon>
-        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
-      </IconStyle>
-      <LabelStyle>
-        <scale>1.1</scale>
-      </LabelStyle>
-    </Style>
-    <StyleMap id="icon-503-DB4436">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#icon-503-DB4436-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#icon-503-DB4436-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="icon-503-DB4436-nodesc-normal">
       <IconStyle>
         <color>ff3644db</color>
@@ -267,44 +231,6 @@
         <styleUrl>#poly-DB4436-1200-184-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-DB4436-1200-194-nodesc-normal">
-      <LineStyle>
-        <color>ff3644db</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>c23644db</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-DB4436-1200-194-nodesc-highlight">
-      <LineStyle>
-        <color>ff3644db</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>c23644db</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-DB4436-1200-194-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-DB4436-1200-194-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-DB4436-1200-194-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-DB4436-5801-204-normal">
       <LineStyle>
         <color>ff3644db</color>
@@ -350,25 +276,16 @@
       </Placemark>
       <Placemark>
         <name>Bailey Mill Delph *DESTROYED* </name>
-        <description><![CDATA[<img src="https://doc-0s-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/401r9q7d0ho1finsvu8rt4td84/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALqCqeQ2SgvLw05L0XYCS7AeLh_4PRMwp15E3c5cBowS0imDJe1bKJjP1fCAEPqHrdyvqJ6_zphGoyipG25uZIVZzN7jik5_RTx0gHPqslGvuThF399vZHA7Yi4cPrKGkCu1YFRFxtR_eUC69KhwrNDs6h-Mr9IKMzKArAwptlvAlkS5zIf1DwtaafhJj67k2ZERL6E5tbO1Ruan3dDS95YGJoN9y3lEXmWaqzfQ36yonwp_OkWb8BJIgy0Fp66zDsuYCx5IpwYdk-mhS6U2gmgcHWQMvg?fife" height="200" width="auto" /><br><br>]]></description>
+        <description><![CDATA[<img src="https://doc-04-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/1it6b9hngsabca82igabjrcrhk/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALpT014JIqjCWUz5V0Oxd5z_bwaut96ePiRtk_F2QB1k2qQHUvbC980EyDGDvLI-jk7zSSFUNoV5W7PU6wybx9mt_5VOhiZ-8-Et4QiNqsjHGbFC1kIpk-xdXH7DDL4rdS9HjLsi14DsfvT9uTqYmVQPogM24ImzAtE1krSJMmcJ0zmMbz7xEMdG5gVA6vpAw68J4BDqh2vR_P48VBgRX17xy-KItk-6NN5YFMoYD4mGSt8eKr60qPG-mxbecGcGlRx6mJM-H6Nuqs_SrXQJyBjsC3oFLw?session=0&fife" height="200" width="auto" /><br><br>]]></description>
         <styleUrl>#icon-503-009D57</styleUrl>
         <ExtendedData>
           <Data name="gx_media_links">
-            <value>https://doc-0s-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/401r9q7d0ho1finsvu8rt4td84/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALqCqeQ2SgvLw05L0XYCS7AeLh_4PRMwp15E3c5cBowS0imDJe1bKJjP1fCAEPqHrdyvqJ6_zphGoyipG25uZIVZzN7jik5_RTx0gHPqslGvuThF399vZHA7Yi4cPrKGkCu1YFRFxtR_eUC69KhwrNDs6h-Mr9IKMzKArAwptlvAlkS5zIf1DwtaafhJj67k2ZERL6E5tbO1Ruan3dDS95YGJoN9y3lEXmWaqzfQ36yonwp_OkWb8BJIgy0Fp66zDsuYCx5IpwYdk-mhS6U2gmgcHWQMvg?fife</value>
+            <value><![CDATA[https://doc-04-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/1it6b9hngsabca82igabjrcrhk/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALpT014JIqjCWUz5V0Oxd5z_bwaut96ePiRtk_F2QB1k2qQHUvbC980EyDGDvLI-jk7zSSFUNoV5W7PU6wybx9mt_5VOhiZ-8-Et4QiNqsjHGbFC1kIpk-xdXH7DDL4rdS9HjLsi14DsfvT9uTqYmVQPogM24ImzAtE1krSJMmcJ0zmMbz7xEMdG5gVA6vpAw68J4BDqh2vR_P48VBgRX17xy-KItk-6NN5YFMoYD4mGSt8eKr60qPG-mxbecGcGlRx6mJM-H6Nuqs_SrXQJyBjsC3oFLw?session=0&fife]]></value>
           </Data>
         </ExtendedData>
         <Point>
           <coordinates>
             -2.023142,53.5626451,0
-          </coordinates>
-        </Point>
-      </Placemark>
-      <Placemark>
-        <name>St Thomas Hospital</name>
-        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
-        <Point>
-          <coordinates>
-            -2.1604657,53.4033951,0
           </coordinates>
         </Point>
       </Placemark>
@@ -387,15 +304,6 @@
         <Point>
           <coordinates>
             -2.7006652,53.6357823,0
-          </coordinates>
-        </Point>
-      </Placemark>
-      <Placemark>
-        <name>St Thomas Morgue</name>
-        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
-        <Point>
-          <coordinates>
-            -2.1610075,53.4029665,0
           </coordinates>
         </Point>
       </Placemark>
@@ -780,11 +688,11 @@
       </Placemark>
       <Placemark>
         <name>Macclesfield ROC Post</name>
-        <description><![CDATA[<img src="https://doc-0k-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/e7m7h7ko8p5cearl3s4greenvk/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALpoo4nzO29LkNf2qAX7vkG9KX5Ls9waDC3oMaMb5eI4XQjJWOa9Fov7wh6-cLPa7QVxgTtSyjCTV6nFWxEnF25EL1kStK0xRF7zN8N36OUs2EXnknvA0hG4LuvJzjolaA0d0m0o0KzBjAGQahmG-zDFWa7DtQRJ6ITeN1KPMKrEXS6W6NOvmABtKfch752izB-A0g-hzM60_KeiwL-IWOofELbm6qoGPcE27TclPJCVZH7ZvIwALQ54pGpBT5MytuDTQL-_j09BqiMe_y1GsT2GZvGbkQ?fife" height="200" width="auto" /><br><br>]]></description>
+        <description><![CDATA[<img src="https://doc-0c-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/t858aik8pnduc0umbjl54qp5ak/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALqRV5mi3e2G3S8WGcmLmtMifOZSVQgy1f6US1P5W_lNYg3L_NWuHNJdMABZsfA2-cOHVcGSEnjzgweR9QQF-aSPn3EYSPXZHtlr0wsuQbahHvDAGy7W4x0wKkmgsYzYrJwnChYjslJnWxuGrgU_bZn_PXrUGTyyhKyCRXkq6E9XskyJfIo4-jdNLYEcawJmtkrVm9gAM59lOfDcz93UPLSLVtYGKK4V9_q7A8TtTlajoRYjbNQuy0UDLZRgN-FDk4Tf2MlkHZp6DJib_V8LUZTOqrXQKg?session=0&fife" height="200" width="auto" /><br><br>]]></description>
         <styleUrl>#icon-503-009D57</styleUrl>
         <ExtendedData>
           <Data name="gx_media_links">
-            <value>https://doc-0k-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/e7m7h7ko8p5cearl3s4greenvk/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALpoo4nzO29LkNf2qAX7vkG9KX5Ls9waDC3oMaMb5eI4XQjJWOa9Fov7wh6-cLPa7QVxgTtSyjCTV6nFWxEnF25EL1kStK0xRF7zN8N36OUs2EXnknvA0hG4LuvJzjolaA0d0m0o0KzBjAGQahmG-zDFWa7DtQRJ6ITeN1KPMKrEXS6W6NOvmABtKfch752izB-A0g-hzM60_KeiwL-IWOofELbm6qoGPcE27TclPJCVZH7ZvIwALQ54pGpBT5MytuDTQL-_j09BqiMe_y1GsT2GZvGbkQ?fife</value>
+            <value><![CDATA[https://doc-0c-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/t858aik8pnduc0umbjl54qp5ak/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALqRV5mi3e2G3S8WGcmLmtMifOZSVQgy1f6US1P5W_lNYg3L_NWuHNJdMABZsfA2-cOHVcGSEnjzgweR9QQF-aSPn3EYSPXZHtlr0wsuQbahHvDAGy7W4x0wKkmgsYzYrJwnChYjslJnWxuGrgU_bZn_PXrUGTyyhKyCRXkq6E9XskyJfIo4-jdNLYEcawJmtkrVm9gAM59lOfDcz93UPLSLVtYGKK4V9_q7A8TtTlajoRYjbNQuy0UDLZRgN-FDk4Tf2MlkHZp6DJib_V8LUZTOqrXQKg?session=0&fife]]></value>
           </Data>
         </ExtendedData>
         <Point>
@@ -841,11 +749,11 @@ Edwardian lido</name>
       </Placemark>
       <Placemark>
         <name>Iranian Consulate</name>
-        <description><![CDATA[<img src="https://doc-0o-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/6bufjpmimvi25v1s5t4oo7pipg/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALpDHNfopYvet1lKd3Ow2wPhlCaR0dDelHMoaEzElaxRCche9Eoei2eQ8D0uUh-Qm6epduvraXoC48-2yzjPG8reGP9A_F63LElW6EkmMZNGU3tPxCPJb01i2KyogSEF0QQmr2VjASivCsml4x8y_gcU0Qelpx1MgK6D4k0uVQjMJDe3LIXWoveaokHN34CZmOw78dUx1vK_wBbKm5Wuk659GLmibIDMZmANwu35g3oz2OGbFLrt8A0tGi-g-3AyUcLWaM9w9ffQfT8d-nbZkzeeUd86Cw?fife" height="200" width="auto" /><br><br>]]></description>
+        <description><![CDATA[<img src="https://doc-0k-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/kjqv8m1khcbtr7mvtq3hfnlv1c/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALo1a_8MkfEehjJGyANcSzOmaH557QdnNyCwP2N_4H2LGU_WHT0rAG3lB2WwmbZEBXV3UXRPXZayfMcuFLWe58f4kYDtnqtoQwzwHvPAuzyN4sa4iuWn6QGJH78rnxbOzYXBNq2oOKS5ZaYXsPY0p8U8zdMSW_CEohhPs7AMGCoMr4sUoWhhYoHm0syhRw6TFzBZxI5PTUJSg7GiaY_CSIIrFDllXeVuEQvAU18i3zck45hYO3FsYXz8z6aV9PNhHZIPunsldGjz59F96wXhT3iCpLVPVA?session=0&fife" height="200" width="auto" /><br><br>]]></description>
         <styleUrl>#icon-503-009D57</styleUrl>
         <ExtendedData>
           <Data name="gx_media_links">
-            <value>https://doc-0o-0s-mymaps.googleusercontent.com/untrusted/hostedimage/flr58psfi9kp61vh5hg82jcuak/6bufjpmimvi25v1s5t4oo7pipg/1563472800000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/14925482456170782236/1AF2TALpDHNfopYvet1lKd3Ow2wPhlCaR0dDelHMoaEzElaxRCche9Eoei2eQ8D0uUh-Qm6epduvraXoC48-2yzjPG8reGP9A_F63LElW6EkmMZNGU3tPxCPJb01i2KyogSEF0QQmr2VjASivCsml4x8y_gcU0Qelpx1MgK6D4k0uVQjMJDe3LIXWoveaokHN34CZmOw78dUx1vK_wBbKm5Wuk659GLmibIDMZmANwu35g3oz2OGbFLrt8A0tGi-g-3AyUcLWaM9w9ffQfT8d-nbZkzeeUd86Cw?fife</value>
+            <value><![CDATA[https://doc-0k-7s-mymaps.googleusercontent.com/untrusted/hostedimage/5n0jjkt7gjlq75eaap911tk1r4/kjqv8m1khcbtr7mvtq3hfnlv1c/1575655200000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/1AF2TALo1a_8MkfEehjJGyANcSzOmaH557QdnNyCwP2N_4H2LGU_WHT0rAG3lB2WwmbZEBXV3UXRPXZayfMcuFLWe58f4kYDtnqtoQwzwHvPAuzyN4sa4iuWn6QGJH78rnxbOzYXBNq2oOKS5ZaYXsPY0p8U8zdMSW_CEohhPs7AMGCoMr4sUoWhhYoHm0syhRw6TFzBZxI5PTUJSg7GiaY_CSIIrFDllXeVuEQvAU18i3zck45hYO3FsYXz8z6aV9PNhHZIPunsldGjz59F96wXhT3iCpLVPVA?session=0&fife]]></value>
           </Data>
         </ExtendedData>
         <Point>
@@ -955,35 +863,6 @@ Edwardian lido</name>
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Royal Mail - Stockport</name>
-        <description>https://www.28dayslater.co.uk/threads/royal-mail-sorting-offices-stockport-jan18.111696/</description>
-        <styleUrl>#icon-503-DB4436</styleUrl>
-        <Point>
-          <coordinates>
-            -2.1613106,53.4079106,0
-          </coordinates>
-        </Point>
-      </Placemark>
-      <Placemark>
-        <name>Royal Mail - Stockport</name>
-        <styleUrl>#poly-DB4436-1200-194-nodesc</styleUrl>
-        <Polygon>
-          <outerBoundaryIs>
-            <LinearRing>
-              <tessellate>1</tessellate>
-              <coordinates>
-                -2.1612006,53.4079857,0
-                -2.1613133,53.4079458,0
-                -2.1620536,53.4077715,0
-                -2.161552,53.4074261,0
-                -2.1609458,53.4077507,0
-                -2.1612006,53.4079857,0
-              </coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
         <name>Springmount Mill - Ha-penny Shelter</name>
         <description>https://www.28dayslater.co.uk/threads/hapenny-shelter-stockport-2017.111799/#post-1194985</description>
         <styleUrl>#poly-DB4436-1200-184</styleUrl>
@@ -1004,6 +883,25 @@ Edwardian lido</name>
             </LinearRing>
           </outerBoundaryIs>
         </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Stockport Underground - Grid Access
+</name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1625684,53.4095052,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Beech Knoll</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.12714295834303,53.2661004794077,0
+          </coordinates>
+        </Point>
       </Placemark>
     </Folder>
   </Document>
