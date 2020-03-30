@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-61874581-1"></script>
+    <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-61874581-1');
+</script> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>BLITZD Live</title>
+    <!-- Custom fonts for this theme -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"
+      type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
+      rel="stylesheet" type="text/css">
+    <!-- Theme CSS -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+  </head>
+  <body id="page-top">
+    <div style="text-align: center;"><!-- Navigation --><!-- Masthead --></div>
+    <div style="text-align: center;"><!-- Masthead Avatar Image --></div>
+    <header class="masthead bg-primary text-white text-center">
+      <div class="container d-flex align-items-center flex-column">
+        <h1><br>
+        </h1>
+        <a href="https://blitzd.uk"><img class="masthead-avatar mb-5" src="https://blitzd.uk/img/blitzd-bitmoji-game.png"
+            alt="blitzd-bitmoji-game" title="blitzd-bitmoji-game"></a>
+        <!-- Masthead Heading -->
+        <h1 class="masthead-heading text-uppercase mb-0"><span style="color: #000100;">blitzd
+            Live</span></h1>
+        <p><br>
+        </p>
+        <a href="https://goto.blitzd.uk/BlitzdTwitch"><img src="https://blitzd.uk/img/twitch-follow.png"
+            alt="follow me on twitch" title="follow me on twitch" style="width: 300px; height: 100px;"></a>
+      </div>
+    </header>
+    <p><br>
+    </p>
+    <div style="text-align: center;"><iframe src="https://player.twitch.tv/?channel=blitzduk"
+        allowfullscreen="true" scrolling="no" height="500" frameborder="0" width="100%"></iframe></div>
+    <div style="text-align: center;"> </div>
+    <p> <iframe src="https://www.twitch.tv/embed/blitzduk/chat" scrolling="yes"
+        height="500" frameborder="0" width="100%"></iframe> </p>
+  </body>
+</html>
