@@ -2,7 +2,7 @@
   "message": "accurate",
   "cod": "200",
   "count": 1,
-  "list1": [
+  "list": [
     {
       "id": 2633883,
       "name": "Wilmslow",
@@ -11,7 +11,7 @@
         "lon": -2.2315
       },
       "main": {
-        "temp": 11,
+        "temps": 11,
         "feels_like": 10.33,
         "temp_min": 9.94,
         "temp_max": 11.74,
