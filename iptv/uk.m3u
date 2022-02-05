@@ -54,3 +54,5 @@ https://cdn-shop-lc-01.akamaized.net/Content/HLS_HLS/Live/channel(TJCOTT)/index.
 https://abr.de1se01.v2beat.live/playlist.m3u8
 #EXTINF:-1 tvg-id="V2BEAT.uk" tvg-country="UK" tvg-language="English" tvg-logo="https://i.imgur.com/Ll6GlqY.png" group-title="Music",V2BEAT (720p) [Not 24/7]
 https://de1se01.v2beat.live/playlist.m3u8
+#EXTINF:-1 tvg-id="Scuzz.uk" tvg-name="UK.v: Scuzz" tvg-logo="http://kiptv.live/chansicons/scuzz.png" group-title="UK: Music",UK.v: Scuzz
+http://ziptv.online:25461/live/z60314/bfkdr/4510.ts
