@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Current weather</title>
+  </head>
+  <body>
+    <div style="text-align: center;"><!-- partial:index.partial.html -->
+      <title>Current Weather</title>
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,900" rel="stylesheet">
+      <script>const key = '2c8dec1709c730a7b127d60da0fc027f';
+if(key=='') document.getElementById('temp').innerHTML = ('Remember to add your api key!');
+
+function weatherBallon( cityID ) {
+	fetch('https://api.openweathermap.org/data/2.5/weather?id=' + cityID+ '&appid=' + key)  
+	.then(function(resp) { return resp.json() }) // Convert data to json
+	.then(function(data) {
+		drawWeather(data);
+	})
+	.catch(function() {
+		// catch any errors
+	});
+}
+function drawWeather( d ) {
+  var celcius = Math.round(parseFloat(d.main.temp)-273.15);
+	var fahrenheit = Math.round(((parseFloat(d.main.temp)-273.15)*1.8)+32);
+  var description = d.weather[0].description;
+  var main = d.weather[0].main;
+  
+	
+	document.getElementById('description').innerHTML = description;
+	document.getElementById('main').innerHTML = main;
+	document.getElementById('temp').innerHTML = celcius + '&deg;c';
+	document.getElementById('location').innerHTML = d.name;
+  
+  if( description.indexOf('rain') > 0 ) {
+  	document.body.className = 'rainy';
+  } else if( description.indexOf('cloud') > 0 ) {
+  	document.body.className = 'cloudy';
+  } else if( description.indexOf('sunny') > 0 ) {
+  	document.body.className = 'sunny';
+  } else {
+  	document.body.className = 'clear';
+  }
+}
+window.onload = function() {
+	weatherBallon( 2633883 );
+}</script></div>
+    <div class="bg" style="text-align: center;"></div>
+    <div style="text-align: center;">
+     <h1> Currently in:</h1>
+      <h2 id="location"></h2>
+      <h2> it's</h2>
+      <h2 id="main"></h2>
+      <h2> with </h2>
+      <h2 id="description"></h2>
+      <h3 id="temp"></h3>
+    </div>
+  </body>
+</html>
+<!-- partial -->
