@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - old lat long</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVHW753Ifa-XrNqsU4krNN8e1uEDMaxkk&sensor=true">
+</script>
+<div id="header">
+		<div id="titles">
+        <p>Drag the map and zoom in to find location of crosshairs. This does not really work on mobile yet, please use you phone GPS to get locations if you must. This will work accurate enough on screens over 1000px wide.</p>
+        <div id="areabuttons"><input type="button" value="flock hill" OnClick=loadview("flock")><input type="button" value="dry valley" OnClick=loadview("dry")><input type="button" value="quantum field" OnClick=loadview("quantum")><input type="button" value="spittle hill" OnClick=loadview("spittle")><input type="button" value="cave stream" OnClick=loadview("cave")><input type="button" value="dark castle" OnClick=loadview("dark")><input type="button" value="gorge" OnClick=loadview("gorge")><input type="button" value="teapot" OnClick=loadview("teapot")><input type="button" value="wuthering heights" OnClick=loadview("wuthering")><input type="button" value="mt cook" OnClick=loadview("cook")>
+        </div>
+        </div>
+    </div>
+    <div id="body">
+        <div id="gmap"></div>
+        <div id="crosshair"></div>
+    </div>
+
+    <div id="foot">
+    	<p><strong>what3words:</strong> <span id="w3w"></span></p>
+        <p><strong>Latitude, Longitude:</strong> <span id="latlon"></span></p>
+        <p>100 Times Slab is -43.186171432010724, 171.74690321087837</p>
+        <p>Please Zoom all the way in before getting a reading.</p>
+        <p id="big"><strong>WKT (copy this bit):</strong> <span id="wkt"></span></p>
+        
+    </div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
