@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Blitzd API Pressure</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div class="mypanel"></div>
+
+    <script>
+    $.getJSON('https://static.blitzd.uk:1880/static/hpa.json', function(data) {
+
+        var text = `Time: ${data.timegmt}<br>
+                    Air Pressure: ${data.xsmaxhpa}`
+
+
+        $(".mypanel").html(text);
+    });
+    </script>
+
+</body>
+</html>
