@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Blitzd API 433 Sensor</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div class="mypanel"></div>
+
+    <script>
+    $.getJSON('https://static.blitzd.uk:1880/static/433sensor.json', function(data) {
+
+        var text = `Time: ${data.time}<br>
+                    Temperature: ${data.temperature_C}<br>
+                    Humidity: ${data.humidity}`
+
+
+        $(".mypanel").html(text);
+    });
+    </script>
+
+</body>
+</html>
