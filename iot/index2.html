@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Blitzd API Dash</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript">
+window.onload = function(){ 
+                alert("This page will auto refresh every 60 seconds");
+                }
+</script>
+
+</head>
+
+<body>
+    <div class="mypanel"></div>
+
+    <script>
+    $.getJSON('https://static.blitzd.uk:1880/static/433sensor.json', function(data) {
+
+        var text = `Time: ${data.time}<br>
+                    Temperature: ${data.temperature_C}<br>
+                    Humidity: ${data.humidity}`
+
+
+        $(".mypanel").html(text);
+    });
+    </script>
+	<p> </p>
+	
+	<div class="mypanel2"></div>
+
+    <script>
+    $.getJSON('https://static.blitzd.uk:1880/static/hpa.json', function(data) {
+
+        var text = `Time: ${data.timegmt}<br>
+                    Air Pressure: ${data.xsmaxhpa}`
+
+
+        $(".mypanel2").html(text);
+    });
+    </script>
+<p> Auto refresh </p>
+	<div id=timer></div>
+<script type="text/javascript">
+    var timeoutHandle;
+    function countdown(minutes, seconds) {
+        function tick() {
+            var counter = document.getElementById("timer");
+            counter.innerHTML =
+                minutes.toString() + ":" + (seconds < 10 ? "0" : "") + String(seconds);
+            seconds--;
+            if (seconds >= 0) {
+                timeoutHandle = setTimeout(tick, 1000);
+            } else {
+                if (minutes >= 1) {
+                    // countdown(mins-1);   never reach “00″ issue solved:Contributed by Victor Streithorst
+                    setTimeout(function () {
+                        countdown(minutes - 1, 59);
+                    }, 1000);
+                }
+            }
+        }
+        tick();
+    }
+
+    countdown(1, 0);
+</script>
+	
+
+</html>
