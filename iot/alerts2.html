@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Blitzd Media Alerts</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<meta charset="utf-8">
+<meta property="og:title" content="Blitzd Alerts">
+<meta property="og:site_name" content="Blitzd Media">
+<meta property="og:url" content="https://blitzd.uk/iot/alerts">
+<meta property="og:description" content="Public alerts from Blitzd Media">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blitzd.uk/img/blitzdalerts.jpg">
+<style type="text/css">
+body,td,th {
+	color: #FFFFFF;
+}
+body {
+	background-color: #000000;
+}
+</style>
+<script type="text/javascript">
+window.onload = function(){ 
+                alert("WARNING: This tool is under developement and must not be used when the safety of yourself or others is a concern.");
+                }
+</script>
+</head>
+
+<body style="text-align: center">
+<header>&nbsp; &nbsp;</header>
+<h1>Blitzd Media Alerts</h1>
+<hr><p></p>
+     <div style="text-align: center;">
+      <form action="https://ntfy.sh/blitzd" method="post"> <input value="Send NTFY Notification" type="submit">
+      </form>
+    </div>
+    <p> </p>
+    <div style="text-align: center;">
+      <form action="https://www.pushsafer.com/api?k=VIU8Xt7fhh7pAJ3xbt3J&d=57904&i=5&pr=2&t=blitzd.uk%2Fiot%2Falerts&m=Somebody%20clicked%20a%20button" method="post"> <input value="Send PushSafer Critical Alert Notification" type="submit">
+      </form>
+      </div>
+    <p> </p>
+    <div style="text-align: center;">
+      <form action="https://api.telegram.org/bot1454548931:AAG_gUPQ5bZw898Irpa8iqo32JN6nZKRW68/sendMessage?chat_id=920222421&text=Somebody%20clicked%20a%20button" method="post"> <input value="Send Telegram message BlitzdBot" type="submit">
+      </form>
+      </div>
+    <p> </p>
+    <p>DISCLAIMER</p>
+    <p>This tool must not be relied upon, content could be false, outdated, inaccurate or misleading.</p>
+    <p>You must not use the information on this site for anything when the safety of yourself or others is a concern.</p> 
+</body>
+</html>
