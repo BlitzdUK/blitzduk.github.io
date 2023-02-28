@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<YealinkIPPhoneTextScreen>
+  <Title>Blitzd Media</Title>
+  <Text>Fetching notification...</Text>
+  <SoftKeyItem>
+    <Name>Refresh</Name>
+    <URL>https://blitzd.uk/testing/data/beta.xml</URL>
+  </SoftKeyItem>
+  <SoftKeyItem>
+    <Name>Exit</Name>
+    <URL>SoftKey:Exit</URL>
+  </SoftKeyItem>
+  <Refresh>10</Refresh>
+  <FetchUrl>http://example.com/news.rss</FetchUrl>
+  <Parse>
+    <RSS>
+      <Item>
+        <Title>{title}</Title>
+        <Text>{description}</Text>
+      </Item>
+    </RSS>
+  </Parse>
+</YealinkIPPhoneTextScreen>
