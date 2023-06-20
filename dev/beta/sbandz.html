@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sBandzBarbers - Book an Appointment</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .banner {
+      background-color: grey;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: grey;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <h1>sBandzBarbers</h1>
+    <p>Book an Appointment</p>
+  </div>
+
+  <div class="container">
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="service">Select a service:</label>
+      <select id="service" name="service" required>
+        <option value="">Choose a service</option>
+        <option value="Haircut">Haircut</option>
+        <option value="Shave">Shave</option>
+        <option value="Beard Trim">Beard Trim</option>
+        <option value="Styling">Styling</option>
+      </select>
+
+      <input type="submit" value="Book Now">
+    </form>
+  </div>
+</body>
+
+</html>
