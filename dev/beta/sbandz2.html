@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sBandzBarbers - Booking Form</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+		text-align: center;
+    }
+
+    .banner {
+      background-color: #777;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+		
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="time"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      background-color: #777;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <h1>sBandzBarbers</h1>
+    <p>Book an appointment now!</p>
+  </div>
+
+  <div class="container">
+    <form action="https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="entry.1">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="entry.2">
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="entry.3">
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="entry.4">
+
+      <label for="time">Time:</label>
+      <input type="time" id="time" name="entry.5">
+
+      <label for="service">Service Required:</label>
+      <select id="service" name="entry.6">
+        <option value="Haircut">Haircut</option>
+        <option value="Beard Trim">Beard Trim</option>
+        <option value="Shave">Shave</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <input type="submit" value="Book Now">
+    </form>
+  </div>
+</body>
+
+</html>
