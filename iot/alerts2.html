@@ -50,5 +50,75 @@ window.onload = function(){
     <p>DISCLAIMER</p>
     <p>This tool must not be relied upon, content could be false, outdated, inaccurate or misleading.</p>
     <p>You must not use the information on this site for anything when the safety of yourself or others is a concern.</p> 
+	
+	<script>
+	
+	// Function to perform the IP lookup using IPStack API
+async function performIPLookup(ip) {
+  const apiKey = 'dc636aa2bdb6431961ac16273ebaf3d1'; // Replace with your IPStack API key
+  const url = `https://api.ipstack.com/${ip}?access_key=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('IP Lookup failed:', error);
+    return null;
+  }
+}
+
+// Function to submit data to Google Forms
+async function submitToGoogleForms(formData) {
+  const formUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSckfmfyrG2fSGE97iaAx9CW9pUdoST-tDaWEnDQL1xUG43HBQ/formResponse'; // Replace with your Google Form URL
+
+  try {
+    const response = await fetch(formUrl, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(formData),
+    });
+
+    console.log('Form submission response:', response);
+  } catch (error) {
+    console.error('Form submission failed:', error);
+  }
+}
+
+// Main function to execute the IP lookup and form submission
+async function main() {
+  // Get user agent, IP, and page URL
+  const userAgent = navigator.userAgent;
+  const ipResponse = await fetch('https://api.ipify.org?format=json');
+  const ipData = await ipResponse.json();
+  const ipAddress = ipData.ip;
+  const pageURL = window.location.href;
+
+  // Perform IP lookup
+  const ipLookupResult = await performIPLookup(ipAddress);
+
+  // Prepare form data
+  const formData = {
+    'entry.1064469062': ipLookupResult.region_name,
+    'entry.1284802502': ipLookupResult.isp,
+    'entry.1793238467': ipLookupResult.city,
+    'entry.1412711051': ipLookupResult.country_name,
+    'entry.2103806015': ipAddress,
+    'entry.1381334581': userAgent,
+    'entry.2095676594': pageURL,
+  };
+
+  // Submit data to Google Forms
+  await submitToGoogleForms(formData);
+}
+
+// Execute the main function
+main();
+
+	
+</script>
 </body>
 </html>
