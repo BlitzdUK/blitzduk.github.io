@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IP Lookup</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<script>
+  // Function to display alert popup box
+  function displayAlert(message) {
+    alert(message);
+  }
+
+  // Function to perform the IP lookup
+  function performIpLookup(ip) {
+    // Replace 'YOUR_API_KEY' with your actual API key from CriminalIP
+    var apiKey = 'f7MbyXpR0DB4eZ2OCmsDOkrXcWTgvA8KZN5zs92xeX6gQcSTIZnlTSlh8U7o';
+    var apiUrl = 'https://api.criminalip.com/v1/ip/';
+
+    $.ajax({
+      url: apiUrl + ip,
+      type: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + apiKey
+      },
+      success: function(response) {
+        if (response.is_tor) {
+          displayAlert('The IP address is associated with Tor network.');
+        } else {
+          displayAlert('The IP address is not associated with Tor network.');
+        }
+      },
+      error: function(error) {
+        displayAlert('Error occurred during IP lookup.');
+      }
+    });
+  }
+
+  // Function to get the IP address
+  function getIpAddress() {
+    $.getJSON('https://api.ipify.org?format=json', function(data) {
+      var ip = data.ip;
+      performIpLookup(ip);
+    });
+  }
+
+  // Call the function to get the IP address on page load
+  getIpAddress();
+</script>
+
+</body>
+</html>
