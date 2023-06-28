@@ -1,0 +1,12 @@
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id='mapid' style='width: 100%; height: 500px;'></div>
+    <script>
+        var mymap = L.map('mapid').setView([53.3356, -2.2357], 15);
+        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {}).addTo(mymap);
+        mymap.attributionControl.addAttribution("<a href=\"https://www.jawg.io\" target=\"_blank\">&copy; Jawg</a> - <a href=\"https://www.openstreetmap.org\" target=\"_blank\">&copy; OpenStreetMap</a>&nbsp;contributors")
+    </script>
+</body>

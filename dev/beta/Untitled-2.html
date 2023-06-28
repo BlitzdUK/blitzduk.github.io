@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Chadwick House Hotel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+		text-align: center;
+    }
+
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>The Chadwick House Hotel</h1>
+    <p>55 Beech Lane, Macclesfield, England</p>
+  </div>
+
+  <div class="container">
+    <h2>Book a Room</h2>
+    <form id="booking-form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="check-in">Check-in Date:</label>
+        <input type="date" id="check-in" required>
+      </div>
+      <div class="form-group">
+        <label for="check-out">Check-out Date:</label>
+        <input type="date" id="check-out" required>
+      </div>
+      <div class="form-group">
+        <label for="room-type">Room Type:</label>
+        <select id="room-type" required>
+          <option value="">-- Select Room Type --</option>
+          <option value="single">Single</option>
+          <option value="double">Double</option>
+          <option value="suite">Suite</option>
+        </select>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const bookingForm = document.getElementById("booking-form");
+
+    bookingForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const checkInDate = document.getElementById("check-in").value;
+      const checkOutDate = document.getElementById("check-out").value;
+      const roomType = document.getElementById("room-type").value;
+
+      // Here, you can perform further validation or send the booking details to a server using AJAX.
+
+      // Clear the form after submission
+      bookingForm.reset();
+
+      alert("Thank you, " + name + "! Your booking has been submitted.");
+    });
+  </script>
+</body>
+</html>
