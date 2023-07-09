@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>River Level Gauge</title>
+  <style>
+    #chart {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <script>
+    // Function to fetch the JSON data from the API endpoint
+    function fetchRiverLevel() {
+      fetch('https://environment.data.gov.uk/flood-monitoring/id/stations/693435/readings.json?_sorted&latest')
+        .then(response => response.json())
+        .then(data => {
+          const riverLevel = data.items[0].value; // Assuming the latest reading is the first item in the array
+
+          // Update the chart based on the river level
+          updateGaugeChart(riverLevel);
+        })
+        .catch(error => console.log('Error:', error));
+    }
+
+    // Function to update the gauge chart based on the river level
+    function updateGaugeChart(riverLevel) {
+      const chartElement = document.getElementById('chart');
+      const minLevel = 0;
+      const maxLevel = 2.8;
+
+      // Calculate the percentage based on the river level
+      const percentage = (riverLevel / maxLevel) * 100;
+
+      // Set the background color of the chart based on the percentage
+      chartElement.style.backgroundColor = `hsl(${percentage}, 70%, 50%)`;
+
+      // You can also add other visual indicators or animations based on the river level
+
+      // Update the text content of the chart to display the river level
+      chartElement.textContent = `River Level: ${riverLevel}`;
+    }
+
+    // Fetch the river level when the page loads
+    fetchRiverLevel();
+  </script>
+</body>
+</html>

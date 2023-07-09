@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>River Level Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    canvas {
+      max-width: 600px;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+  </head>
+  <body> <canvas id="riverChart"></canvas>
+    <script>
+    // Make an HTTP GET request to fetch the river level data
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://environment.data.gov.uk/flood-monitoring/id/stations/693435/readings.json?_sorted&latest", true);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        const readings = response.items;
+
+        // Extract the required data for the chart
+        const timestamps = readings.map((item) => item.dateTime);
+        const riverLevels = readings.map((item) => item.value);
+
+        // Create the chart
+        const ctx = document.getElementById("riverChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: timestamps,
+            datasets: [
+              {
+                label: "River Bollin",
+                data: riverLevels,
+                fill: false,
+                borderColor: "blue",
+                tension: 0.1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "Last measurement"
+                }
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: "River Level"
+                }
+              }
+            }
+          }
+        });
+      }
+    };
+    xhr.send();
+  </script>
+  </body>
+</html>

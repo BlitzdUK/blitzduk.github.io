@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flood Readings Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="chart"></canvas>
+
+    <script>
+        // Function to make an HTTP GET request
+        function httpGet(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    callback(JSON.parse(xhr.responseText));
+                }
+            };
+            xhr.send();
+        }
+
+        // URL of the JSON API
+        var apiUrl = 'https://environment.data.gov.uk/flood-monitoring/id/stations/693435/readings.json';
+
+        // Make the HTTP GET request
+        httpGet(apiUrl, function(response) {
+            var timestamps = response.items.map(function(item) {
+                return item.dateTime;
+            });
+
+            var values = response.items.map(function(item) {
+                return item.value;
+            });
+
+            // Create the chart
+            var ctx = document.getElementById('chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: timestamps,
+                    datasets: [{
+                        label: 'Flood Readings',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Timestamp'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Value'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gauge Example</title>
+    <script>
+	
+	window.addEventListener('DOMContentLoaded', function() {
+    // Fetch the JSON data from the API
+    fetch('https://environment.data.gov.uk/flood-monitoring/id/stations/693435/readings.json?_sorted&latest')
+        .then(response => response.json())
+        .then(data => {
+            // Extract the value you want to plot from the JSON response
+            const value = data.items[0].value;
+
+            // Call the function to plot the gauge with the extracted value
+            plotGauge(value);
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+function plotGauge(value) {
+    // Access the gauge container element
+    const gaugeContainer = document.getElementById('gaugeContainer');
+
+    // Create the gauge using a library like Gauge.js (https://bernii.github.io/gauge.js/)
+    const opts = {
+        angle: 0,
+        lineWidth: 0.4,
+        radiusScale: 1,
+        pointer: {
+            length: 0.6,
+            strokeWidth: 0.035,
+            color: '#000000'
+        },
+        staticLabels: {
+            font: '10px sans-serif',
+            labels: [0, 50, 100],  // Customize the scale values as per your requirements
+            fractionDigits: 0
+        },
+        limitMax: true,
+        limitMin: true,
+        colorStart: '#6FADCF',
+        colorStop: '#8FC0DA',
+        strokeColor: '#E0E0E0',
+        generateGradient: true
+    };
+    
+    const gauge = new Gauge(gaugeContainer).setOptions(opts);
+    
+    // Set the value on the gauge
+    gauge.maxValue = 100;  // Set the maximum value of the gauge
+    gauge.set(value);  // Set the value you extracted from the JSON API
+    
+    // Render the gauge
+    gauge.animationSpeed = 32;
+    gauge.set(value);
+}
+	
+	</script>
+</head>
+<body>
+    <div id="gaugeContainer"></div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
