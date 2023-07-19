@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>UrbEx</name>
+    <description/>
+    <Style id="icon-1125-nodesc-normal">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/1125-crisis-caution.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1125-nodesc-highlight">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/1125-crisis-caution.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1125-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1125-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1125-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1467-nodesc-normal">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/1467-trans-tunnel.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1467-nodesc-highlight">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/1467-trans-tunnel.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1467-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1467-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1467-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-503-009D57-normal">
+      <IconStyle>
+        <color>ff579d00</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-503-009D57-highlight">
+      <IconStyle>
+        <color>ff579d00</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-503-009D57">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-503-009D57-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-503-009D57-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-503-009D57-nodesc-normal">
+      <IconStyle>
+        <color>ff579d00</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-503-009D57-nodesc-highlight">
+      <IconStyle>
+        <color>ff579d00</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-503-009D57-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-503-009D57-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-503-009D57-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-503-DB4436-nodesc-normal">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-503-DB4436-nodesc-highlight">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-503-DB4436-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-503-DB4436-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-503-DB4436-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-DB4436-1200-184-normal">
+      <LineStyle>
+        <color>ff3644db</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>b83644db</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-DB4436-1200-184-highlight">
+      <LineStyle>
+        <color>ff3644db</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>b83644db</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-DB4436-1200-184">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-DB4436-1200-184-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-DB4436-1200-184-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-DB4436-5801-204-normal">
+      <LineStyle>
+        <color>ff3644db</color>
+        <width>5.801</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>cc3644db</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-DB4436-5801-204-highlight">
+      <LineStyle>
+        <color>ff3644db</color>
+        <width>8.7015</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>cc3644db</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-DB4436-5801-204">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-DB4436-5801-204-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-DB4436-5801-204-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>UrbEx</name>
+      <Placemark>
+        <name>Mayfield Station</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.225633,53.475953,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bailey Mill Delph *DESTROYED* </name>
+        <description><![CDATA[<img src="https://doc-0o-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/5ohkftv3g5pjlg7nmo33hepcg8/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet5JPJ7W2dNlZLyY1wux9mo4cle6MONB6bPs74vjuOw-USa9R3zAkMVON4ZemIKgHgFqu3SxNBJ29owNvl-qeQZA4Y8qCGvmY9lHSMcHA_qubHUGOsLffdbMbnPbfhIYxVxXHwvXXy3lvLkC8IsY2F1iPc48ZI8JlUpq_N338krsX8MIlShp38d0VUMJ?session=0&fife" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-503-009D57</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://doc-0o-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/5ohkftv3g5pjlg7nmo33hepcg8/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet5JPJ7W2dNlZLyY1wux9mo4cle6MONB6bPs74vjuOw-USa9R3zAkMVON4ZemIKgHgFqu3SxNBJ29owNvl-qeQZA4Y8qCGvmY9lHSMcHA_qubHUGOsLffdbMbnPbfhIYxVxXHwvXXy3lvLkC8IsY2F1iPc48ZI8JlUpq_N338krsX8MIlShp38d0VUMJ?session=0&fife]]></value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.023142,53.5626451,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Houldsworth Mill</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1650898,53.4393941,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Camelot Theme Park</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.7006652,53.6357823,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Stockport Workhouse</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1599936,53.4020838,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mayfield Station</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2272635,53.4756309,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mayfield Enterance</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2278053,53.4752031,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mayfield Enterance (2) via bridge</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2276068,53.4749253,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Mayfield Enterance </name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2276229,53.4759965,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Friedland Mill</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.16596360209223,53.4390734236081,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Tiviot Dale Railway Tunnel</name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1592104,53.4142706,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Exit to Tiviot Dale Tunnel</name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1619879,53.412958,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Tiviot Dale Railway Tunnel</name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1652079,53.4113785,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Junction Canal ]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2452128,53.4755894,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Lock 1]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.25725,53.4789,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Lock 2]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.25663199999997,53.478734,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Slate Wharf]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.25614799999994,53.478416,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Transhipment Dock]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24934899999994,53.476848,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Lock 3]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24829299999999,53.476445,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Lock 4]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24794599999996,53.476396,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Stop Lock]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24576400000001,53.475716,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Manc & Salford Canal - Bridgewater Hall Basin]]></name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24516700000004,53.475582,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Taxal Lodge</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.991599034518,53.3188620231769,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>UMIST</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2294145822525,53.4743010787629,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>London Road Fire Station</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.232483,53.47664,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>BRSA Club</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.242339,53.486628,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Ancoats warehouse</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.171516,53.479874,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Hartford Mill</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.148213,53.54806,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Hulme Hippodrome</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.249274,53.464252,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Excelsior Printing and Bookbinding</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.264055,53.471582,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Box Factory Drain</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.201058,53.546521,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Minto & Turner]]></name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2354656,53.4775944,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Victoria Arches Air Raid Shelter</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.245867,53.484758,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Piccadilly Station Air-Raid Shelter</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.231083,53.477645,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dodge Hill Deep Shelter</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1616298,53.4130907,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Brinksway Shelter</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.17735290527344,53.4063148623874,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>River Street Tower</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2489518,53.4707937,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Bloom Street Power Station</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2394219,53.475923,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[St Joseph's Seminary Upholland]]></name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.73291800000004,53.5530222,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Denbigh Asylum 
+</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -3.4190816,53.1754375,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>leeds sports centre derelict</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.5201339,53.7978991,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Hole Farm</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24251200000003,53.308618,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>The County Hotel - Wacky Warehouse</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2363437,53.3109974,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>??? 28dl house??</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.5894341,53.0003226,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Delamere Forest School</name>
+        <styleUrl>#icon-1125-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.66783399999997,53.240457,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>The Raven Inn, Winsford</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.5217875,53.1657359,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Macclesfield ROC Post</name>
+        <description><![CDATA[<img src="https://doc-08-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/rb1drm4gnihan0b2s5qae9g6v4/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet74B6mewdwk3Wj0kM7BQsDVuy0Oz5ABjbczFdDp6dbFLQ6s4dUPx6T4oCbkkgrwnKxbGh_MWDJw-OJb0eSxEzTOraL3X6_HeK5rwGhHe2QBOYaAQVHVg1BVc-ZXjDW0Kg0GfXoE_nY9k2_3x4fCgQPgup3qaE0wza52TAcE-rBPjX1Qci-ujpT70_Uh?session=0&fife" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-503-009D57</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://doc-08-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/rb1drm4gnihan0b2s5qae9g6v4/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet74B6mewdwk3Wj0kM7BQsDVuy0Oz5ABjbczFdDp6dbFLQ6s4dUPx6T4oCbkkgrwnKxbGh_MWDJw-OJb0eSxEzTOraL3X6_HeK5rwGhHe2QBOYaAQVHVg1BVc-ZXjDW0Kg0GfXoE_nY9k2_3x4fCgQPgup3qaE0wza52TAcE-rBPjX1Qci-ujpT70_Uh?session=0&fife]]></value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.11399700000004,53.250004,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>High Grove</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.22509200000002,53.382618,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Park Hall Pool
+Edwardian lido</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.94670706987381,53.3910057413149,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Abinger Farm</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.77164062857628,53.5538083959074,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Dinting Rail Shed</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.96868039667606,53.4481816062377,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Thornseat Lodge</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.64028346538544,53.4272700494763,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Iranian Consulate</name>
+        <description><![CDATA[<img src="https://doc-0o-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/bjsic4ge9ue4kgk1epn774eooc/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet4s4ZExZc857RSpH2YjmOlv36hteFZCTM-mlDN4wC3WCcT0mo082MnxZhRfBMH_ZP7ioP7lroQxGDvlvr5fErkVuMvvLAwdZ3vZvt2spl0ku-mLPn7EHaKQ-YmjSOrNwxPE_uB1qLeVEdkwC22Anp4gC5RgLJ8qUwK8T4a-VOWSzBos2mPcrhDmr4cj?session=0&fife" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-503-009D57</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://doc-0o-7s-mymaps.googleusercontent.com/untrusted/hostedimage/rrvcgmhc1if82ccav99euifktk/bjsic4ge9ue4kgk1epn774eooc/1689727637000/Mk2ppxpC3msK-ZsZILjvtu7VPMT-zdBk/01836185995133868289/5ACnmet4s4ZExZc857RSpH2YjmOlv36hteFZCTM-mlDN4wC3WCcT0mo082MnxZhRfBMH_ZP7ioP7lroQxGDvlvr5fErkVuMvvLAwdZ3vZvt2spl0ku-mLPn7EHaKQ-YmjSOrNwxPE_uB1qLeVEdkwC22Anp4gC5RgLJ8qUwK8T4a-VOWSzBos2mPcrhDmr4cj?session=0&fife]]></value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -2.37904293090651,53.3823246247734,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Knutsford ROC Post</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.37885519862175,53.31156565365,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Nags Head</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.39176869392395,53.3642903802963,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cowdale Buxton Lime Works</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -1.8858744,53.2499964,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Willow Pool Garden Centre and Baron Antiques</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.44712144136429,53.3720966822567,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lymm Dam Air Raid Shelter</name>
+        <styleUrl>#icon-503-009D57-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.4809146,53.3787822,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Cheadle Royal</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.2238597,53.3751013,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Victoria Undercroft</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24285110831261,53.4868729405025,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Victoria Arches Grid</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.24499955773354,53.4851484998584,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Liberty Village (Stockport)</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1606575,53.4094647,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>1 - 32 Liberty Village Stockport</name>
+        <description>https://www.28dayslater.co.uk/threads/stockport-village-stockport-town-centre-greater-manchester.113802/</description>
+        <styleUrl>#poly-DB4436-5801-204</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -2.160982,53.4091593,0
+                -2.1604858,53.4094479,0
+                -2.1606588,53.4095782,0
+                -2.1613401,53.4093656,0
+                -2.160982,53.4091593,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Springmount Mill - Ha-penny Shelter</name>
+        <description>https://www.28dayslater.co.uk/threads/hapenny-shelter-stockport-2017.111799/#post-1194985</description>
+        <styleUrl>#poly-DB4436-1200-184</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -2.1793914,53.4062621,0
+                -2.1794316,53.4056865,0
+                -2.1784285,53.4053315,0
+                -2.1779081,53.4054466,0
+                -2.1782139,53.4059807,0
+                -2.1780315,53.4060286,0
+                -2.1781415,53.4063181,0
+                -2.1793914,53.4062621,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Stockport Underground - Grid Access
+</name>
+        <styleUrl>#icon-1467-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.1625684,53.4095052,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Beech Knoll</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.12714295834303,53.2661004794077,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Point 67</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.3992441,53.3259312,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>The Wild Boar Hotel
+</name>
+        <styleUrl>#icon-503-DB4436-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            -2.6613846,53.1275655,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
