@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Information</title>
+    <style>
+        #weather-info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    <button onclick="getLocation()">Get Weather</button>
+    <div id="weather-info"></div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showWeather);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showWeather(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const url = `https://app.owm.io/app/1.1/geo/reverse?lat=${lat}&lon=${lon}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const weatherInfo = document.getElementById("weather-info");
+                    weatherInfo.innerHTML = `<p>City: ${data.name}</p>
+                                             <p>Closest Address: ${data.full_name}°C</p>
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    const weatherInfo = document.getElementById("weather-info");
+                    weatherInfo.innerHTML = "<p>Error retrieving weather information.</p>";
+                });
+        }
+    </script>
+</body>
+</html>
