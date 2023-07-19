@@ -1,66 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
-  <style>
-    #map {
-      height: 400px;
-    }
-  </style>
+    <title>Leaflet Map with Circles</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
-  <div id="map"></div>
-  <div id="labels"></div>
-  <script>
-  
-  // Initialize the map
+    <div id="map" style="height: 500px;"></div>
+
+    <script>
+	// Initialize Leaflet map
 var map = L.map('map').setView([51.505, -0.09], 13);
 
-// Create a Tile Layer and add it to the map
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-  maxZoom: 18,
+// Add the OpenStreetMap tile layer
+L.tileLayer('tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-// Define the circle data with their coordinates and radius
-var circles = [
-  { lat: 51.5, lng: -0.09, radius: 100, label: 'Circle 1' },
-  { lat: 51.51, lng: -0.1, radius: 200, label: 'Circle 2' },
-  { lat: 51.49, lng: -0.1, radius: 300, label: 'Circle 3' }
+// Circle data (example)
+var circleData = [
+    { lat: 51.505, lng: -0.09, radius: 200, label: 'Circle 1' },
+    { lat: 51.51, lng: -0.1, radius: 150, label: 'Circle 2' },
+    { lat: 51.51, lng: -0.05, radius: 100, label: 'Circle 3' }
 ];
 
-// Loop through the circles and add them to the map
-circles.forEach(function(circle) {
-  // Create a Leaflet circle marker with the specified coordinates and radius
-  var circleMarker = L.circle([circle.lat, circle.lng], {
-    radius: circle.radius,
-    color: 'red',
-    fillColor: '#f03',
-    fillOpacity: 0.5
-  }).addTo(map);
+// Add circles with popup labels
+circleData.forEach(function(circle) {
+    var circleOptions = {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5
+    };
 
-  // Create a label for the circle
-  var label = L.marker([circle.lat, circle.lng], {
-    opacity: 0, // Set opacity to 0 to hide initially
-    draggable: false
-  }).bindTooltip(circle.label).addTo(map);
-
-  // Add the label marker to the labels div
-  document.getElementById('labels').appendChild(label.getElement());
-
-  // Listen for mouseover event on the circle marker to show the label
-  circleMarker.on('mouseover', function() {
-    label.setOpacity(1); // Show the label
-  });
-
-  // Listen for mouseout event on the circle marker to hide the label
-  circleMarker.on('mouseout', function() {
-    label.setOpacity(0); // Hide the label
-  });
+    var circleMarker = L.circle([circle.lat, circle.lng], circle.radius, circleOptions).addTo(map);
+    circleMarker.bindPopup(circle.label);
 });
 
-  
-  </script>
+	</script>
 </body>
 </html>
