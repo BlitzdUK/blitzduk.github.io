@@ -1,33 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Multiple Pins on Map</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alerts</title>
+    <style>
+        /* Add your CSS styles here */
+    </style>
 </head>
 <body>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script>
-    var map = L.map('map').setView([11.206051, 122.447886], 8);
-    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© ' + mapLink + ' Contributors',
-      maxZoom: 18,
-    }).addTo(map);
+    <h1>Weather Alerts</h1>
+    <div id="weather-alerts"></div>
 
-    var locations = [
-      ['LOCATION_1', 11.8166, 122.0942],
-      ['LOCATION_2', 11.9804, 121.9189],
-      ['LOCATION_3', 10.7202, 122.5621],
-      ['LOCATION_4', 11.3889, 122.6277],
-      ['LOCATION_5', 10.5929, 122.6325]
-    ];
+    <script>
+        // JavaScript code to fetch data from the API and display it
+        const weatherAlertsContainer = document.getElementById('weather-alerts');
 
-    for (var i = 0; i < locations.length; i++) {
-      var marker = new L.marker([locations[i][1], locations[i][2]])
-        .bindPopup(locations[i][0])
-        .addTo(map);
-    }
-  </script>
+        // Make a GET request to the WeatherKit API
+        fetch('https://weatherkit.apple.com/api/v1/weatherAlerts?lang=en-GB&ids=c09e9410-e5e6-5bd7-90d5-96c456b87206')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Display the response data on the webpage
+                const alerts = data.weatherAlerts;
+                if (alerts.length === 0) {
+                    weatherAlertsContainer.innerHTML = '<p>No weather alerts found.</p>';
+                } else {
+                    const alertList = document.createElement('ul');
+                    alerts.forEach(alert => {
+                        const alertItem = document.createElement('li');
+                        alertItem.textContent = `${alert.title}: ${alert.description}`;
+                        alertList.appendChild(alertItem);
+                    });
+                    weatherAlertsContainer.appendChild(alertList);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                weatherAlertsContainer.innerHTML = '<p>Error fetching weather alerts.</p>';
+            });
+    </script>
 </body>
 </html>
