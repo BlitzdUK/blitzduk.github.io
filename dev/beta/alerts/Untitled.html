@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON from API</title>
+</head>
+<body>
+    <h1>JSON Data from API</h1>
+    <div id="json-data"></div>
+
+    <script>
+        // Function to fetch and display JSON data
+        function fetchData() {
+            // URL of the API you want to fetch data from
+            const apiUrl = 'https://api.example.com/data';
+
+            // Make a GET request to the API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Access the JSON data and display it
+                    const jsonDataDiv = document.getElementById('json-data');
+                    jsonDataDiv.innerHTML = JSON.stringify(data, null, 2); // Pretty print JSON
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // Call the fetchData function when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
