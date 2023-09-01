@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Red Text Effect Page</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+73alrIxlPf1S6O+SL5z2fF4I5v3iaRkF5Hj3p4meW4WqsR" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(to bottom, #000, #fff);
+            color: #ff0000;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #ff0000;
+        }
+
+        .redirect-link {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-text">Welcome to Neon Red Text Page</h1>
+        <p>You will be redirected in <span id="countdown">5</span> seconds...</p>
+        <p>If the redirect fails, please <a href="https://bit.ly/47T6O9V" class="redirect-link">click here</a>.</p>
+    </div>
+
+    <!-- JavaScript for Redirect -->
+    <script>
+        // Countdown timer for redirection
+        let countdown = 5;
+        const countdownDisplay = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownDisplay.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'https://bit.ly/47T6O9V'; // Replace with your target URL
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+
+
