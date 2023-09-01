@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>recon</title>
+  </head>
+  <body>
+    <script>
+
+      const apiKey = 'dc636aa2bdb6431961ac16273ebaf3d1';
+const ipstackEndpoint = `http://api.ipstack.com/check?access_key=${apiKey}`;
+
+// Step 1: Get your IP address using ipstack API
+fetch(ipstackEndpoint)
+  .then(response => response.json())
+  .then(data => {
+    const ipAddress = data.ip;
+
+    // Step 2: Prepare data for the HTTP POST request
+    const postData = {
+      ip: ipAddress,
+    };
+
+    // Step 3: Make an HTTP POST request to the target server with CORS headers
+    const targetEndpoint = 'https://static.blitzd.uk:1880/data/recon';
+
+    fetch(targetEndpoint, {
+      method: 'POST',
+      body: JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        // Handle the response from the target server here
+        console.log('POST Request Successful:', responseData);
+      })
+      .catch(error => {
+        // Handle errors from the POST request here
+        console.error('POST Request Error:', error);
+      });
+  })
+  .catch(error => {
+    // Handle errors from the IP retrieval here
+    console.error('IP Retrieval Error:', error);
+  });
+
+	
+	</script>
+  </body>
+</html>
