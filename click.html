@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blitzd Media - Disclaimer</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css"
-
-      rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+73alrIxlPf1S6O+SL5z2fF4I5v3iaRkF5Hj3p4meW4WqsR"
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+73alrIxlPf1S6O+SL5z2fF4I5v3iaRkF5Hj3p4meW4WqsR"
       crossorigin="anonymous">
     <!-- Custom CSS -->
   </head>
@@ -16,8 +14,7 @@
     <div class="container" style="text-align: center;">
       <h1 class="neon-text">Now leaving Blitzd Media</h1>
       <p>You will be redirected in <span id="countdown">5</span> seconds...</p>
-      <p>If the redirect fails, please <a href="https://sh.st/st/30d8e8b6b709a695334f79a22abfab0b/blitzd.uk/click"
-
+      <p>If the redirect fails, please <a href="https://sh.st/st/30d8e8b6b709a695334f79a22abfab0b/blitzd.uk/click"
           class="redirect-link">click here</a>.</p>
     </div>
     <div style="text-align: center;">
@@ -34,6 +31,66 @@
                 window.location.href = 'https://sh.st/st/30d8e8b6b709a695334f79a22abfab0b/blitzd.uk/click'; // Replace with your target URL
             }
         }, 1000);
-    </script></div>
+    </script>
+      <script>
+      document.addEventListener("DOMContentLoaded", () => {
+    // Define the API endpoint and API key
+    const apiUrl = "https://api.criminalip.io/v1/ip/data";
+    const apiKey = "f7MbyXpR0DB4eZ2OCmsDOkrXcWTgvA8KZN5zs92xeX6gQcSTIZnlTSlh8U7o";
+
+    // Make a POST request to the Criminal IP API
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({}),
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then((data) => {
+        // Data from the Criminal IP API
+        console.log("Criminal IP API Response:", data);
+
+        // Send the JSON response to another endpoint
+        sendDataToOtherEndpoint(data);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+
+    // Function to send data to another endpoint
+    function sendDataToOtherEndpoint(data) {
+        const otherApiUrl = "https://static.blitzd.uk:1880/data/recon";
+
+        fetch(otherApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((response) => {
+            // Response from the other endpoint
+            console.log("Other Endpoint Response:", response);
+        })
+        .catch((error) => {
+            console.error("Error sending data to other endpoint:", error);
+        });
+    }
+});
+
+      </script> </div>
   </body>
 </html>
