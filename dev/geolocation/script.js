@@ -1,69 +1,81 @@
-// Function to get geolocation
-function getGeolocation() {
-    return new Promise((resolve, reject) => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.watchPosition(
-                (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    resolve({ latitude, longitude });
-                },
-                (error) => {
-                    reject(error);
-                }
-            );
-        } else {
-            reject(new Error("Geolocation is not available in this browser."));
-        }
-    });
-}
+// Function to update the table and map with geolocation data
+function updateGeolocation(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const speed = position.coords.speed || 0;
+    const altitude = position.coords.altitude || 0;
+    const accuracy = position.coords.accuracy || 0;
 
-// Function to make an HTTP GET request to OpenWeatherMap API
-function getWeatherData(latitude, longitude) {
-    const apiKey = "dd8770c04bfc20b2f1885e5f1c901125";
-    const apiUrl = `https://app.owm.io/app/1.1/geo/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}&deviceid=011006FD-129A-458E-8A98-7283010A3558`;
+    // Update table data
+    document.getElementById('latitude').textContent = latitude.toFixed(6);
+    document.getElementById('longitude').textContent = longitude.toFixed(6);
+    document.getElementById('speed').textContent = speed.toFixed(2);
+    document.getElementById('altitude').textContent = altitude.toFixed(2);
+    document.getElementById('accuracy').textContent = accuracy.toFixed(2);
 
-    return fetch(apiUrl)
-        .then((response) => response.json())
-        .catch((error) => console.error("Error fetching weather data:", error));
-}
+    // Get address from OpenWeatherMap API
+    fetch(`https://app.owm.io/app/1.1/geo/reverse?lat=${latitude}&lon=${longitude}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`)
+        .then(response => response.json())
+        .then(data => {
+            const address = data.display_name || 'N/A';
+            document.getElementById('address').textContent = address;
 
-// Function to check if the device has moved (you can define your own logic)
-function hasDeviceMoved(oldCoords, newCoords) {
-    // You can implement your own logic here
-    // For example, you can check if the new coordinates are significantly different from the old ones.
-    return true;
-}
+            // Check if device has moved (you may need to implement this logic)
+            const hasMoved = true; // Replace with your logic
 
-// Function to post JSON response to another server
-function postDataToServer(data) {
-    if (hasDeviceMoved(oldCoordinates, data.coordinates)) {
-        const postUrl = "https://static.blitzd.uk:1880/data/geolocation";
+            // If the device has moved, post JSON response to another server
+            if (hasMoved) {
+                const postData = {
+                    latitude,
+                    longitude,
+                    speed,
+                    altitude,
+                    accuracy,
+                    address
+                };
 
-        fetch(postUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
+                // Perform an HTTP POST request to your server (https://static.blitzd.uk:1880/data/geolocation)
+                // You can use the Fetch API or another library to make the POST request.
+                // Example:
+                // fetch('https://static.blitzd.uk:1880/data/geolocation', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(postData)
+                // })
+                // .then(response => {
+                //     // Handle the response as needed
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                // });
+            }
         })
-            .then((response) => response.json())
-            .then((result) => console.log("Data posted successfully:", result))
-            .catch((error) => console.error("Error posting data:", error));
-    }
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    // Update the map with a marker
+    const map = L.map('map').setView([latitude, longitude], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const marker = L.marker([latitude, longitude]).addTo(map);
 }
 
-// Initialize the process
-let oldCoordinates = null;
+// Function to handle errors in geolocation
+function handleGeolocationError(error) {
+    console.error('Geolocation error:', error.message);
+}
 
-getGeolocation()
-    .then((coordinates) => {
-        oldCoordinates = coordinates;
-        document.getElementById("coordinates").innerText = `Latitude: ${coordinates.latitude}, Longitude: ${coordinates.longitude}`;
-        return getWeatherData(coordinates.latitude, coordinates.longitude);
-    })
-    .then((weatherData) => {
-        document.getElementById("weather-data").innerText = JSON.stringify(weatherData, null, 2);
-        postDataToServer({ coordinates: oldCoordinates, weatherData });
-    })
-    .catch((error) => console.error("Error:", error));
+// Start watching for geolocation updates
+const watchOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 30000,
+    timeout: 27000
+};
+
+const watchId = navigator.geolocation.watchPosition(updateGeolocation, handleGeolocationError, watchOptions);

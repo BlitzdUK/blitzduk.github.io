@@ -1,11 +1,46 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.map-container {
+    height: 300px;
+}
+
+.data-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.data-table th {
+    background-color: #333;
+}
+
+.data-table td {
+    background-color: #555;
+}
+
+.data-table th, .data-table td {
     text-align: center;
 }
 
-#geolocation-data {
-    margin: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-}

@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geolocation and Data Posting</title>
+    <title>Geolocation Data</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="coordinates"></div>
-    <div id="weather-data"></div>
-
-    <script src="script.js"></script>
+    <div class="container">
+        <h1>Geolocation Data</h1>
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Speed (m/s)</th>
+                    <th>Altitude (m)</th>
+                    <th>GPS Accuracy</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="data-row">
+                    <td id="latitude"></td>
+                    <td id="longitude"></td>
+                    <td id="speed"></td>
+                    <td id="altitude"></td>
+                    <td id="accuracy"></td>
+                    <td id="address"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
