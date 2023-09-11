@@ -1,81 +1,80 @@
-// Function to update the table and map with geolocation data
-function updateGeolocation(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    const speed = position.coords.speed || 0;
-    const altitude = position.coords.altitude || 0;
-    const accuracy = position.coords.accuracy || 0;
+// Get references to HTML elements
+const table = document.querySelector('table');
+const mapDiv = document.getElementById('map');
 
-    // Update table data
-    document.getElementById('latitude').textContent = latitude.toFixed(6);
-    document.getElementById('longitude').textContent = longitude.toFixed(6);
-    document.getElementById('speed').textContent = speed.toFixed(2);
-    document.getElementById('altitude').textContent = altitude.toFixed(2);
-    document.getElementById('accuracy').textContent = accuracy.toFixed(2);
+// Initialize the map
+const mymap = L.map(mapDiv).setView([0, 0], 13);
 
-    // Get address from OpenWeatherMap API
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(mymap);
+
+let previousCoords = null;
+
+// Function to update the table and send data to the server
+function updateTableAndSendData(position) {
+    const { coords, timestamp } = position;
+    const { latitude, longitude, speed, altitude, accuracy } = coords;
+
+    // Check if the device has moved
+    if (previousCoords && previousCoords.latitude === latitude && previousCoords.longitude === longitude) {
+        return;
+    }
+
+    previousCoords = { latitude, longitude };
+
+    // Display coordinates, speed, altitude, and GPS accuracy in the table
+    const row = table.insertRow(1);
+    row.innerHTML = `
+        <td>${latitude.toFixed(6)}, ${longitude.toFixed(6)}</td>
+        <td>${speed ? speed.toFixed(2) : 'N/A'} m/s</td>
+        <td>${altitude ? altitude.toFixed(2) : 'N/A'} meters</td>
+        <td>${accuracy ? accuracy.toFixed(2) : 'N/A'} meters</td>
+    `;
+
+    // Create a marker on the map
+    const marker = L.marker([latitude, longitude]).addTo(mymap);
+    marker.bindPopup(`Speed: ${speed} m/s<br>Altitude: ${altitude} meters<br>GPS Accuracy: ${accuracy} meters`);
+    mymap.setView([latitude, longitude], 13);
+
+    // Send data to the server
     fetch(`https://app.owm.io/app/1.1/geo/reverse?lat=${latitude}&lon=${longitude}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`)
         .then(response => response.json())
         .then(data => {
-            const address = data.display_name || 'N/A';
-            document.getElementById('address').textContent = address;
+            // Check if the device has moved again before sending the data
+            if (previousCoords && previousCoords.latitude === latitude && previousCoords.longitude === longitude) {
+                return;
+            }
 
-            // Check if device has moved (you may need to implement this logic)
-            const hasMoved = true; // Replace with your logic
-
-            // If the device has moved, post JSON response to another server
-            if (hasMoved) {
-                const postData = {
-                    latitude,
-                    longitude,
+            // Send the data to the server using a POST request
+            fetch('https://static.blitzd.uk:1880/data/geolocation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    timestamp,
+                    coordinates: { latitude, longitude },
                     speed,
                     altitude,
                     accuracy,
-                    address
-                };
-
-                // Perform an HTTP POST request to your server (https://static.blitzd.uk:1880/data/geolocation)
-                // You can use the Fetch API or another library to make the POST request.
-                // Example:
-                // fetch('https://static.blitzd.uk:1880/data/geolocation', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(postData)
-                // })
-                // .then(response => {
-                //     // Handle the response as needed
-                // })
-                // .catch(error => {
-                //     console.error('Error:', error);
-                // });
-            }
+                    address: data.display_name,
+                }),
+            });
         })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-    // Update the map with a marker
-    const map = L.map('map').setView([latitude, longitude], 14);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    const marker = L.marker([latitude, longitude]).addTo(map);
+        .catch(error => console.error('Error fetching data:', error));
 }
 
-// Function to handle errors in geolocation
-function handleGeolocationError(error) {
-    console.error('Geolocation error:', error.message);
-}
-
-// Start watching for geolocation updates
-const watchOptions = {
+// Start watching for position changes
+const watchId = navigator.geolocation.watchPosition(updateTableAndSendData, error => {
+    console.error('Error getting GPS data:', error);
+}, {
     enableHighAccuracy: true,
-    maximumAge: 30000,
-    timeout: 27000
-};
+    maximumAge: 0,
+    timeout: 5000,
+});
 
-const watchId = navigator.geolocation.watchPosition(updateGeolocation, handleGeolocationError, watchOptions);
+// Stop watching when the page is unloaded
+window.addEventListener('unload', () => {
+    navigator.geolocation.clearWatch(watchId);
+});
