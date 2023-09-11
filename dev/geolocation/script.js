@@ -1,68 +1,69 @@
-// Function to get the current date and time in the desired format
-function getCurrentDateTime() {
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB'); // dd/mm/yy format
-    const timeStr = now.toLocaleTimeString('en-US', { hour12: false }); // hh:mm:ss format
-    return `${timeStr} - ${dateStr}`;
+// Function to get geolocation
+function getGeolocation() {
+    return new Promise((resolve, reject) => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    resolve({ latitude, longitude });
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        } else {
+            reject(new Error("Geolocation is not available in this browser."));
+        }
+    });
 }
 
-// Function to send a POST request to the server
-function sendDataToServer(data) {
-    // Check if the device has moved (you can implement this logic)
-    const deviceHasMoved = true; // Replace with your logic to determine movement
+// Function to make an HTTP GET request to OpenWeatherMap API
+function getWeatherData(latitude, longitude) {
+    const apiKey = "dd8770c04bfc20b2f1885e5f1c901125";
+    const apiUrl = `https://app.owm.io/app/1.1/geo/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}&deviceid=011006FD-129A-458E-8A98-7283010A3558`;
 
-    if (deviceHasMoved) {
-        fetch('https://static.blitzd.uk:1880/data/geolocation', {
-            method: 'POST',
+    return fetch(apiUrl)
+        .then((response) => response.json())
+        .catch((error) => console.error("Error fetching weather data:", error));
+}
+
+// Function to check if the device has moved (you can define your own logic)
+function hasDeviceMoved(oldCoords, newCoords) {
+    // You can implement your own logic here
+    // For example, you can check if the new coordinates are significantly different from the old ones.
+    return true;
+}
+
+// Function to post JSON response to another server
+function postDataToServer(data) {
+    if (hasDeviceMoved(oldCoordinates, data.coordinates)) {
+        const postUrl = "https://static.blitzd.uk:1880/data/geolocation";
+
+        fetch(postUrl, {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
         })
-        .then(response => {
-            if (response.ok) {
-                console.log('Data successfully posted to the server.');
-            } else {
-                console.error('Failed to post data to the server.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then((response) => response.json())
+            .then((result) => console.log("Data posted successfully:", result))
+            .catch((error) => console.error("Error posting data:", error));
     }
 }
 
-// Function to handle geolocation updates
-function handleLocationUpdate(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    const altitude = position.coords.altitude;
-    const timestamp = getCurrentDateTime();
+// Initialize the process
+let oldCoordinates = null;
 
-    const data = {
-        latitude,
-        longitude,
-        altitude,
-        timestamp,
-    };
-
-    document.getElementById('geolocation-data').innerHTML = `
-        <p>Latitude: ${latitude}</p>
-        <p>Longitude: ${longitude}</p>
-        <p>Altitude: ${altitude} meters</p>
-        <p>Timestamp: ${timestamp}</p>
-    `;
-
-    sendDataToServer(data);
-}
-
-// Function to handle geolocation errors
-function handleLocationError(error) {
-    console.error('Error getting geolocation:', error.message);
-}
-
-// Start watching the device's geolocation
-const watchId = navigator.geolocation.watchPosition(
-    handleLocationUpdate,
-    handleLocationError
-);
+getGeolocation()
+    .then((coordinates) => {
+        oldCoordinates = coordinates;
+        document.getElementById("coordinates").innerText = `Latitude: ${coordinates.latitude}, Longitude: ${coordinates.longitude}`;
+        return getWeatherData(coordinates.latitude, coordinates.longitude);
+    })
+    .then((weatherData) => {
+        document.getElementById("weather-data").innerText = JSON.stringify(weatherData, null, 2);
+        postDataToServer({ coordinates: oldCoordinates, weatherData });
+    })
+    .catch((error) => console.error("Error:", error));
