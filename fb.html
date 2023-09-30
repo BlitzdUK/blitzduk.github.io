@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .disclaimer {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="disclaimer">
+        <h1>Blitzd Media</h1>
+        <p>You are now leaving this website.</p>
+        <p>We are not responsible for the content on external websites.</p>
+        <p>If you are not redirected, click the button below:</p>
+        <button onclick="redirectToExternal()">Continue</button>
+    </div>
+
+    <script>
+        function redirectToExternal() {
+            window.location.href = "https://fb.me/blitzdmedia";
+        }
+        
+        // Automatically redirect after a few seconds (optional)
+        setTimeout(function() {
+            redirectToExternal();
+        }, 5000); // Redirect after 5 seconds
+    </script>
+</body>
+</html>
