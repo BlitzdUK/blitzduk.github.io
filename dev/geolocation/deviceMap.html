@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Location on Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 600px;"></div>
+
+    <script>
+        // Create a Leaflet map
+        var map = L.map('map').setView([53.4615, -2.2488], 11); // Default to center of the world, adjust as needed
+
+        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // Function to plot a location on the map
+        function plotLocation(lat, lon) {
+            var location = L.latLng(lat, lon);
+            L.marker(location).addTo(map);
+            map.setView(location, 17); // Set the view to the location
+        }
+
+        // Make an AJAX request to get the JSON data
+        var url = "https://blitzd.gotdns.ch:1880/api/owntracks/read/json";
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Extract the latitude and longitude from the JSON response
+                var lat = data.lat;
+                var lon = data.lon;
+
+                // Plot the location on the map
+                plotLocation(lat, lon);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>

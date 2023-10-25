@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <title>GitHub Blog</title>
+  </head>
+  <body>
+    <div style="text-align: center;">
+      <header class="bg-dark text-white p-4 text-center">
+        <h1>GitHub Blog</h1>
+      </header>
+      <main class="container mt-4">
+        <div id="blog-posts" class="row">
+          <!-- Blog posts will be dynamically inserted here --> </div>
+      </main>
+      <script>const username = 'BlitzdUK';
+const repo = 'blog';
+
+const apiUrl = `https://api.github.com/repos/${username}/${repo}/issues`;
+
+fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        const blogPosts = document.getElementById('blog-posts');
+        data.forEach(issue => {
+            const post = document.createElement('div');
+            post.className = 'col-md-4 mb-4';
+
+            let imageUrl = '';
+            const imageTag = issue.body.match(/!\[.*?\]\((.*?)\)/);
+            if (imageTag && imageTag[1]) {
+                imageUrl = imageTag[1];
+            }
+
+            post.innerHTML = `
+                <div class="card">
+                    <img src="${imageUrl}" class="card-img-top" alt="Post Image">
+                    <div class="card-body">
+                        <h5 class="card-title">${issue.title}</h5>
+                        <p class="card-text">${issue.body}</p>
+                    </div>
+                </div>
+            `;
+
+            blogPosts.appendChild(post);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+</script></div>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Blitzd Media</title>
+    <style>
+	
+		body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #000;
+    transition: background-color 1s ease-in-out;
+}
+
+.container {
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 1s ease-in-out;
+}
+
+h1 {
+    color: #fff;
+}
+
+
+	
+	</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Blitzd Media</h1>
+    </div>
+    <script>
+	
+	const colors = ['#ff5733', '#33ff57', '#5733ff']; // Add your desired colors here
+let index = 0;
+
+function changeBackgroundColor() {
+    document.body.style.backgroundColor = colors[index];
+    document.querySelector('.container').style.backgroundColor = colors[index];
+    index = (index + 1) % colors.length;
+}
+
+setInterval(changeBackgroundColor, 3000); // Change color every 3 seconds
+
+	
+	</script>
+</body>
+</html>
