@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GeoJSON Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with GeoJSON</title>
+    <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 800px;
-        }
-    </style>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
-    <div id="map"></div>
+    <div id="map" style="width: 100%; height: 500px;"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([53.335666, -2.235665], 15); // Initial coordinates and zoom level
+        // Create a Leaflet map
+        var map = L.map('map').setView([53.335666, -2.235665], 13);
 
-        // Add OpenStreetMap as the base layer
-        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
-            maxZoom: 19,
+        // Add a tile layer to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Fetch GeoJSON data from the API
+        // Make a GET request to the API and add GeoJSON data to the map
         fetch('https://blitzd.gotdns.ch:1880/api/sensorlog/read/geojson')
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(geojson) {
-                // Create a GeoJSON layer and add it to the map
-                L.geoJSON(geojson, {
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
                     pointToLayer: function (feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: 8,
@@ -43,14 +34,13 @@
                         });
                     },
                     onEachFeature: function (feature, layer) {
-                        if (feature.properties && feature.properties.loggingTime) {
-                            layer.bindPopup('Time: ' + feature.properties.loggingTime + '<br>Device ID: ' + feature.properties.deviceID);
-                        }
+                        var popupContent = "Latitude: " + feature.properties.locationLatitude + "<br>Longitude: " + feature.properties.locationLongitude + "<br>Time: " + feature.properties.loggingTime + "<br>Device ID: " + feature.properties.deviceID;
+                        layer.bindPopup(popupContent);
                     }
                 }).addTo(map);
             })
-            .catch(function(error) {
-                console.error('Error fetching GeoJSON data:', error);
+            .catch(error => {
+                console.error("Error fetching GeoJSON data: " + error);
             });
     </script>
 </body>
