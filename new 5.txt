@@ -1,7 +1,0 @@
-grep "" /var/log/auth.log
-
-
-
-sudo grep "Failed password" /var/log/auth.log > /root/Documents/result.txt
-
-
