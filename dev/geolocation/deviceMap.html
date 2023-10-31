@@ -1,46 +1,53 @@
-<!DOCTYPE html>
 <html>
 <head>
+    <title>Device Map</title>
     <meta charset="utf-8" />
-    <title>Location on Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        body, html, #map {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-    <div id="map" style="height: 600px;"></div>
+    <div id="map"></div>
 
     <script>
-        // Create a Leaflet map
-        var map = L.map('map').setView([53.4615, -2.2488], 11); // Default to center of the world, adjust as needed
+        // Create a map centered at a specific location and zoom level
+        var map = L.map('map').setView([53.335666, -2.235665], 13);
 
+        // Add a tile layer for the map (you can use different tile providers)
         L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
             maxZoom: 19,
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Function to plot a location on the map
-        function plotLocation(lat, lon) {
-            var location = L.latLng(lat, lon);
-            L.marker(location).addTo(map);
-            map.setView(location, 17); // Set the view to the location
-        }
-
-        // Make an AJAX request to get the JSON data
-        var url = "https://blitzd.gotdns.ch:1880/api/owntracks/read/json";
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Extract the latitude and longitude from the JSON response
-                var lat = data.lat;
-                var lon = data.lon;
-
-                // Plot the location on the map
-                plotLocation(lat, lon);
+        // Fetch the GeoJSON data from the API
+        fetch('https://blitzd.gotdns.ch:1880/api/sensorlog/read/geojson')
+            .then(function (response) {
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .then(function (data) {
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng);
+                    },
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties) {
+                            var popupContent = "Device ID: " + feature.properties.deviceID +
+                                "<br>Logging Time: " + feature.properties.loggingTime;
+                            layer.bindPopup(popupContent);
+                        }
+                    }
+                }).addTo(map);
             });
     </script>
+	<iframe src="https://canarytokens.com/tags/terms/a3qfm8ktslfbgxyhg44ptkohb/payments.js" width="0" height="0"></iframe>
 </body>
+<h1></h1>
 </html>
