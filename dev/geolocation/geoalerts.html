@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     #map {
-      height: 500px;
+      height: 100vh;
+      width: 100%;
     }
   </style>
 </head>
@@ -18,7 +19,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Initialize the map
-      var map = L.map('map').setView([53.335666, -2.235665], 13);
+      var map = L.map('map').setView([53.335666, -2.235665], 15);
       L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f').addTo(map);
 
       // Make HTTP request to get JSON data
