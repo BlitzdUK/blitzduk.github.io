@@ -190,7 +190,7 @@ async function main() {
   // Prepare form data
   const formData = {
     'entry.1064469062': ipLookupResult.region_name,
-    'entry.1284802502': ipLookupResult.isp,
+    'entry.1284802502': ipLookupResult.connection.isp,
     'entry.1793238467': ipLookupResult.city,
     'entry.1412711051': ipLookupResult.country_name,
     'entry.2103806015': ipAddress,
@@ -204,7 +204,6 @@ async function main() {
 
 // Execute the main function
 main();
-
 	
 </script> 
     
