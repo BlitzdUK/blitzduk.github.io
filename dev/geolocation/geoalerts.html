@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draw Circle on Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize the map
+      var map = L.map('map').setView([53.335666, -2.235665], 13);
+      L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f').addTo(map);
+
+      // Make HTTP request to get JSON data
+      fetch('https://blitzd.gotdns.ch:1880/alerts/geolocation')
+        .then(response => response.json())
+        .then(data => {
+          // Extracting data from the JSON response
+          var lon = parseFloat(data.lon);
+          var lat = parseFloat(data.lat);
+          var radiusMeters = parseFloat(data.radiusMeters);
+
+          // Draw circle on the map
+          L.circle([lat, lon], {
+            color: 'red',
+            fillColor: 'red',
+            fillOpacity: 0.5,
+            radius: radiusMeters
+          }).addTo(map);
+
+          // Add a popup with additional information
+          L.popup()
+            .setLatLng([lat, lon])
+            .setContent(`<b>Description:</b> ${data.description}<br><b>Valid from:</b> ${data.validFrom}<br><b>Valid til:</b> ${data.validUntil}<br><b>Posted at:</b> ${data.postedAt}`)
+            .openOn(map);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    });
+  </script>
+</body>
+</html>
