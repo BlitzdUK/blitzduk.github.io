@@ -1,6 +1,5 @@
-// Function to perform the IP lookup using IPStack API
 async function performIPLookup(ip) {
-  const apiKey = 'dc636aa2bdb6431961ac16273ebaf3d1'; // Replace with your IPStack API key
+  const apiKey = 'dc636aa2bdb6431961ac16273ebaf3d1';
   const url = `https://api.ipstack.com/${ip}?access_key=${apiKey}`;
 
   try {
@@ -12,10 +11,8 @@ async function performIPLookup(ip) {
     return null;
   }
 }
-
-// Function to submit data to Google Forms
 async function submitToGoogleForms(formData) {
-  const formUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSckfmfyrG2fSGE97iaAx9CW9pUdoST-tDaWEnDQL1xUG43HBQ/formResponse'; // Replace with your Google Form URL
+  const formUrl = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSckfmfyrG2fSGE97iaAx9CW9pUdoST-tDaWEnDQL1xUG43HBQ/formResponse';
 
   try {
     const response = await fetch(formUrl, {
@@ -33,19 +30,15 @@ async function submitToGoogleForms(formData) {
   }
 }
 
-// Main function to execute the IP lookup and form submission
 async function main() {
-  // Get user agent, IP, and page URL
   const userAgent = navigator.userAgent;
   const ipResponse = await fetch('https://api.ipify.org?format=json');
   const ipData = await ipResponse.json();
   const ipAddress = ipData.ip;
   const pageURL = window.location.href;
 
-  // Perform IP lookup
   const ipLookupResult = await performIPLookup(ipAddress);
 
-  // Prepare form data
   const formData = {
     'entry.1064469062': ipLookupResult.region_name,
     'entry.1284802502': ipLookupResult.connection.isp,
@@ -55,10 +48,7 @@ async function main() {
     'entry.1381334581': userAgent,
     'entry.2095676594': pageURL,
   };
-
-  // Submit data to Google Forms
   await submitToGoogleForms(formData);
 }
 
-// Execute the main function
 main();
