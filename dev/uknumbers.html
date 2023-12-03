@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Search</title>
     <style>
@@ -21,25 +21,24 @@
             color: #333;
         }
     </style>
-</head>
-<body>
-
-    <h1>Number Lookup</h1>
-
-    <form id="search-form">
-      <label for="search-input">Phone numbers operator search (UK ONLY)<br>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Number Lookup</h1>
+    <div style="text-align: center;">
+      <form id="search-form"> <label for="search-input">Phone numbers operator
+          search (UK ONLY)<br>
+          <br>
+          Enter the first six numbers WITHOUT the first 0<br>
+          <br>
+        </label> <input id="search-input" placeholder="Formatted Phone Number"
+          maxlength="6" type="text"><br>
         <br>
-        Enter the first six numbers WITHOUT the first 0<br>
-        <br>
-      </label>
-      <input type="text" id="search-input" placeholder="Formatted Phone Number">
-      <button type="button" onclick="searchCSV()">Search</button>
-</form>
-
-    <div id="result"></div>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
+        <button type="button" onclick="searchCSV()">Search</button> </form>
+    </div>
+    <div id="result" style="text-align: center;"></div>
+    <div style="text-align: center;">
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script>
         function searchCSV() {
             var inputValue = $('#search-input').val();
 			
@@ -71,7 +70,6 @@
                 }
             });
         }
-    </script>
-
-</body>
+    </script></div>
+  </body>
 </html>
