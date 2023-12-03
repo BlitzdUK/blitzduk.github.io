@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets Search</title>
+  <style>
+    /* Add your CSS styles here */
+	  body {
+		  text-align: center;
+		  color: greenyellow;
+		  background-color: black;
+	  }
+	  
+  </style>
+</head>
+<body>
+
+  <form onsubmit="searchValue(); return false;">
+    <label for="searchInput">Enter Number:</label>
+    <input type="text" id="searchInput" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function searchValue() {
+      const userInput = document.getElementById('searchInput').value;
+      const googleSheetURL = 'https://docs.google.com/spreadsheets/d/1cwmEtsvOI9KBhAwZEi0Ve5pEJzQz9HYCSfPbzJzFxDY';
+      const sheetID = '1cwmEtsvOI9KBhAwZEi0Ve5pEJzQz9HYCSfPbzJzFxDY'; // Extract from the link
+      const endpoint = `https://spreadsheets.google.com/feeds/cells/${sheetID}/1/public/full?alt=json&range=A:B`;
+
+      fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+          const entries = data.feed.entry;
+          let result = 'Number not found';
+
+          for (const entry of entries) {
+            if (entry.content.$t === userInput) {
+              result = `Value in Column B: ${entry.content.$t}`;
+              break;
+            }
+          }
+
+          document.getElementById('result').textContent = result;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+  </script>
+
+</body>
+</html>
