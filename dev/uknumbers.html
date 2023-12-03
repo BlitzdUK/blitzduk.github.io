@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Sheets Search</title>
-  <style>
-    /* Add your CSS styles here */
-	  body {
-		  text-align: center;
-		  color: greenyellow;
-		  background-color: black;
-	  }
-	  
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #search-form {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 
-  <form onsubmit="searchValue(); return false;">
-    <label for="searchInput">Enter Number:</label>
-    <input type="text" id="searchInput" required>
-    <button type="submit">Search</button>
-  </form>
+    <h1>Number Lookup</h1>
 
-  <div id="result"></div>
+    <form id="search-form">
+      <label for="search-input">Phone numbers operator search (UK ONLY)<br>
+        <br>
+        Enter the first six numbers WITHOUT the first 0<br>
+        <br>
+      </label>
+      <input type="text" id="search-input" placeholder="Formatted Phone Number">
+      <button type="button" onclick="searchCSV()">Search</button>
+</form>
 
-  <script>
-    function searchValue() {
-      const userInput = document.getElementById('searchInput').value;
-      const googleSheetURL = 'https://docs.google.com/spreadsheets/d/1cwmEtsvOI9KBhAwZEi0Ve5pEJzQz9HYCSfPbzJzFxDY';
-      const sheetID = '1cwmEtsvOI9KBhAwZEi0Ve5pEJzQz9HYCSfPbzJzFxDY'; // Extract from the link
-      const endpoint = `https://spreadsheets.google.com/feeds/cells/${sheetID}/1/public/full?alt=json&range=A:B`;
+    <div id="result"></div>
 
-      fetch(endpoint)
-        .then(response => response.json())
-        .then(data => {
-          const entries = data.feed.entry;
-          let result = 'Number not found';
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+        function searchCSV() {
+            var inputValue = $('#search-input').val();
+			
 
-          for (const entry of entries) {
-            if (entry.content.$t === userInput) {
-              result = `Value in Column B: ${entry.content.$t}`;
-              break;
-            }
-          }
+            $.ajax({
+                type: 'GET',
+                url: 'https://blitzd.uk/dev/beta/uknumbers.csv',
+                dataType: 'text',
+                success: function (data) {
+                    var lines = data.split('\n');
+                    var result = '';
 
-          document.getElementById('result').textContent = result;
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }
-  </script>
+                    for (var i = 0; i < lines.length; i++) {
+                        var columns = lines[i].split(',');
+                        if (columns[0] === inputValue) {
+                            result = 'Match found! The operator is: ' + columns[1];
+                            break;
+                        }
+                    }
+
+                    if (result === '') {
+                        result = 'No match found for ' + inputValue;
+                    }
+
+                    $('#result').text(result);
+                },
+                error: function () {
+                    $('#result').text('Error loading CSV file');
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
