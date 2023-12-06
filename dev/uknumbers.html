@@ -25,12 +25,16 @@
   <body>
     <h1 style="text-align: center;">Number Lookup</h1>
     <div style="text-align: center;">
-      <form id="search-form"> <label for="search-input">Phone numbers operator
+      <form id="search-form">
+        <label for="search-input">Phone numbers operator
           search (UK ONLY)<br>
           <br>
-          Enter the first six numbers WITHOUT the first 0<br>
+          For landline numbers enter the first six numbers. NOT including the first 0.<br>
+          For mobile numbers enter the first five numbers. NOT including the first 0.<br>
           <br>
-        </label> <input id="search-input" placeholder="Formatted Phone Number"
+        </label>
+        <input id="search-input" placeholder="Formatted Phone Number"
+
           maxlength="6" type="text"><br>
         <br>
         <button type="button" onclick="searchCSV()">Search</button> </form>
