@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert System</title>
+</head>
+<body>
+
+<script>
+    // Function to make HTTP GET request
+    function getData(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send();
+    }
+
+    // Function to check if user is within the alert radius
+    function checkAlert(userLat, userLon, alertLat, alertLon, alertRadius) {
+        var earthRadius = 6371000; // Earth's radius in meters
+        var latDiff = (userLat - alertLat) * (Math.PI / 180);
+        var lonDiff = (userLon - alertLon) * (Math.PI / 180);
+        var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+                Math.cos(alertLat * (Math.PI / 180)) * Math.cos(userLat * (Math.PI / 180)) *
+                Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = earthRadius * c;
+
+        return distance <= alertRadius;
+    }
+
+    // Function to get user's geolocation and check for alerts
+    function checkAlerts() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLat = position.coords.latitude;
+            var userLon = position.coords.longitude;
+
+            // Make HTTP GET request to the provided API
+            getData("https://blitzd.gotdns.ch:1880/alerts/geolocation", function (data) {
+                var alertLat = data.lat;
+                var alertLon = data.lon;
+                var alertRadius = data.radiusMeters;
+
+                // Check if user is within the alert radius
+                if (checkAlert(userLat, userLon, alertLat, alertLon, alertRadius)) {
+                    alert("You are within the alert radius!");
+                } else {
+                    alert("You are outside the alert radius.");
+                }
+            });
+        });
+    }
+
+    // Call the function to check for alerts when the page loads
+    checkAlerts();
+</script>
+
+</body>
+</html>
