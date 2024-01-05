@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barcode Scanner</title>
     <style>
         #barcode-result {
             margin-top: 20px;
         }
+		
+		body {
+			background-color: black;
+			color: aqua;
+		}
+        
     </style>
-</head>
-<body>
-    <h1>Barcode Scanner</h1>
-    
-    <div id="barcode-result"></div>
-    <form id="barcode-form">
-        <label for="barcode-input">Barcode:</label>
-        <input type="text" id="barcode-input" readonly>
-        <button type="submit">Submit</button>
-    </form>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Barcode Scanner</h1>
+    <div id="barcode-result" style="text-align: center;"></div>
+    <div style="text-align: center;">
+      <form id="barcode-form"> <label for="barcode-input">Barcode:</label> <input
 
-    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
-    <script>
+          id="barcode-input" readonly type="text"> <button
+
+          type="submit">Submit</button> </form>
+      <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+      <script>
 	
 	document.addEventListener('DOMContentLoaded', function () {
     const barcodeResult = document.getElementById('barcode-result');
@@ -95,6 +100,6 @@
 });
 
 		
-	</script>
-</body>
+	</script></div>
+  </body>
 </html>
