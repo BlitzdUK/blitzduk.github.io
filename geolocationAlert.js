@@ -1,0 +1,50 @@
+    // Function to make HTTP GET request
+    function getData(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                callback(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send();
+    }
+
+    // Function to check if user is within the alert radius
+    function checkAlert(userLat, userLon, alertLat, alertLon, alertRadius) {
+        var earthRadius = 6371000; // Earth's radius in meters
+        var latDiff = (userLat - alertLat) * (Math.PI / 180);
+        var lonDiff = (userLon - alertLon) * (Math.PI / 180);
+        var a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+                Math.cos(alertLat * (Math.PI / 180)) * Math.cos(userLat * (Math.PI / 180)) *
+                Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distance = earthRadius * c;
+
+        return distance <= alertRadius;
+    }
+
+    // Function to get user's geolocation and check for alerts
+    function checkAlerts() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var userLat = position.coords.latitude;
+            var userLon = position.coords.longitude;
+
+            // Make HTTP GET request to the provided API
+            getData("https://blitzd.gotdns.ch:1880/alerts/geolocation", function (data) {
+                var alertLat = data.lat;
+                var alertLon = data.lon;
+                var alertRadius = data.radiusMeters;
+
+                // Check if user is within the alert radius
+                if (checkAlert(userLat, userLon, alertLat, alertLon, alertRadius)) {
+                    alert("EMERGENCY EVACUATION ALERT: This is a critical message requiring your immediate attention. Due to an ongoing emergency, you must evacuate the area promptly. Gather essential belongings, follow marked evacuation routes, and proceed to the designated assembly point. Stay informed through official channels for updates and guidance. Emergency services are mobilized to assist you. Your swift and orderly departure is vital for your safety and the well-being of the community. Act responsibly, and if assistance is needed, contact emergency services promptly. Thank you for your cooperation during this challenging time!");
+                } else {
+                    alert("You are outside the alert area.");
+                }
+            });
+        });
+    }
+
+    // Call the function to check for alerts when the page loads
+    checkAlerts();
