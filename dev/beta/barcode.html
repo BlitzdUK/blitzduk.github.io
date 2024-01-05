@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Scanner</title>
+    <style>
+        #barcode-result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Barcode Scanner</h1>
+    
+    <div id="barcode-result"></div>
+    <form id="barcode-form">
+        <label for="barcode-input">Barcode:</label>
+        <input type="text" id="barcode-input" readonly>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+    <script>
+	
+	document.addEventListener('DOMContentLoaded', function () {
+    const barcodeResult = document.getElementById('barcode-result');
+    const barcodeInput = document.getElementById('barcode-input');
+    const barcodeForm = document.getElementById('barcode-form');
+
+    // Configure QuaggaJS
+    Quagga.init({
+        inputStream: {
+            name: 'Live',
+            type: 'LiveStream',
+            target: document.querySelector('#barcode-result'),
+            constraints: {
+                width: 480,
+                height: 320,
+                facingMode: 'environment', // or user
+            },
+        },
+        decoder: {
+            readers: ['ean_reader'],
+        },
+    });
+
+    // Start QuaggaJS when the barcode result div is clicked
+    barcodeResult.addEventListener('click', function () {
+        Quagga.start();
+    });
+
+    // Stop QuaggaJS when the barcode input is focused
+    barcodeInput.addEventListener('focus', function () {
+        Quagga.stop();
+    });
+
+    // Listen for barcode detection
+    Quagga.onDetected(function (result) {
+        const barcodeValue = result.codeResult.code;
+        barcodeInput.value = barcodeValue;
+        Quagga.stop();
+    });
+
+    // Submit the form with the barcode value
+    barcodeForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const barcodeValue = barcodeInput.value;
+        
+        // Perform HTTP POST request to the Google Form
+        const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLSdVkCFQTk_9jbrciD0-4IVqrbEFiYxiEeey_5x5dS1KvmVndw/formResponse';
+        const postData = {
+            'entry.1247481217': barcodeValue,
+        };
+
+        fetch(googleFormURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(postData),
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Form submitted successfully!');
+            } else {
+                alert('Error submitting form. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+});
+
+		
+	</script>
+</body>
+</html>
