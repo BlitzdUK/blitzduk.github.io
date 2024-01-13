@@ -32,7 +32,7 @@
       .then(response => response.json())
       .then(data => {
         // Extract the address from the API response
-        var address = data.address;
+        var address = data[0]?.formatted || 'Address not found';
 
         // Display the address in a popup box
         L.popup()
