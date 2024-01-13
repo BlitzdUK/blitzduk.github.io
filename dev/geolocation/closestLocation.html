@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <title>Map with Address Lookup</title>
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+  // Initialize Leaflet map
+  var map = L.map('map').setView([0, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  // Add click event listener to the map
+  map.on('click', function (e) {
+    // Get the latitude and longitude from the clicked location
+    var lat = e.latlng.lat;
+    var lon = e.latlng.lng;
+
+    // Make a request to OWM API for reverse geocoding
+    fetch(`https://app.owm.io/app/1.1/geo/reverse?lat=${lat}&lon=${lon}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`)
+      .then(response => response.json())
+      .then(data => {
+        // Extract the address from the API response
+        var address = data.address;
+
+        // Display the address in a popup box
+        L.popup()
+          .setLatLng([lat, lon])
+          .setContent(`<p>${address}</p>`)
+          .openOn(map);
+      })
+      .catch(error => console.error('Error fetching address:', error));
+  });
+</script>
+
+</body>
+</html>
