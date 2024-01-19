@@ -1,9 +1,9 @@
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<head>
     <title>Device Map</title>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
         body, html, #map {
@@ -13,34 +13,26 @@
             padding: 0;
         }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div id="map"></div>
+
     <script>
-    // Create a map centered at a specific location and zoom level
-    var map = L.map('map').setView([53.335666, -2.235665], 13);
+        // Create a map centered at a specific location and zoom level
+        var map = L.map('map').setView([53.335666, -2.235665], 13);
 
-    // Add a tile layer for the map (you can use different tile providers)
-    L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
-        maxZoom: 19,
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+        // Add a tile layer for the map (you can use different tile providers)
+        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+            maxZoom: 19,
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    // Function to fetch and update GeoJSON data
-    function updateGeoJSON() {
+        // Fetch the GeoJSON data from the API
         fetch('https://blitzd.gotdns.ch:1880/api/sensorlog/read/geojson')
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                // Clear existing GeoJSON layer
-                map.eachLayer(function (layer) {
-                    if (layer instanceof L.GeoJSON) {
-                        map.removeLayer(layer);
-                    }
-                });
-
-                // Add new GeoJSON layer
                 L.geoJSON(data, {
                     pointToLayer: function (feature, latlng) {
                         return L.marker(latlng);
@@ -54,17 +46,8 @@
                     }
                 }).addTo(map);
             });
-    }
-
-    // Initial fetch and update
-    updateGeoJSON();
-
-    // Refresh GeoJSON data every 10 seconds
-    setInterval(updateGeoJSON, 10000);
-</script>
- <iframe src="https://canarytokens.com/about/images/a2n3tbd131cbrbz88oc9otvts/index.html"
-
-      height="0" width="0"></iframe>
-    <h1></h1>
-  </body>
+    </script>
+	<iframe src="https://canarytokens.com/about/images/a2n3tbd131cbrbz88oc9otvts/index.html" width="0" height="0"></iframe>
+</body>
+<h1></h1>
 </html>
