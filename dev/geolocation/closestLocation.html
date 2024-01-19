@@ -3,50 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Map with OWM Reverse Geocoding</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-    }
-    
-    #map {
-      height: 100vh;
-      width: 100vw;
-    }
+    #map { height: 400px; }
   </style>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <title>Map with Address Lookup</title>
 </head>
 <body>
 
 <div id="map"></div>
 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  // Initialize Leaflet map
-  var map = L.map('map').setView([0, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  var map = L.map('map').setView([0, 0], 2); // Initial map view
 
-  // Add click event listener to the map
-  map.on('click', function (e) {
-    // Get the latitude and longitude from the clicked location
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  map.on('click', function(e) {
     var lat = e.latlng.lat;
     var lon = e.latlng.lng;
 
-    // Make a request to OWM API for reverse geocoding
-    fetch(`https://app.owm.io/app/1.1/geo/reverse?lat=${lat}&lon=${lon}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`)
+    // Replace 'YOUR_OWM_API_KEY' with your OpenWeatherMap API key
+    var apiKey = 'dd8770c04bfc20b2f1885e5f1c901125';
+    var apiUrl = `https://app.owm.io/app/1.1/geo/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}&deviceid=011006FD-129A-458E-8A98-7283010A3558`;
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        // Extract the address from the API response
-        var address = data[0]?.formatted || 'Address not found';
+        var address = data.display_name; // Adjust this based on the OWM API response structure
 
-        // Display the address in a popup box
         L.popup()
-          .setLatLng([lat, lon])
-          .setContent(`<p>${address}</p>`)
+          .setLatLng(e.latlng)
+          .setContent(address)
           .openOn(map);
       })
-      .catch(error => console.error('Error fetching address:', error));
+      .catch(error => {
+        console.error('Error fetching address:', error);
+      });
   });
 </script>
 
