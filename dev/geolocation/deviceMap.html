@@ -6,8 +6,14 @@
   <title>Device Location Map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
     #map {
-      height: 400px;
+      height: 100vh;
+      width: 100vw;
     }
   </style>
 </head>
@@ -23,7 +29,7 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Function to update the map with the device location
+    // Function to update the map with the device location and open popup
     function updateMap(locationData) {
       var latitude = parseFloat(locationData.locationLatitude);
       var longitude = parseFloat(locationData.locationLongitude);
@@ -37,6 +43,15 @@
 
       // Add a new marker for the updated location
       var marker = L.marker([latitude, longitude]).addTo(map);
+
+      // Create a popup with device ID and logging time
+      var popupContent = `
+        <b>Device ID:</b> ${locationData.deviceID}<br>
+        <b>Logging Time:</b> ${locationData.loggingTime}
+      `;
+
+      marker.bindPopup(popupContent, { closeOnClick: false }).openPopup();
+
       map.setView([latitude, longitude], 15); // Set map view centered around the new location
     }
 
