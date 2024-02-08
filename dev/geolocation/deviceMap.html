@@ -1,53 +1,60 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Device Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <style>
-        body, html, #map {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Location Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
 </head>
 <body>
-    <div id="map"></div>
+  <div id="map"></div>
 
-    <script>
-        // Create a map centered at a specific location and zoom level
-        var map = L.map('map').setView([53.335666, -2.235665], 13);
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([0, 0], 2); // Default view at (0, 0)
 
-        // Add a tile layer for the map (you can use different tile providers)
-        L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
-            maxZoom: 19,
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+    L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-        // Fetch the GeoJSON data from the API
-        fetch('https://blitzd.gotdns.ch:1880/api/sensorlog/read/geojson')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                L.geoJSON(data, {
-                    pointToLayer: function (feature, latlng) {
-                        return L.marker(latlng);
-                    },
-                    onEachFeature: function (feature, layer) {
-                        if (feature.properties) {
-                            var popupContent = "Device ID: " + feature.properties.deviceID +
-                                "<br>Logging Time: " + feature.properties.loggingTime;
-                            layer.bindPopup(popupContent);
-                        }
-                    }
-                }).addTo(map);
-            });
-    </script>
-	<iframe src="https://canarytokens.com/about/images/a2n3tbd131cbrbz88oc9otvts/index.html" width="0" height="0"></iframe>
+    // Function to update the map with the device location
+    function updateMap(locationData) {
+      var latitude = parseFloat(locationData.locationLatitude);
+      var longitude = parseFloat(locationData.locationLongitude);
+
+      // Clear previous markers
+      map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker) {
+          layer.remove();
+        }
+      });
+
+      // Add a new marker for the updated location
+      var marker = L.marker([latitude, longitude]).addTo(map);
+      map.setView([latitude, longitude], 15); // Set map view centered around the new location
+    }
+
+    // Function to fetch device location from the API
+    function fetchDeviceLocation() {
+      fetch('https://blitzd.gotdns.ch:1880/data/gps')
+        .then(response => response.json())
+        .then(data => {
+          updateMap(data);
+        })
+        .catch(error => {
+          console.error('Error fetching device location:', error);
+        });
+    }
+
+    // Fetch device location initially and then every 10 seconds (adjust as needed)
+    fetchDeviceLocation();
+    setInterval(fetchDeviceLocation, 10000);
+  </script>
 </body>
-<h1></h1>
 </html>
