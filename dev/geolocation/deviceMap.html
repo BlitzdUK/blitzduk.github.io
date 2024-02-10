@@ -46,8 +46,8 @@
 
       // Create a popup with device ID and logging time
       var popupContent = `
-        <b>Device ID:</b> ${locationData.deviceID}<br>
-        <b>Logging Time:</b> ${locationData.loggingTimeFormatted}
+        <b>DeviceID:</b> ${locationData.deviceID}<br>
+        <b>Last Seen:</b> ${locationData.loggingTimeFormatted}
       `;
 
       marker.bindPopup(popupContent, { closeOnClick: false }).openPopup();
