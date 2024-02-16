@@ -1,58 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>IP Lookup</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Check</title>
 </head>
 <body>
 
 <script>
-  // Function to display alert popup box
-  function displayAlert(message) {
-    alert(message);
+  // Function to fetch user's public IP using ipinfo.io
+  function getUserIP() {
+    fetch('https://ipinfo.io/json')
+      .then(response => response.json())
+      .then(data => {
+        const userIP = data.ip;
+        checkTorExitNodes(userIP);
+      })
+      .catch(error => console.error('Error fetching IP:', error));
   }
 
-  // Function to perform the IP lookup
-  function performIpLookup(ip) {
-    // Replace 'YOUR_API_KEY' with your actual API key from CriminalIP
-    var apiKey = 'f7MbyXpR0DB4eZ2OCmsDOkrXcWTgvA8KZN5zs92xeX6gQcSTIZnlTSlh8U7o';
-    var apiUrl = 'https://api.criminalip.com/v1/ip/';
+  // Function to check if the user's IP is in the Tor exit nodes list
+  function checkTorExitNodes(userIP) {
+    const torExitNodesURL = 'https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-exit-nodes.lst';
 
-    $.ajax({
-      url: apiUrl + ip,
-      type: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + apiKey
-      },
-      success: function(response) {
-        if (response.is_tor) {
-          displayAlert('The IP address is associated with Tor network.');
+    fetch(torExitNodesURL)
+      .then(response => response.text())
+      .then(ipList => {
+        const torExitNodes = ipList.split('\n');
+        if (torExitNodes.includes(userIP)) {
+          alert('Access from Tor is not allowed.');
+          window.location.href = 'https://your-redirect-page.com';
         } else {
-          displayAlert('The IP address is not associated with Tor network.');
+          console.log('User IP is not in Tor exit nodes list.');
         }
-      },
-      error: function(error) {
-        displayAlert('Error occurred during IP lookup.');
-      }
-    });
+      })
+      .catch(error => console.error('Error fetching Tor exit nodes list:', error));
   }
 
-  // Function to get the IP address
-  function getIpAddress() {
-    $.getJSON('https://api.ipify.org?format=json', function(data) {
-      var ip = data.ip;
-      performIpLookup(ip);
-    });
-  }
-
-  // Call the function to get the IP address on page load
-  getIpAddress();
+  // Call the function when the page loads
+  getUserIP();
 </script>
-
-<script src="https://blitzd.uk/snitch.js"></script>
-<script src="https://blitzd.uk/littleSnitch.js"></script>
-<script src="https://blitzd.uk/devices.js"></script>
-
 
 </body>
 </html>
