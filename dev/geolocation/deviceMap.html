@@ -49,11 +49,11 @@
       // Create a popup with device ID and logging time
       var popupContent = `
         <b>DeviceID:</b> ${locationData.deviceID}<br>
-		<b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
+		<b>Last Seen:</b> ${locationData.loggingTimeFormatted}<br>
 		<b>Lat:</b> ${locationData.locationLatitude}<br>
 		<b>Lon:</b> ${locationData.locationLongitude}<br>
-		<b>Closest Address:</b>
-		<b>		${locationData.full_name}
+		<b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
+		<b>Last Seen:</b> ${locationData.loggingTimeFormatted}
 		
       `;
 
