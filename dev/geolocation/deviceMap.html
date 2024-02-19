@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Device Map</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Device Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
     body, html {
       height: 100%;
       margin: 0;
+		background-color: black;
     }
 
     #map {
-      height: 100vh;
+      height: 98vh;
       width: 100vw;
     }
   </style>
-</head>
-<body>
-  <div id="map"></div>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
+  </head>
+  <body>
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
     // Initialize the map
     var map = L.map('map').setView([0, 0], 2); // Default view at (0, 0)
 
     L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+  attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a> '
+}).addTo(map);
+
 
     // Function to update the map with the device location and open popup
     function updateMap(locationData) {
@@ -48,12 +50,12 @@
 
       // Create a popup with device ID and logging time
       var popupContent = `
-        <b>DeviceID:</b> ${locationData.deviceID}<br>
-		<b>Last Seen:</b> ${locationData.loggingTimeFormatted}<br>
-		<b>Lat:</b> ${locationData.locationLatitude}<br>
-		<b>Lon:</b> ${locationData.locationLongitude}<br>
-		<b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
-		<b>Last Seen:</b> ${locationData.loggingTimeFormatted}
+        <p style="text-align: center;"> <b>DeviceID:</b>
+      ${locationData.deviceID}<br>
+      <b>Lat:</b> ${locationData.locationLatitude}<br>
+      <b>Lon:</b> ${locationData.locationLongitude}<br>
+      <b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
+      <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </p>
 		
       `;
 
@@ -78,6 +80,61 @@
     fetchDeviceLocation();
     setInterval(fetchDeviceLocation, 10000);
   </script>
-  <script src="https://blitzd.uk/snitch.js"></script>
-</body>
+    <script src="https://blitzd.uk/snitch.js"></script>
+     <p style="text-align: center;"> </p>
+    <div style="text-align: center;"> <button id="pingButton" style="height: 57px;">Ping
+        Device</button>
+    </div>
+    <!-- Container for the confirmation message -->
+    <div id="confirmationMessage" style="text-align: center; display: none;"></div>
+    <script>
+    document.getElementById('pingButton').addEventListener('click', function() {
+        // Disable the button
+        document.getElementById('pingButton').disabled = true;
+
+        // Create an object with the data you want to send in the request body
+        const requestData = {
+            message: 'This device has been pinged from the map'
+            // You can add more data if needed
+        };
+
+        // Make a POST request using the Fetch API
+        fetch('https://ntfy.sh/blitzd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Set the appropriate content type
+            },
+            body: JSON.stringify(requestData), // Convert the data to JSON format
+        })
+        .then(response => {
+            // Handle the response if needed
+            console.log('Request successful', response);
+
+            // Display confirmation message
+            document.getElementById('confirmationMessage').innerText = 'Device has been pinged!';
+            document.getElementById('confirmationMessage').style.display = 'block';
+
+            // Re-enable the button after 10 seconds
+            setTimeout(function() {
+                document.getElementById('pingButton').disabled = false;
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 10000);
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('Error:', error);
+            
+            // Display error message if needed
+            document.getElementById('confirmationMessage').innerText = 'Error occurred!';
+            document.getElementById('confirmationMessage').style.display = 'block';
+
+            // Re-enable the button after 10 seconds
+            setTimeout(function() {
+                document.getElementById('pingButton').disabled = false;
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 10000);
+        });
+    });
+</script>
+  </body>
 </html>
