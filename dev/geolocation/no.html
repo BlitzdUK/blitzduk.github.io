@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>no</title>
+  </head>
+  <body>
+    <h5 style="   text-align: center;"> <b>DeviceID:</b>
+      ${locationData.deviceID}<br>
+      <b>Lat:</b> ${locationData.locationLatitude}<br>
+      <b>Lon:</b> ${locationData.locationLongitude}<br>
+      <b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
+      <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <table style="width: 100%" border="1">
+      <tbody>
+        <tr>
+          <td>DeviceID</td>
+          <td>Lat</td>
+          <td>Lon</td>
+          <td>Altitude</td>
+          <td>Last Seen</td>
+        </tr>
+        <tr>
+          <td>
+            <h5 style="   text-align: center;"> ${locationData.deviceID}</h5>
+          </td>
+          <td>
+            <h5 style="   text-align: center;">${locationData.locationLatitude}</h5>
+          </td>
+          <td>
+            <h5 style="   text-align: center;">${locationData.locationLongitude}</h5>
+          </td>
+          <td>
+            <h5 style="   text-align: center;">${locationData.locationAltitude}</h5>
+          </td>
+          <td>
+            <h5 style="   text-align: center;">${locationData.loggingTimeFormatted}
+              </h5> </td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="text-align: center;"><br>
+    </p>
+    <div id="datetime"></div>
+    <script>
+    function updateDateTime() {
+      var currentDate = new Date();
+
+      var hours = currentDate.getHours();
+      var minutes = currentDate.getMinutes();
+      var seconds = currentDate.getSeconds();
+
+      var day = currentDate.getDate();
+      var month = currentDate.getMonth() + 1; // Months are zero-based
+      var year = currentDate.getFullYear();
+
+      // Formatting with leading zeros if needed
+      hours = (hours < 10) ? "0" + hours : hours;
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      seconds = (seconds < 10) ? "0" + seconds : seconds;
+      day = (day < 10) ? "0" + day : day;
+      month = (month < 10) ? "0" + month : month;
+
+      var dateTimeString = hours + ":" + minutes + ":" + seconds + " - " + day + "/" + month + "/" + year;
+
+      // Display on the page
+      document.getElementById("datetime").innerHTML = dateTimeString;
+    }
+
+    // Update the date and time every second
+    setInterval(updateDateTime, 1000);
+
+    // Initial call to display the date and time immediately
+    updateDateTime();
+  </script>
+  </body>
+</html>
