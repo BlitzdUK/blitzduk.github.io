@@ -25,7 +25,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
   <body>
-    <nav class="navbar navbar-default no-margin"> <!-- Brand and toggle get grouped for better mobile display -->
+    <nav class="navbar navbar-default no-margin">
+      <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header fixed-brand"> <button type="button" class="navbar-toggle collapsed"
 
           data-toggle="collapse" id="menu-toggle"> <span class="glyphicon glyphicon-th-large"
@@ -103,7 +104,7 @@
       ${locationData.deviceID}<br>
       <b>Lat:</b> ${locationData.locationLatitude}<br>
       <b>Lon:</b> ${locationData.locationLongitude}<br>
-			<b>Closest Address:</b> ${locationData.full_name}<br>
+      <b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
       <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
 		
       `;
