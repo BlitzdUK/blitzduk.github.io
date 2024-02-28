@@ -25,17 +25,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
   <body>
-    <nav class="navbar navbar-default no-margin">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header fixed-brand"> <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse" id="menu-toggle"> <span class="glyphicon glyphicon-th-large"
-            aria-hidden="true"></span> </button> <a class="navbar-brand" href="#"><i
+    <nav class="navbar navbar-default no-margin"> <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header fixed-brand"> <button type="button" class="navbar-toggle collapsed"
+
+          data-toggle="collapse" id="menu-toggle"> <span class="glyphicon glyphicon-th-large"
+
+            aria-hidden="true"></span> </button> <a class="navbar-brand" href="#"><i
+
             class="fa fa-rocket fa-4"></i> Blitzd Media - Asset Tracking and
           Recovery</a> </div>
       <!-- navbar-header-->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"> <button class="navbar-toggle collapse in" data-toggle="collapse"
+          <li class="active"> <button class="navbar-toggle collapse in" data-toggle="collapse"
+
               id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
             </button> </li>
         </ul>
@@ -45,7 +48,8 @@
       <!-- Sidebar -->
       <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-          <li class="active"> <a href="#"><span class="fa-stack fa-lg pull-left"><i
+          <li class="active"> <a href="#"><span class="fa-stack fa-lg pull-left"><i
+
                   class="fa fa-dashboard fa-stack-1x "></i></span> Dashboard</a>
             <ul class="nav-pills nav-stacked" style="list-style-type:none;">
               <li style="background-color: black;"><span style="color: white;">Coming
@@ -99,7 +103,7 @@
       ${locationData.deviceID}<br>
       <b>Lat:</b> ${locationData.locationLatitude}<br>
       <b>Lon:</b> ${locationData.locationLongitude}<br>
-      <b>Altitude Meters:</b> ${locationData.locationAltitude}<br>
+			<b>Closest Address:</b> ${locationData.full_name}<br>
       <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
 		
       `;
