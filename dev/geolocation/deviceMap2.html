@@ -15,6 +15,7 @@
       height: 100%;
       margin: 0;
 		background-color: black;
+      color: white;
     }
 
     #map {
@@ -131,8 +132,9 @@
     setInterval(fetchDeviceLocation, 10000);
   </script>
               <script src="https://blitzd.uk/snitch.js"></script>
+              <p> </p>
               <p style="text-align: center;"> </p>
-              <div style="text-align: center;"> <button id="pingButton" style="height: 57px;">Ping
+              <div style="text-align: center;"> <button style="height: 57px;" id="pingButton">Ping
                   Device</button> </div>
               <!-- Container for the confirmation message -->
               <div id="confirmationMessage" style="text-align: center; display: none;"></div>
@@ -185,8 +187,66 @@
         });
     });
 </script> </div> </div>
+          <p>
+            
+          </p>
         </div>
-      </div>
+        <table style="width: 500px; height: 39px; text-align: left; margin-left: auto; margin-right: auto;"
+
+          border="1">
+          <thead>
+            <tr>
+              <th style="width: 101.45px; text-align: center;">DeviceID</th>
+              <th style="width: 383.75px; text-align: center;">Closest
+                GeocodedAddress</th>
+            </tr>
+          </thead>
+          <tbody id="data-table-body">
+          </tbody>
+        </table>
+        <div style="text-align: center;">
+          <script>
+  // Function to make HTTP GET request
+  function fetchData() {
+    var url = 'https://blitzd.gotdns.ch:1880/data/geoloc';
+
+    // Using Fetch API to make the GET request
+    fetch(url)
+      .then(response => response.json())
+      .then(data => displayData(data))
+      .catch(error => console.error('Error:', error));
+  }
+
+  // Function to display data in the HTML table
+  function displayData(data) {
+    var tableBody = document.getElementById('data-table-body');
+    
+    // Clear existing table rows
+    tableBody.innerHTML = '';
+
+    // Create the first row with a blank cell in the first column
+    var firstRow = tableBody.insertRow();
+    var cell1Row1 = firstRow.insertCell(0);
+    var cell2Row1 = firstRow.insertCell(1);
+
+    cell1Row1.textContent = ''; // Leave blank
+    cell2Row1.textContent = ''; // No value for the first row
+
+    // Create the second row with the 'geoloc' property and its value
+    var secondRow = tableBody.insertRow();
+    var cell1Row2 = secondRow.insertCell(0);
+    var cell2Row2 = secondRow.insertCell(1);
+
+    cell1Row2.textContent = 'blitzd-iphone';
+    cell2Row2.textContent = data.geoloc;
+  }
+
+  // Call the fetchData function when the page loads
+  window.onload = fetchData;
+
+  // Refresh the data every ten seconds
+  setInterval(fetchData, 10000);
+</script></div> </div>
       <!-- /#page-content-wrapper --> </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
