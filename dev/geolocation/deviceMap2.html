@@ -32,10 +32,9 @@
 
           data-toggle="collapse" id="menu-toggle"> <span class="glyphicon glyphicon-th-large"
 
-            aria-hidden="true"></span> </button> <a class="navbar-brand" href="#"><i
-
-            class="fa fa-rocket fa-4"></i> Blitzd Media - Asset Tracking and
-          Recovery</a> </div>
+            aria-hidden="true"></span> </button>
+        <a class="navbar-brand" href="#"><em class="fa fa-rocket fa-4"></em> Blitzd Media Asset Tracking and
+      Recovery</a></div>
       <!-- navbar-header-->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
@@ -101,13 +100,14 @@
 
       // Create a popup with device ID and logging time
       var popupContent = `
-        <h5 style="   text-align: center;"> <b>DeviceID:</b>
-      ${locationData.deviceID}<br>
-      <b>Lat:</b> ${locationData.locationLatitude}<br>
-      <b>Lon:</b> ${locationData.locationLongitude}<br>
-      <b>Alt:</b> ${locationData.locationAltitude} m<br>
-<b>Activity:</b> ${locationData.activity} m<br>
-      <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
+        <h5 style="text-align: center;"> <b>DeviceID:</b>
+          ${locationData.deviceID}<br>
+          <b>Lat:</b> ${locationData.locationLatitude}<br>
+          <b>Lon:</b> ${locationData.locationLongitude}<br>
+          <b>Alt:</b> ${locationData.locationAltitude} m<br>
+<b>Speed:</b> ${locationData.locationSpeed} mph<br>
+          <b>Status:</b> ${locationData.activity}<br>
+          <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
 		
       `;
 
