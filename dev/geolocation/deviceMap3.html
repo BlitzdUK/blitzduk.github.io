@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+
+    // Initialize the map
+    var map = L.map('map').setView([0, 0], 2);
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+        attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a>'
+    }).addTo(map);
+
+    // Function to fetch device data and plot on the map
+    function plotDeviceOnMap() {
+        fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+            .then(response => response.json())
+            .then(data => {
+                const { locationLatitude, locationLongitude } = data.gps_data;
+                const deviceLocation = [parseFloat(locationLatitude), parseFloat(locationLongitude)];
+                const devicePopupContent = `
+                    <h4 style="text-align: center;"> <b>Device ID:</b> ${data.gps_data.deviceID}<br>
+					<b>Lat:</b> ${data.gps_data.locationLatitude}<br>
+					<b>Lon:</b> ${data.gps_data.locationLongitude}<br>
+					<b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
+					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
+					<b>Status:</b> ${data.gps_data.activity}<br>
+					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
+                    <b>Location:</b> ${data.geoloc_data.geoloc} </h4>
+                `;
+                L.marker(deviceLocation).addTo(map)
+                    .bindPopup(devicePopupContent)
+                    .openPopup();
+                map.setView(deviceLocation, 15);
+            })
+            .catch(error => console.error('Error fetching device data:', error));
+    }
+
+    // Call the function initially
+    plotDeviceOnMap();
+
+    // Update device location every 10 seconds
+    setInterval(plotDeviceOnMap, 10000);
+
+</script>
+
+</body>
+</html>
