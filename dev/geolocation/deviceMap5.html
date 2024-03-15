@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Map</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center;">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light"> <a class="navbar-brand"
+          href="#">Blitzd Media Telematics</a> </nav>
+    </div>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col">
+          <div id="map"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+    var map = L.map('map').setView([0, 0], 2);
+
+    L.tileLayer('https://tile.jawg.io/d3dd7b47-82c9-41b0-a313-18d0d310a806/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+        attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a>'
+    }).addTo(map);
+
+    function plotDeviceOnMap() {
+        fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+            .then(response => response.json())
+            .then(data => {
+                const { locationLatitude, locationLongitude } = data.gps_data;
+                const deviceLocation = [parseFloat(locationLatitude), parseFloat(locationLongitude)];
+                const devicePopupContent = `
+                    <p style="text-align: center;"> <b>Device ID:</b> ${data.gps_data.deviceID}<br>
+					<b>Lat:</b> ${data.gps_data.locationLatitude}<br>
+					<b>Lon:</b> ${data.gps_data.locationLongitude}<br>
+					<b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
+					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
+					<b>Status:</b> ${data.gps_data.activity}<br>
+					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
+                    <b>Location:</b> ${data.geoloc_data.geoloc} </p>
+                `;
+                L.marker(deviceLocation).addTo(map)
+                    .bindPopup(devicePopupContent)
+                    .openPopup();
+                map.setView(deviceLocation, 15);
+            })
+            .catch(error => console.error('Error fetching device data:', error));
+    }
+
+    plotDeviceOnMap();
+
+    setInterval(plotDeviceOnMap, 30000);
+
+</script> </body>
+</html>
