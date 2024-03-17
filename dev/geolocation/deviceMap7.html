@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic JSON Table</title>
+<style>
+  /* CSS styles */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  th {
+    background-color: white;
+    height: 112px;
+  }
+  td {
+    background-color: white;
+    height: 120px;
+  }
+</style>
+</head>
+<body>
+
+<figure class="table" style="height:300px;width:100%;">
+  <table class="ck-table-resized">
+    <colgroup>
+      <col style="width:37.27%;">
+      <col style="width:15.74%;">
+      <col style="width:7.05%;">
+      <col style="width:5.72%;">
+      <col style="width:4.84%;">
+      <col style="width:7.15%;">
+      <col style="width:15.2%;">
+      <col style="width:3.51%;">
+      <col style="width:3.52%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Device ID</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Altitude</th>
+        <th>Status</th>
+        <th>Last Seen</th>
+        <th>Geolocation</th>
+        <th>Ping Device</th>
+        <th>Emergency Assist</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="deviceID"></td>
+        <td id="latitude"></td>
+        <td id="longitude"></td>
+        <td id="altitude"></td>
+        <td id="status"></td>
+        <td id="lastSeen"></td>
+        <td id="streetAddress"></td>
+        <td><button name="Coming soon"></button></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="deviceID2"></td>
+        <td id="latitude2"></td>
+        <td id="longitude2"></td>
+        <td id="altitude2"></td>
+        <td id="status2"></td>
+        <td id="lastSeen2"></td>
+        <td id="streetAddress2"></td>
+        <td><button name="Coming soon"></button></td>
+        <td></td>
+      </tr>
+      <!-- Add more rows if needed -->
+    </tbody>
+  </table>
+</figure>
+
+<script>
+  // Fetching JSON data from API
+  fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+    .then(response => response.json())
+    .then(data => {
+      // Accessing JSON data and populating the existing table cells
+      document.getElementById("deviceID").innerText = data[0].deviceID;
+      document.getElementById("latitude").innerText = data[0].latitude;
+      document.getElementById("longitude").innerText = data[0].longitude;
+      document.getElementById("altitude").innerText = data[0].altitude;
+      document.getElementById("status").innerText = data[0].status;
+      document.getElementById("lastSeen").innerText = data[0].lastSeen;
+      document.getElementById("streetAddress").innerText = data[0].streetAddress;
+
+      document.getElementById("deviceID2").innerText = data[1].deviceID;
+      document.getElementById("latitude2").innerText = data[1].latitude;
+      document.getElementById("longitude2").innerText = data[1].longitude;
+      document.getElementById("altitude2").innerText = data[1].altitude;
+      document.getElementById("status2").innerText = data[1].status;
+      document.getElementById("lastSeen2").innerText = data[1].lastSeen;
+      document.getElementById("streetAddress2").innerText = data[1].streetAddress;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+</script>
+
+</body>
+</html>
