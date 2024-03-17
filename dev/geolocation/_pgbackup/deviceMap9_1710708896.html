@@ -1,0 +1,218 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Device Location Map</title>         
+        <link href="bootstrap_theme/bootstrap.css" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"> 
+        <style>#map { height: 800px; width: 1000px; } body { background-color: black; color: 4AF626; }</style>         
+        <script src="https://blitzd.uk/snitch.js"></script>         
+    </head>     
+    <body> <span style="color: #4af626;"> </span> 
+        <div style="text-align: center;"> 
+            <div style="text-align: center;"> 
+                <nav class="bg-dark navbar navbar-dark navbar-expand-lg" style="text-align: center;"> <span style="color: #4af626;"><a class="navbar-brand" href="#" style="color: #4af626;">Blitzd
+              Media Telematics</a></span> 
+                </nav>                 
+            </div>             
+            <style><span style="color: #4af626;">
+                <br>
+            </span></style>             
+        </div>         <span style="color: #4af626;"> </span> 
+        <div style="text-align: center;"> 
+            <h5><span style="color: #4af626;"><br> </span></h5> 
+            <h5><span style="color: #4af626;">Device Map&nbsp;</span></h5> 
+        </div>         <span style="color: #4af626;"> </span> 
+        <div class="container mt-4"> 
+            <div class="row"> 
+                <div class="col"> 
+                    <div id="map"> <span style="color: #4af626;"><br> </span> 
+                    </div>                     
+                </div>                 
+            </div>             
+        </div>         <span style="color: #4af626;"> <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> <script>
+            var map = L.map('map').setView([0, 0], 2);
+            
+            L.tileLayer('https://tile.jawg.io/d3dd7b47-82c9-41b0-a313-18d0d310a806/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+                attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a>'
+            }).addTo(map);
+            
+            function plotDeviceOnMap() {
+                fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+                    .then(response => response.json())
+                    .then(data => {
+                        const { locationLatitude, locationLongitude } = data.gps_data;
+                        const deviceLocation = [parseFloat(locationLatitude), parseFloat(locationLongitude)];
+                        const devicePopupContent = `
+                            <p style="text-align: center;"> <b>Device ID:</b> ${data.gps_data.deviceID}<br>
+            					<b>Lat:</b> ${data.gps_data.locationLatitude}<br>
+            					<b>Lon:</b> ${data.gps_data.locationLongitude}<br>
+            					<b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
+            					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
+            					<b>Status:</b> ${data.gps_data.activity}<br>
+            					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
+                            <b>Location:</b> ${data.geoloc_data.geoloc} </p>
+                        `;
+                        L.marker(deviceLocation).addTo(map)
+                            .bindPopup(devicePopupContent)
+                            .openPopup();
+                        map.setView(deviceLocation, 17);
+                    })
+                    .catch(error => console.error('Error fetching device data:', error));
+            }
+            
+            plotDeviceOnMap();
+            
+            setInterval(plotDeviceOnMap, 10000);
+            
+        </script> </span> 
+        <div style="text-align: center;"> 
+            <hr style="text-align: center; width: 100%; margin-left: auto; margin-right: auto; margin-top: 2px;"> 
+            <h6><span style="color: #4af626;"><br> </span></h6> 
+            <h6><span style="color: #4af626;">Devices&nbsp;</span></h6> <span style="color: #4af626;"> &nbsp; <script>
+                // Function to fetch data from API and update the table
+                function updateData() {
+                  fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+                    .then(response => response.json())
+                    .then(data => {
+                      // Update table with fetched data
+                      document.getElementById('deviceID').innerText = data.gps_data.deviceID;
+                      document.getElementById('latitude').innerText = data.gps_data.locationLatitude;
+                      document.getElementById('longitude').innerText = data.gps_data.locationLongitude;
+                      document.getElementById('altitude').innerText = data.gps_data.locationAltitude;
+                      document.getElementById('status').innerText = data.gps_data.activity;
+                      document.getElementById('lastSeen').innerText = data.gps_data.loggingTimeFormatted;
+                      document.getElementById('streetAddress').innerText = data.geoloc_data.geoloc;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+                }
+                
+                // Call updateData function initially
+                updateData();
+                
+                // Refresh data every 10 seconds
+                setInterval(updateData, 10000);
+            </script>&nbsp;</span> 
+            <figure class="table" style="height:300px;width:100%;"> <span style="color: #4af626;">&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span>
+                <span style="color: #4af626;"> </span> 
+                <table class="bg-dark ck-table-resized" cellspacing="120" cellpadding="20" border="20"> 
+                    <colgroup> 
+                        <col style="width:37.27%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:15.74%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:7.05%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:5.72%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:4.84%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:7.15%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:15.2%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:3.51%;"> 
+                    </colgroup>                     
+                    <colgroup> </colgroup>                     
+                    <colgroup>
+                        <col style="width:3.52%;"> 
+                    </colgroup>                     
+                    <thead> 
+                        <tr> 
+                            <th style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Device ID</span></th> 
+                            <th style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Latitude</span></th> 
+                            <th style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Longitude</span></th> 
+                            <th style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Altitude</span></th> 
+                            <th style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Status</span></th> 
+                            <th style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Last seen</span></th> 
+                            <th style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Geolocation</span></th> 
+                            <th style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Ping Device</span></th> 
+                            <th style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Emergency Assist</span></th> 
+                        </tr>                         
+                    </thead>                     
+                    <tbody> 
+                        <tr> 
+                            <td style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="deviceID"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="latitude"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="longitude"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="altitude"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="status"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="lastSeen"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%; color: #4af626;" id="streetAddress"><span style="color: #4af626;"><br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%; color: #4af626;">Not
+                yet implemented</td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><br> <span style="color: #4af626;">Not yet implemented &nbsp; <br> </span></td> 
+                        </tr>                         
+                        <tr> 
+                            <td style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 112px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                            <td style="background-color: #000000; height: 120px; text-align: center; vertical-align: middle; width: 80%;"><span style="color: #4af626;">Not yet implemented&nbsp;&nbsp;<br> 
+                  &nbsp;&nbsp;</span></td> 
+                        </tr>                         
+                    </tbody>                     
+                </table>                 
+            </figure>             
+            <p><span style="color: #4af626;"><br> </span></p> 
+            <p><span style="color: #4af626;"><br> </span></p> 
+        </div>         <span style="color: #4af626;"> </span> 
+    </body>     
+</html>
