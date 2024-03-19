@@ -51,7 +51,7 @@ function confirmRequest() {
 
 function checkDeviceId(deviceId) {
   var spreadsheetId = '1iLsLa3GrvZUG6KEicjbqCi6tyzSgDu82ED0VQw2vnj0';
-  var range = 'Sheet1!A:B'; // Assuming Device IDs are in column A and dates in column B
+  var range = 'Sheet1!A2:B'; // Assuming Device IDs start from cell A2 and dates in column B
 
   var url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&tq=SELECT%20A,B%20WHERE%20A%20=%20'${deviceId}'`;
 
