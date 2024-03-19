@@ -52,17 +52,30 @@ function confirmRequest() {
 
 function checkDeviceId(deviceId) {
   var spreadsheetId = '1iLsLa3GrvZUG6KEicjbqCi6tyzSgDu82ED0VQw2vnj0';
-  var range = 'Sheet1!A:A'; // Assuming Device IDs are in column A
+  var range = 'Sheet1!A:B'; // Assuming Device IDs are in column A and dates in column B
 
-  var url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&tq=SELECT%20A%20WHERE%20A%20=%20'${deviceId}'`;
+  var url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&tq=SELECT%20A,B%20WHERE%20A%20=%20'${deviceId}'`;
 
   fetch(url)
     .then(response => response.text())
     .then(data => {
-      var isDeviceIdFound = data.includes(deviceId);
-      if (isDeviceIdFound) {
-        alert("Device ID found in the spreadsheet.");
-        // Do something if Device ID is found
+      var jsonData = JSON.parse(data.substr(47).slice(0, -2));
+      if (jsonData.rows.length > 0) {
+        var row = jsonData.rows[0];
+        var dateStr = row.c[1].v;
+        var dateParts = dateStr.split('/');
+        var day = parseInt(dateParts[0], 10);
+        var month = parseInt(dateParts[1], 10) - 1; // Months are zero-based in JavaScript
+        var year = parseInt(dateParts[2], 10);
+        var dateValue = new Date(year, month, day);
+        var currentDate = new Date();
+        if (dateValue < currentDate) {
+          alert("Device ID found in the spreadsheet and the date has passed.");
+          // Do something if Device ID is found and the date has passed
+        } else {
+          alert("Device ID found in the spreadsheet but the date has not passed yet.");
+          // Do something if Device ID is found but the date has not passed yet
+        }
       } else {
         alert("Device ID not found in the spreadsheet.");
         // Do something if Device ID is not found
