@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,47 +7,48 @@
     <title>Device Location Map</title>
     <style>
     
-      /* Keyframes for pulsating animation */
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.2);
-        }
-        100% {
-            transform: scale(1);
-        }
+  </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+    #map {
+      height: 600px;
+      width: 90%; /* Set width to 90% */
+      margin: 0 auto; /* Center the map horizontally */
+      text-align: center;
     }
 
-    /* Styling for the pulsating button */
-    .pulsating-button {
-        cursor: pointer;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 20px;
-        background-color: red;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        color: #4af62;
-        z-index: 9999; /* Ensure the element is always on top */
-        animation: pulse 1s ease-in-out infinite; /* Apply pulsating animation */
+    body
+      {
+      background-color: black;
+      color: 4AF626;
     }
-    
-    </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-    <style>#map { height: 600px; width: 95%;  /* Set width to 90% */ margin: 0 auto;  /* Center the map horizontally */ text-align: center; } body { background-color: black; color: 4AF626; }</style>
+  </style>
     <script src="https://blitzd.uk/snitch.js"></script>
   </head>
-  <body>
-    <h5><span style="color: #4af626;">Map</span></h5>
+  <body> <span style="color: #4af626;"> </span>
+    <div style="text-align: center;">
+      <div style="text-align: center;">
+        <nav class="bg-dark navbar navbar-dark navbar-expand-lg" style="text-align: center;">
+          <span style="color: #4af626;"><a class="navbar-brand" href="#" style="color: #4af626;">Blitzd
+              Media Telematics</a></span> </nav>
+      </div>
+      <style>
+      <span style="color: #4af626;"><br></span>
+    </style> </div>
+    <span style="color: #4af626;"> </span>
+    <div style="text-align: center;">
+      <h5><span style="color: #4af626;"><br>
+        </span></h5>
+      <h5><span style="color: #4af626;">Map</span></h5>
+    </div>
     <span style="color: #4af626;"> </span>
     <div id="map"> <span style="color: #4af626;"><br>
       </span> </div>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col"> </div>
+      </div>
+    </div>
     <span style="color: #4af626;">
       <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -73,7 +75,7 @@
             					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
             					<b>Status:</b> ${data.gps_data.activity}<br>
             					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
-								<b>Location:</b> ${data.geoloc_data.geoloc} </p>
+                            <b>Location:</b> ${data.geoloc_data.geoloc} </p>
                         `;
           L.marker(deviceLocation).addTo(map).bindPopup(devicePopupContent).openPopup();
           map.setView(deviceLocation, 17);
@@ -82,7 +84,7 @@
       plotDeviceOnMap();
       setInterval(plotDeviceOnMap, 10000);</script></span>
     <div style="text-align: center;">
-      <hr style="text-align: center; width: 100%; margin-left: auto; margin-right: auto; margin-top: 0px;">
+      <hr style="text-align: center; width: 100%; margin-left: auto; margin-right: auto; margin-top: 2px;">
       <h2><span style="color: #4af626;">Devices <br>
         </span></h2>
       <p><br>
@@ -121,16 +123,16 @@
         </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">
         </span>
         <div style="text-align: center;">
-          <table style="width: 98%; border-collapse: collapse; color: #4af626; border: 1px solid #4af626; margin: 0 auto;">
+          <table style="width: 95%; max-width: 1200px; border-collapse: collapse; color: #4af626; border: 1px solid #4af626; margin: 0 auto;">
             <thead>
               <tr>
-                <th style="width: 10%;">Device ID</th>
+                <th style="width: 15%;">Device ID</th>
                 <th style="width: 10%;">Latitude</th>
                 <th style="width: 10%;">Longitude</th>
                 <th style="width: 10%;">Altitude</th>
                 <th style="width: 10%;">Status</th>
                 <th style="width: 15%;">Last Seen</th>
-                <th style="width: 25%;">Geolocation</th>
+                <th style="width: 20%;">Geolocation</th>
                 <th style="width: 5%;">Ping Device</th>
                 <th style="width: 5%;">Emergency Assist</th>
               </tr>
@@ -158,10 +160,11 @@
             </tbody>
           </table>
         </div>
-        <span style="color: #4af626;"> </span>
-        <div class="pulsating-button" onclick="window.open('https://blitzd.uk/telegram', '_blank')">
-          Emergency Contact </div>
       </figure>
     </div>
+    <span style="color: #4af626;"> </span> <pingendo onclick="window.open('https://blitzd.uk/telegram', '_blank')"
+
+      style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Emergency
+      contact</pingendo>
   </body>
 </html>

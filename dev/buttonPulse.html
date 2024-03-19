@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Assistance Simulation</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #000; /* Set the background color */
+    position: relative; /* Ensure positioning relative to the body */
+  }
+
+  .emergency-box {
+    position: fixed; /* Position the button fixed */
+    bottom: 20px; /* Adjust to your desired distance from the bottom */
+    right: 20px; /* Adjust to your desired distance from the right */
+    width: 200px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    background-color: red; /* Initial color */
+    border-radius: 20px; /* Make the button rounder */
+    text-align: center;
+    line-height: 40px;
+    font-family: Arial, sans-serif;
+    font-size: 14px; /* Adjust font size as needed */
+    color: white;
+    cursor: pointer; /* Change cursor to pointer on hover */
+    z-index: 9999; /* Ensure the button is always on top */
+  }
+
+  .emergency-box:hover {
+    background-color: darkred; /* Change color on hover */
+  }
+</style>
+</head>
+<body>
+<div class="emergency-box" onclick="confirmRequest()">Request Help</div>
+
+<script>
+function confirmRequest() {
+  if (confirm("You're about to request help. Do you want to continue?")) {
+    var deviceId = prompt("Please enter your Device ID:");
+    if (deviceId !== null && deviceId.trim() !== "") {
+      checkDeviceId(deviceId);
+    } else {
+      alert("Device ID cannot be empty.");
+    }
+  }
+}
+
+function checkDeviceId(deviceId) {
+  var spreadsheetId = '1iLsLa3GrvZUG6KEicjbqCi6tyzSgDu82ED0VQw2vnj0';
+  var range = 'Sheet1!A:A'; // Assuming Device IDs are in column A
+
+  var url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&tq=SELECT%20A%20WHERE%20A%20=%20'${deviceId}'`;
+
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      var isDeviceIdFound = data.includes(deviceId);
+      if (isDeviceIdFound) {
+        alert("Device ID found in the spreadsheet.");
+        // Do something if Device ID is found
+      } else {
+        alert("Device ID not found in the spreadsheet.");
+        // Do something if Device ID is not found
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Error checking Device ID.");
+    });
+}
+</script>
+
+</body>
+</html>

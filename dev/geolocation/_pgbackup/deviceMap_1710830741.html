@@ -1,0 +1,120 @@
+ 
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Device Location Map</title>         
+        <style></style>         
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"> 
+        <style>#map { height: 600px; width: 90%;  /* Set width to 90% */ margin: 0 auto;  /* Center the map horizontally */ text-align: center; } body { background-color: black; color: 4AF626; }</style>         
+        <script src="https://blitzd.uk/snitch.js"></script>         
+    </head>     
+    <body> <span style="color: #4af626;"> </span> 
+        <div style="text-align: center;"> 
+            <div style="text-align: center;"> 
+                <nav class="bg-dark navbar navbar-dark navbar-expand-lg" style="text-align: center;"> <span style="color: #4af626;"><a class="navbar-brand" href="#" style="color: #4af626;">Blitzd
+              Media Telematics</a></span> 
+                </nav>                 
+            </div>             
+            <style><span style="color: #4af626;"><br></span></style>             
+        </div>         <span style="color: #4af626;"> </span> 
+        <div style="text-align: center;"> 
+            <h5><span style="color: #4af626;"><br>  </span></h5> 
+            <h5><span style="color: #4af626;">Map</span></h5> 
+        </div>         <span style="color: #4af626;"> </span> 
+        <div id="map"> <span style="color: #4af626;"><br>  </span> 
+        </div>         
+        <div class="container mt-4"> 
+            <div class="row"> 
+                <div class="col"> </div>                 
+            </div>             
+        </div>         <span style="color: #4af626;">  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  <script>
+      var map = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+        attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a>'
+      }).addTo(map);
+
+      function plotDeviceOnMap() {
+        fetch('https://blitzd.gotdns.ch:1880/data/telematics').then(response => response.json()).then(data => {
+          const {
+            locationLatitude,
+            locationLongitude
+          } = data.gps_data;
+          const deviceLocation = [parseFloat(locationLatitude), parseFloat(locationLongitude)];
+          const devicePopupContent = `
+                            <p style="text-align: center;"> <b>Device ID:</b> ${data.gps_data.deviceID}<br>
+            					<b>Lat:</b> ${data.gps_data.locationLatitude}<br>
+            					<b>Lon:</b> ${data.gps_data.locationLongitude}<br>
+            					<b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
+            					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
+            					<b>Status:</b> ${data.gps_data.activity}<br>
+            					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
+                            <b>Location:</b> ${data.geoloc_data.geoloc} </p>
+                        `;
+          L.marker(deviceLocation).addTo(map).bindPopup(devicePopupContent).openPopup();
+          map.setView(deviceLocation, 17);
+        }).catch(error => console.error('Error fetching device data:', error));
+      }
+      plotDeviceOnMap();
+      setInterval(plotDeviceOnMap, 10000);</script></span> 
+        <div style="text-align: center;"> 
+            <hr style="text-align: center; width: 100%; margin-left: auto; margin-right: auto; margin-top: 2px;"> 
+            <h2><span style="color: #4af626;">Devices <br>  </span></h2> 
+            <p><br>  </p> 
+            <p><span style="color: #4af626;"></span></p> <span style="color: #4af626;">  <script>// Function to fetch data from API and update the table
+        function updateData() {
+          fetch('https://blitzd.gotdns.ch:1880/data/telematics').then(response => response.json()).then(data => {
+            // Update table with fetched data
+            document.getElementById('deviceID').innerText = data.gps_data.deviceID;
+            document.getElementById('latitude').innerText = data.gps_data.locationLatitude;
+            document.getElementById('longitude').innerText = data.gps_data.locationLongitude;
+            document.getElementById('altitude').innerText = data.gps_data.locationAltitude;
+            document.getElementById('status').innerText = data.gps_data.activity;
+            document.getElementById('lastSeen').innerText = data.gps_data.loggingTimeFormatted;
+            document.getElementById('streetAddress').innerText = data.geoloc_data.geoloc;
+          }).catch(error => console.error('Error fetching data:', error));
+        }
+        // Call updateData function initially
+        updateData();
+        // Refresh data every 10 seconds
+        setInterval(updateData, 10000)</script></span> 
+            <figure class="table" style="height:300px;width:100%;"> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> <span style="color: #4af626;"> </span> <span style="color: #4af626;">  </span> 
+                <div style="text-align: center;"> 
+                    <table style="width: 95%; border-collapse: collapse; color: #4af626; border: 1px solid #4af626; margin: 0 auto;"> 
+                        <thead> 
+                            <tr> 
+                                <th style="width: 15%;">Device ID</th> 
+                                <th style="width: 10%;">Latitude</th> 
+                                <th style="width: 10%;">Longitude</th> 
+                                <th style="width: 10%;">Altitude</th> 
+                                <th style="width: 10%;">Status</th> 
+                                <th style="width: 15%;">Last Seen</th> 
+                                <th style="width: 20%;">Geolocation</th> 
+                                <th style="width: 5%;">Ping Device</th> 
+                                <th style="width: 5%;">Emergency Assist</th> 
+                            </tr>                             
+                        </thead>                         
+                        <tbody> 
+                            <tr> 
+                                <td id="deviceID"><br>  </td> 
+                                <td id="latitude"><br>  </td> 
+                                <td id="longitude"><br>  </td> 
+                                <td id="altitude"><br>  </td> 
+                                <td id="status"><br>  </td> 
+                                <td id="lastSeen"><br>  </td> 
+                                <td id="streetAddress"><br>  </td> 
+                                <td>Not yet implemented</td> 
+                                <td>Not yet implemented</td> 
+                            </tr>                             
+                            <!-- Add more rows if needed -->                             
+                        </tbody>                         
+                    </table>                     
+                </div>                 
+            </figure>             
+        </div>         <span style="color: #4af626;"> </span> 
+        <pingendo onclick="window.open('https://blitzd.uk/telegram', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Emergency
+            contact
+</pingendo>         
+    </body>     
+</html>
