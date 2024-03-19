@@ -51,10 +51,8 @@ function confirmRequest() {
 }
 
 function checkDeviceId(deviceId) {
-  var spreadsheetId = '1iLsLa3GrvZUG6KEicjbqCi6tyzSgDu82ED0VQw2vnj0';
-  var range = 'Sheet1!A2:B'; // Assuming Device IDs start from cell A2 and dates in column B
-
-  var url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json&tq=SELECT%20A,B%20WHERE%20A%20=%20'${deviceId}'`;
+  var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1iLsLa3GrvZUG6KEicjbqCi6tyzSgDu82ED0VQw2vnj0';
+  var url = spreadsheetUrl + '/gviz/tq?tqx=out:json&tq=SELECT%20A,B';
 
   fetch(url)
     .then(response => response.text())
@@ -62,9 +60,11 @@ function checkDeviceId(deviceId) {
       var match = data.match(/google\.visualization\.Query\.setResponse\((.*)\)/);
       if (match) {
         var jsonData = JSON.parse(match[1]);
-        if (jsonData.table.rows.length > 0) {
-          var row = jsonData.table.rows[0];
-          var dateStr = row.c[1].v;
+        var deviceIds = jsonData.table.rows.map(row => row.c[0].v);
+        var dates = jsonData.table.rows.map(row => row.c[1].v);
+        var index = deviceIds.indexOf(deviceId);
+        if (index !== -1) {
+          var dateStr = dates[index];
           var dateParts = dateStr.split('/');
           var day = parseInt(dateParts[0], 10);
           var month = parseInt(dateParts[1], 10) - 1; // Months are zero-based in JavaScript
