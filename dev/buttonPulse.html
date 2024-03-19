@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Assistance Simulation</title>
-    <style>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Assistance Simulation</title>
+<style>
   body {
     margin: 0;
     padding: 0;
@@ -34,10 +34,11 @@
     background-color: darkred; /* Change color on hover */
   }
 </style>
-  </head>
-  <body>
-    <div class="emergency-box" onclick="confirmRequest()">Request Help</div>
-    <script>
+</head>
+<body>
+<div class="emergency-box" onclick="confirmRequest()">Request Help</div>
+
+<script>
 function confirmRequest() {
   if (confirm("You're about to request help. Do you want to continue?")) {
     var deviceId = prompt("Please enter your Device ID:");
@@ -71,7 +72,9 @@ function checkDeviceId(deviceId) {
           var dateValue = new Date(year, month, day);
           var currentDate = new Date();
           if (dateValue < currentDate) {
-            alert("Device ID found in the spreadsheet and the date has passed.");
+            var timeDifference = currentDate.getTime() - dateValue.getTime();
+            var daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            alert(`Device ID found in the spreadsheet and the date has passed. It has been ${daysDifference} days since.`);
             // Do something if Device ID is found and the date has passed
           } else {
             alert("Device ID found in the spreadsheet but the date has not passed yet.");
@@ -91,5 +94,6 @@ function checkDeviceId(deviceId) {
     });
 }
 </script>
-  </body>
+
+</body>
 </html>
