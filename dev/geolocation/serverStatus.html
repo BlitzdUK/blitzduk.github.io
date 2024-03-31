@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Connection Check</title>
+    <script>
+    function checkServerConnection() {
+        var xhr = new XMLHttpRequest();
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Connection successful
+                    console.log("Server is reachable.");
+                } else {
+                    // Connection failed or server error
+                    console.log("Server connection failed. Status: " + xhr.status);
+                    alert("Server connection failed. Please try again later.");
+                }
+            }
+        };
+        
+        xhr.open("GET", "https://blitzd.gotdns.ch:1880/data/", true);
+        xhr.timeout = 5000;
+        xhr.send();
+    }
+
+    window.onload = function() {
+        checkServerConnection();
+    };
+</script>
+  </head>
+  <body>
+    <!-- Your HTML content goes here -->
+    
+  </body>
+</html>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emergency Assistance Simulation</title>
-<style>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Assistance Simulation</title>
+    <style>
   body {
     margin: 0;
     padding: 0;
@@ -34,11 +34,41 @@
     background-color: darkred; /* Change color on hover */
   }
 </style>
-</head>
-<body>
-<div class="emergency-box" onclick="confirmRequest()">Request Help</div>
+  </head>
+  <body>
+    <div class="emergency-box" onclick="confirmRequest()">Request
+      Help</div>
+    
+    
+    <script>
+    function checkServerConnection() {
+        var xhr = new XMLHttpRequest();
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Connection successful
+                    console.log("Server is reachable.");
+                } else {
+                    // Connection failed or server error
+                    console.log("Server connection failed. Status: " + xhr.status);
+                    alert("Server connection failed. Please try again later.");
+                }
+            }
+        };
+        
+        xhr.open("GET", "https://blitzd.gotdns.ch:1880/data/", true);
+        xhr.timeout = 5000;
+        xhr.send();
+    }
 
-<script>
+    window.onload = function() {
+        checkServerConnection();
+    };
+</script>
+    
+    
+    <script>
 function confirmRequest() {
   if (confirm("You're about to request help. Do you want to continue?")) {
     var deviceId = prompt("Please enter your Device ID:");
@@ -74,6 +104,5 @@ function checkDeviceId(deviceId) {
     });
 }
 </script>
-
-</body>
+  </body>
 </html>
