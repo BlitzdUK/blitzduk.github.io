@@ -3,36 +3,77 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Connection Check</title>
+    <title>Server Status Checker</title>
+    <style>
+    .server-status {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 5px;
+        background-color: grey;
+        transition: background-color 0.3s ease;
+        animation: pulse 1s infinite alternate;
+    }
+    .server-status.online {
+        background-color: green;
+        animation: none; /* Stop pulsating animation when online */
+    }
+    .server-status.offline {
+        background-color: red;
+        animation: none; /* Stop pulsating animation when offline */
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.2); }
+    }
+</style>
+  </head>
+  <body>
+    <h1>Blitzd Server Status: </h1>
+    <h1><span id="serverName">Telematics</span>
+      <div class="server-status" id="statusIndicator"></div>
+    </h1>
     <script>
-    function checkServerConnection() {
+    function checkServerStatus() {
+        var url = "https://blitzd.gotdns.ch:1880";
+        var indicator = document.getElementById("statusIndicator");
+
         var xhr = new XMLHttpRequest();
-        
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Connection successful
-                    console.log("Server is reachable.");
-                } else {
-                    // Connection failed or server error
-                    console.log("Server connection failed. Status: " + xhr.status);
-                    alert("Oh no! Those pesky gremlins are at it again, causing chaos with our servers like an unmediated ADHD kid with a bad cocaine habit! They’ve even targeted our database with their mischievous pranks. But fear not, our crack team of geeks with weapons grade autism are on the case. Sorry for the inconvenience, we’ll sort this out ASAP!");
-                }
+        xhr.open("GET", url, true);
+        xhr.timeout = 5000; // Set timeout to 5 seconds
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Server is reachable
+                indicator.classList.remove("offline");
+                indicator.classList.add("online");
+            } else {
+                // Server is not reachable
+                indicator.classList.remove("online");
+                indicator.classList.add("offline");
             }
         };
-        
-        xhr.open("GET", "https://blitzd.gotdns.ch:1880/data/telematics", true);
-        xhr.timeout = 5000;
+
+        xhr.onerror = function () {
+            // Request failed
+            indicator.classList.remove("online");
+            indicator.classList.add("offline");
+        };
+
+        xhr.ontimeout = function () {
+            // Request timed out
+            indicator.classList.remove("online");
+            indicator.classList.add("offline");
+        };
+
         xhr.send();
     }
 
-    window.onload = function() {
-        checkServerConnection();
-    };
+    // Check server status initially and every 5 seconds
+    checkServerStatus();
+    setInterval(checkServerStatus, 5000);
 </script>
-  </head>
-  <body>
-    <!-- Your HTML content goes here -->
-    
   </body>
 </html>
