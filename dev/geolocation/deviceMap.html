@@ -43,7 +43,10 @@
     <script src="https://blitzd.uk/snitch.js"></script>
   </head>
   <body>
-    <h5><span style="color: #4af626;">Map</span></h5>
+    <h1 style=" text-align: center;"><span style="color: #4af626;">Blitzd Media
+        Telematics</span></h1>
+    <p><br>
+    </p>
     <span style="color: #4af626;"> </span>
     <div id="map"> <span style="color: #4af626;"><br>
       </span> </div>
@@ -72,7 +75,7 @@
             					<b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
             					<b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
             					<b>Status:</b> ${data.gps_data.activity}<br>
-            					<b>Last Seen:</b> ${data.gps_data.loggingTimeFormatted}<br>
+            					<b>Last Seen:</b> ${data.gps_data.loggingTime}<br>
 								<b>Location:</b> ${data.geoloc_data.geoloc} </p>
                         `;
           L.marker(deviceLocation).addTo(map).bindPopup(devicePopupContent).openPopup();

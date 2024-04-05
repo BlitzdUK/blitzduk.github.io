@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Connection Check</title>
-    <script>
-    function checkServerConnection() {
+function checkServerConnection() {
         var xhr = new XMLHttpRequest();
         
         xhr.onreadystatechange = function() {
@@ -29,10 +22,3 @@
     window.onload = function() {
         checkServerConnection();
     };
-</script>
-  </head>
-  <body>
-    <!-- Your HTML content goes here -->
-    
-  </body>
-</html>
