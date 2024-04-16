@@ -40,12 +40,10 @@ button[type="submit"] {
   <body>
     <div class="container" style="text-align: center;">
       <h2>Blitzd Credits</h2>
-      <form id="myForm"> <label for="useCredit">Use Credit:</label> <input id="useCredit"
-
+      <form id="myForm"> <label for="useCredit">Use Credit:</label> <input id="useCredit"
           name="useCredit" value="0" required="" type="number"><br>
         <br>
-        <label for="addCredit">Add Credit:</label> <input id="addCredit" name="addCredit"
-
+        <label for="addCredit">Add Credit:</label> <input id="addCredit" name="addCredit"
           value="0" required="" type="number"><br>
         <br>
         <button type="submit" id="submitBtn">Submit</button> </form>
@@ -77,10 +75,10 @@ button[type="submit"] {
         alert('An error occurred while submitting the form.');
       });
     });
-  </script>
-    </div>
-    <div id="creditsDisplay"></div>
-    <script>
+  </script> </div>
+    <div id="creditsDisplay" style="text-align: center;"></div>
+    <div style="text-align: center;">
+      <script>
 // Function to make HTTP GET request
 function fetchCredits() {
     fetch('https://blitzd.gotdns.ch:1880/data/credits')
@@ -99,6 +97,6 @@ function fetchCredits() {
 
 // Call fetchCredits function when the page loads
 window.onload = fetchCredits;
-</script>
+</script></div>
   </body>
 </html>
