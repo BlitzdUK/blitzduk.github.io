@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blitzd Licensing</title>
-<style>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitzd Licensing</title>
+    <style>
+      
+		body {
+			background-color: aquamarine;
+			color: 4AF626;
+		}
+		
 .container {
   max-width: 400px;
   margin: 0 auto;
@@ -30,20 +36,22 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
 }
-</style>
-</head>
-<body>
-  <div class="container">
-    <h2>Form</h2>
-    <form id="myForm">
-      <label for="useCredit">Use Credit:</label>
-      <input type="number" id="useCredit" name="useCredit" value="0" required><br><br>
-      <label for="addCredit">Add Credit:</label>
-      <input type="number" id="addCredit" name="addCredit" value="0" required><br><br>
-      <button type="submit" id="submitBtn">Submit</button>
-    </form>
-  </div>
-  <script>
+</style> </head>
+  <body>
+    <div class="container" style="text-align: center;">
+      <h2>Blitzd Credits</h2>
+      <form id="myForm"> <label for="useCredit">Use Credit:</label> <input id="useCredit"
+
+          name="useCredit" value="0" required="" type="number"><br>
+        <br>
+        <label for="addCredit">Add Credit:</label> <input id="addCredit" name="addCredit"
+
+          value="0" required="" type="number"><br>
+        <br>
+        <button type="submit" id="submitBtn">Submit</button> </form>
+    </div>
+    <div style="text-align: center;">
+      <script>
     document.getElementById('myForm').addEventListener('submit', function(event) {
       event.preventDefault();
       var useCredit = document.getElementById('useCredit').value;
@@ -70,5 +78,27 @@ button[type="submit"] {
       });
     });
   </script>
-</body>
+    </div>
+    <div id="creditsDisplay"></div>
+    <script>
+// Function to make HTTP GET request
+function fetchCredits() {
+    fetch('https://blitzd.gotdns.ch:1880/data/credits')
+    .then(response => response.json())
+    .then(data => {
+        // Extract credits from the JSON response
+        const credits = data.credits;
+        // Display credits in HTML
+        document.getElementById('creditsDisplay').innerHTML = 'Credits: ' + credits;
+    })
+    .catch(error => {
+        console.error('Error fetching credits:', error);
+        document.getElementById('creditsDisplay').innerHTML = 'Error fetching credits';
+    });
+}
+
+// Call fetchCredits function when the page loads
+window.onload = fetchCredits;
+</script>
+  </body>
 </html>

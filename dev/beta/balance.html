@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display Credits</title>
+</head>
+<body>
+
+<div id="creditsDisplay"></div>
+
+<script>
+// Function to make HTTP GET request
+function fetchCredits() {
+    fetch('https://blitzd.gotdns.ch:1880/data/credits')
+    .then(response => response.json())
+    .then(data => {
+        // Extract credits from the JSON response
+        const credits = data.credits;
+        // Display credits in HTML
+        document.getElementById('creditsDisplay').innerHTML = 'Credits: ' + credits;
+    })
+    .catch(error => {
+        console.error('Error fetching credits:', error);
+        document.getElementById('creditsDisplay').innerHTML = 'Error fetching credits';
+    });
+}
+
+// Call fetchCredits function when the page loads
+window.onload = fetchCredits;
+</script>
+
+</body>
+</html>
