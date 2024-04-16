@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blitzd Licensing</title>
+<style>
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>Form</h2>
+    <form id="myForm">
+      <label for="useCredit">Use Credit:</label>
+      <input type="number" id="useCredit" name="useCredit" value="0" required><br><br>
+      <label for="addCredit">Add Credit:</label>
+      <input type="number" id="addCredit" name="addCredit" value="0" required><br><br>
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var useCredit = document.getElementById('useCredit').value;
+      var addCredit = document.getElementById('addCredit').value;
+      var url = 'https://docs.google.com/forms/d/e/1FAIpQLScofv5yjjZvsu3NASKu5k_b0IbAY5jsf20YAf1cF6n-A0PCSQ/formResponse?entry.1594623109=' + useCredit + '&entry.1980400740=' + addCredit;
+      fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(function(response) {
+        if (response.ok) {
+          alert('Form submitted successfully!');
+          document.getElementById('myForm').reset();
+        } else {
+          alert('Form submission failed!');
+        }
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+        alert('An error occurred while submitting the form.');
+      });
+    });
+  </script>
+</body>
+</html>

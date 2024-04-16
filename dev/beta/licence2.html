@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display CSV Column F</title>
+    <style>
+        /* Add your styles here if needed */
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        window.onload = function() {
+            fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vS1_lzAxrQ3EUQAlJDuBLDZsFaZ83--GPysnbPRRahTZieV6FwR0potUl7Xmp93PQHOsXijGZ_cCBMk/pub?output=csv')
+                .then(response => response.text())
+                .then(csvData => {
+                    const rows = csvData.split('\n');
+                    const values = rows.map(row => row.split(','));
+
+                    // Assuming the header row is the first row
+                    const headerRow = values[0];
+                    const columnIndex = headerRow.indexOf('F'); // Column F
+
+                    if (columnIndex !== -1) {
+                        // Find values in column F
+                        const columnFValues = values.slice(1).map(row => row[columnIndex]);
+
+                        // Display values in HTML
+                        const outputDiv = document.getElementById('output');
+                        outputDiv.innerHTML = '<h1>Values in Column F:</h1>';
+                        outputDiv.innerHTML += '<ul>';
+                        columnFValues.forEach(value => {
+                            outputDiv.innerHTML += `<li>${value}</li>`;
+                        });
+                        outputDiv.innerHTML += '</ul>';
+                    } else {
+                        console.error('Column F not found in CSV data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching CSV data:', error);
+                });
+        };
+    </script>
+</body>
+</html>
