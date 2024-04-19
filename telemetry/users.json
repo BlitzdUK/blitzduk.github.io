@@ -1,20 +1,15 @@
 {
-    "users": [
-      {
-        "username": "oliver",
-        "password": "$2a$12$.U4jOlZPqOg/ngu6awwK/egb5EvjRXxwzi84eugaMGXqrngi00hEq",
-        "permissions": ["page1", "page2"]
-      },
-      {
-        "username": "user2",
-        "password": "hashed_password2",
-        "permissions": ["page2", "page3"]
-      },
-      {
-        "username": "user3",
-        "password": "hashed_password3",
-        "permissions": ["page3", "page4"]
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "username": "user1",
+      "password": "hashed_password1",
+      "permissions": ["page1", "page2"]
+    },
+    {
+      "username": "user2",
+      "password": "hashed_password2",
+      "permissions": ["page2", "page3"]
+    },
+    // Add more users as needed
+  ]
+}

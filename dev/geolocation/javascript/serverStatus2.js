@@ -9,7 +9,7 @@ function checkServerConnection() {
             } else {
                 // Connection failed or server error
                 console.log("Server connection failed. Status: " + xhr.status);
-                alert("Oh no! Those pesky gremlins are at it again, causing chaos with our servers like an unmediated ADHD kid with a bad cocaine habit! They’ve even targeted our database with their mischievous pranks. But fear not, our crack team of geeks with weapons grade autism are on the case. Sorry for the inconvenience, we’ll sort this out ASAP!");
+                alert("Oh no! Those pesky gremlins are at it again, causing chaos with our servers like an unmediated ADHD kid with a bad cocaine habit! This time they've choosen to target our database with their pranks. But fear not, our crack team of geeks with weapons grade autism are on the case. Sorry for the inconvenience, we’ll sort this out ASAP!");
             }
         }
     };
