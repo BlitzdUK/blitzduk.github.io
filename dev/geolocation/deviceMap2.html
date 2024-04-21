@@ -1,259 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/font-awesome.min.css">
-    <link rel="stylesheet" href="./style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Device Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <title>Device Location Map</title>
     <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-		background-color: black;
-      color: white;
-    }
-
-    #map {
-      height: 75vh;
-      width: 75vw;
-    }
-  </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  </head>
-  <body>
-    <nav class="navbar navbar-default no-margin">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header fixed-brand"> <button type="button" class="navbar-toggle collapsed"
-
-          data-toggle="collapse" id="menu-toggle"> <span class="glyphicon glyphicon-th-large"
-
-            aria-hidden="true"></span> </button>
-        <a class="navbar-brand" href="#"><em class="fa fa-rocket fa-4"></em> Blitzd Media Asset Tracking and
-      Recovery</a></div>
-      <!-- navbar-header-->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"> <button class="navbar-toggle collapse in" data-toggle="collapse"
-
-              id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-            </button> </li>
-        </ul>
-      </div>
-      <!-- bs-example-navbar-collapse-1 --> </nav>
-    <div id="wrapper">
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-          <li class="active"> <a href="#"><span class="fa-stack fa-lg pull-left"><i
-
-                  class="fa fa-dashboard fa-stack-1x "></i></span> Dashboard</a>
-            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-              <li style="background-color: black;"><span style="color: white;">Coming
-                  soon</span></li>
-              <li><span style="color: white;">Coming soon</span></li>
-            </ul>
-          </li>
-          <li> <a href="#"><span class="fa-stack fa-lg pull-left"></span>Shortcuts</a>
-            <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-              <li><a href="#"><span class="fa-stack fa-lg pull-left"></span>Coming
-                  soon</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- /#sidebar-wrapper -->
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <div class="container-fluid xyz">
-          <div class="row">
-            <div class="col-lg-12">
-              <div id="map"></div>
-              <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-              <script>
-    // Initialize the map
-    var map = L.map('map').setView([0, 0], 2); // Default view at (0, 0)
-
-    L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
-  attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a> '
-}).addTo(map);
-
-
-    // Function to update the map with the device location and open popup
-    function updateMap(locationData) {
-      var latitude = parseFloat(locationData.locationLatitude);
-      var longitude = parseFloat(locationData.locationLongitude);
-
-      // Clear previous markers
-      map.eachLayer(function (layer) {
-        if (layer instanceof L.Marker) {
-          layer.remove();
+        /* Keyframes for pulsating animation */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
-      });
 
-      // Add a new marker for the updated location
-      var marker = L.marker([latitude, longitude]).addTo(map);
+        /* Styling for the pulsating button */
+        .pulsating-button {
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: red;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #4af62;
+            z-index: 9999; /* Ensure the element is always on top */
+            animation: pulse 1s ease-in-out infinite; /* Apply pulsating animation */
+        }
 
-      // Create a popup with device ID and logging time
-      var popupContent = `
-        <h5 style="text-align: center;"> <b>DeviceID:</b>
-          ${locationData.deviceID}<br>
-          <b>Lat:</b> ${locationData.locationLatitude}<br>
-          <b>Lon:</b> ${locationData.locationLongitude}<br>
-          <b>Alt:</b> ${locationData.locationAltitude} m<br>
-<b>Speed:</b> ${locationData.locationSpeed} mph<br>
-          <b>Status:</b> ${locationData.activity}<br>
-          <b>Last Seen:</b> ${locationData.loggingTimeFormatted} </h5>
-		
-      `;
+        #map {
+            height: 600px;
+            width: 95%;
+            margin: 0 auto; /* Center the map horizontally */
+            text-align: center;
+        }
 
-      marker.bindPopup(popupContent, { closeOnClick: false }).openPopup();
+        body {
+            background-color: black;
+            color: #4af626;
+            text-align: center; /* Center align text */
+        }
 
-      map.setView([latitude, longitude], 19); // Set map view centered around the new location
+        table {
+            width: 98%;
+            border-collapse: collapse;
+            color: #4af626;
+            border: 1px solid #4af626;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+
+        th {
+            background-color: #4af626;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: rgba(74, 246, 38, 0.2);
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: rgba(74, 246, 38, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://blitzd.uk/snitch.js"></script>
+    <script src="https://blitzd.uk/dev/geolocation/javascript/serverStatus2.js"></script>
+</head>
+<body>
+<h1>Blitzd Media Telematics</h1>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    var map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+        attribution: 'In emergencies, avoid relying solely on location data; prioritize direct communication with emergency services for accurate assistance. | OpenStreetMap contributors | Blitzd Media © | <a href="https://blitzd.uk/telegram" target="_blank">Contact Us</a>'
+    }).addTo(map);
+
+    function plotDeviceOnMap() {
+        fetch('https://blitzd.gotdns.ch:1880/data/telematics')
+            .then(response => response.json())
+            .then(data => {
+                const {
+                    locationLatitude,
+                    locationLongitude
+                } = data.gps_data;
+                const deviceLocation = [parseFloat(locationLatitude), parseFloat(locationLongitude)];
+                const devicePopupContent = `
+                    <p><b>Device ID:</b> ${data.gps_data.deviceID}<br>
+                    <b>Lat:</b> ${data.gps_data.locationLatitude}<br>
+                    <b>Lon:</b> ${data.gps_data.locationLongitude}<br>
+                    <b>Alt:</b> ${data.gps_data.locationAltitude} m<br>
+                    <b>Speed:</b> ${data.gps_data.locationSpeed} mph<br>
+                    <b>Status:</b> ${data.gps_data.activity}<br>
+                    <b>Last Seen:</b> ${data.gps_data.loggingTime}<br>
+                    <b>Location:</b> ${data.geoloc_data.geoloc}</p>
+                `;
+                L.marker(deviceLocation).addTo(map).bindPopup(devicePopupContent).openPopup();
+                map.setView(deviceLocation, 17);
+            })
+            .catch(error => console.error('Error fetching device data:', error));
     }
-
-    // Function to fetch device location from the API
-    function fetchDeviceLocation() {
-      fetch('https://blitzd.gotdns.ch:1880/data/gps')
-        .then(response => response.json())
-        .then(data => {
-          updateMap(data);
-        })
-        .catch(error => {
-          console.error('Error fetching device location:', error);
-        });
-    }
-
-    // Fetch device location initially and then every 10 seconds (adjust as needed)
-    fetchDeviceLocation();
-    setInterval(fetchDeviceLocation, 10000);
-  </script>
-              <script src="https://blitzd.uk/snitch.js"></script>
-              <p> </p>
-              <p style="text-align: center;"> </p>
-              <div style="text-align: center;"> <button style="height: 57px;" id="pingButton">Ping
-                  Device</button> </div>
-              <!-- Container for the confirmation message -->
-              <div id="confirmationMessage" style="text-align: center; display: none;"></div>
-              <script>
-    document.getElementById('pingButton').addEventListener('click', function() {
-        // Disable the button
-        document.getElementById('pingButton').disabled = true;
-
-        // Create an object with the data you want to send in the request body
-        const requestData = {
-            message: 'This device has been pinged from the map'
-            // You can add more data if needed
-        };
-
-        // Make a POST request using the Fetch API
-        fetch('https://ntfy.sh/blitzd', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Set the appropriate content type
-            },
-            body: JSON.stringify(requestData), // Convert the data to JSON format
-        })
-        .then(response => {
-            // Handle the response if needed
-            console.log('Request successful', response);
-
-            // Display confirmation message
-            document.getElementById('confirmationMessage').innerText = 'Device has been pinged!';
-            document.getElementById('confirmationMessage').style.display = 'block';
-
-            // Re-enable the button after 10 seconds
-            setTimeout(function() {
-                document.getElementById('pingButton').disabled = false;
-                document.getElementById('confirmationMessage').style.display = 'none';
-            }, 10000);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('Error:', error);
-            
-            // Display error message if needed
-            document.getElementById('confirmationMessage').innerText = 'Error occurred!';
-            document.getElementById('confirmationMessage').style.display = 'block';
-
-            // Re-enable the button after 10 seconds
-            setTimeout(function() {
-                document.getElementById('pingButton').disabled = false;
-                document.getElementById('confirmationMessage').style.display = 'none';
-            }, 10000);
-        });
-    });
-</script> </div> </div>
-          <p>
-            
-          </p>
-        </div>
-        <table style="width: 500px; height: 39px; text-align: left; margin-left: auto; margin-right: auto;"
-
-          border="1">
-          <thead>
-            <tr>
-              <th style="width: 101.45px; text-align: center;">DeviceID</th>
-              <th style="width: 383.75px; text-align: center;">Closest
-                GeocodedAddress</th>
-            </tr>
-          </thead>
-          <tbody id="data-table-body">
-          </tbody>
-        </table>
-        <div style="text-align: center;">
-          <script>
-  // Function to make HTTP GET request
-  function fetchData() {
-    var url = 'https://blitzd.gotdns.ch:1880/data/geoloc';
-
-    // Using Fetch API to make the GET request
-    fetch(url)
-      .then(response => response.json())
-      .then(data => displayData(data))
-      .catch(error => console.error('Error:', error));
-  }
-
-  // Function to display data in the HTML table
-  function displayData(data) {
-    var tableBody = document.getElementById('data-table-body');
-    
-    // Clear existing table rows
-    tableBody.innerHTML = '';
-
-    // Create the first row with a blank cell in the first column
-    var firstRow = tableBody.insertRow();
-    var cell1Row1 = firstRow.insertCell(0);
-    var cell2Row1 = firstRow.insertCell(1);
-
-    cell1Row1.textContent = ''; // Leave blank
-    cell2Row1.textContent = ''; // No value for the first row
-
-    // Create the second row with the 'geoloc' property and its value
-    var secondRow = tableBody.insertRow();
-    var cell1Row2 = secondRow.insertCell(0);
-    var cell2Row2 = secondRow.insertCell(1);
-
-    cell1Row2.textContent = 'blitzd-iphone';
-    cell2Row2.textContent = data.geoloc;
-  }
-
-  // Call the fetchData function when the page loads
-  window.onload = fetchData;
-
-  // Refresh the data every ten seconds
-  setInterval(fetchData, 10000);
-</script></div> </div>
-      <!-- /#page-content-wrapper --> </div>
-    <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"> </script>
-    <script src="./script.js"></script>
-  </body>
+    plotDeviceOnMap();
+    setInterval(plotDeviceOnMap, 10000);
+</script>
+<hr>
+<h2>Devices</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Device ID</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Altitude</th>
+        <th>Status</th>
+        <th>Last Seen</th>
+        <th>Geolocation</th>
+        <th>Ping Device</th>
+        <th>Emergency Assist</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td id="deviceID"></td>
+        <td id="latitude"></td>
+        <td id="longitude"></td>
+        <td id="altitude"></td>
+        <td id="status"></td>
+        <td id="lastSeen"></td>
+        <td id="streetAddress"></td>
+        <td>Not yet implemented</td>
+        <td>Not yet implemented</td>
+    </tr>
+    <!-- Add more rows if needed -->
+    </tbody>
+</table>
+<div class="pulsating-button" onclick="window.open('https://blitzd.uk/telegram', '_blank')">Emergency Contact</div>
+</body>
 </html>
-<!-- partial -->
