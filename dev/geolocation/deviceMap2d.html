@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <!-- Apple Web App meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Admin Panel">
+  <link rel="apple-touch-icon" href="/path/to/apple-touch-icon.png">
+  <link rel="apple-touch-startup-image" href="/path/to/apple-startup-image.png">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Page Description Meta Tag -->
+  <meta name="description" content="This is an asset tracker to track and monitor devices and their sensor data on a map.">
+  <style>
+    body {
+      background-color: black;
+      color: #4AF626; /* Terminal green */
+    }
+    #map {
+      width: 90%;
+      height: 600px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4">Admin Panel</h1>
+    <div id="map" class="mt-4"></div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script>
+    // Function to fetch device location from API and display on map
+    function showDeviceLocation() {
+      fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
+        .then(response => response.json())
+        .then(data => {
+          const { lat, lon, deviceID, speed, activity, barometer, loggingTime } = data;
+          const map = L.map('map').setView([lat, lon], 16);
+          L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+            maxZoom: 19,
+          }).addTo(map);
+          const popupContent = `
+            <h5 style="text-align: center;"><strong>Device Location:</strong><br />Device ID: ${deviceID}<br />Latitude: ${lat}<br />Longitude: ${lon}<br />Speed: ${speed}<br />Activity: ${activity}<br />Barometer: ${barometer}<br />Logging Time: ${loggingTime}</h5>
+          `;
+          L.marker([lat, lon]).addTo(map)
+            .bindPopup(popupContent).openPopup();
+        })
+        .catch(error => console.error('Error fetching device location:', error));
+    }
+
+    // Show device location initially
+    showDeviceLocation();
+
+    // Refresh device location every 10 seconds
+    setInterval(showDeviceLocation, 10000);
+  </script>
+</body>
+</html>

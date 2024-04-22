@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <style>
+    body {
+      background-color: black;
+      color: #4AF626; /* Terminal green */
+    }
+    #map {
+      height: 400px;
+    }
+    #popupText {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      background-color: black;
+      color: #4AF626;
+      padding: 20px;
+      border-radius: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4">Admin Panel</h1>
+    <button id="popupBtn" class="btn btn-primary mt-4">Show Device Location</button>
+    <div id="map" class="mt-4"></div>
+    <div id="popupText"></div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script>
+    // Function to fetch device location from API and display on map
+    function showDeviceLocation() {
+      fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
+        .then(response => response.json())
+        .then(data => {
+          const { lat, lon } = data;
+          const map = L.map('map').setView([lat, lon], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+          }).addTo(map);
+          L.marker([lat, lon]).addTo(map)
+            .bindPopup(`<b>Device Location:</b><br>Latitude: ${lat}<br>Longitude: ${lon}`).openPopup();
+        })
+        .catch(error => console.error('Error fetching device location:', error));
+    }
+
+    // Show popup text
+    document.getElementById('popupBtn').addEventListener('click', () => {
+      document.getElementById('popupText').style.display = 'block';
+      showDeviceLocation();
+    });
+  </script>
+</body>
+</html>
