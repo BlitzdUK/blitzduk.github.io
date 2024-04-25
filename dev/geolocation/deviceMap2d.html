@@ -7,7 +7,7 @@
   <!-- Bootstrap CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
   <!-- Apple Web App meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -27,45 +27,108 @@
       height: 600px;
       margin: 0 auto;
     }
+    .container {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+    #dynamic-table {
+      margin-top: 20px;
+      width: 90%;
+      margin: 0 auto;
+    }
+    #dynamic-table th, #dynamic-table td {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="mt-4">Admin Panel</h1>
-    <div id="map" class="mt-4"></div>
-  </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Leaflet JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-  <script>
-    // Function to fetch device location from API and display on map
-    function showDeviceLocation() {
-      fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
-        .then(response => response.json())
-        .then(data => {
-          const { lat, lon, deviceID, speed, activity, barometer, loggingTime } = data;
-          const map = L.map('map').setView([lat, lon], 16);
+<div class="container">
+  <h1 class="mt-4"><b>Blitzd Media Asset &amp; Fleet Tracking</b></h1>
+  <p><br></p>
+  <div id="map" class="mt-4"></div>
+  <p> <br></p>
+  <table id="dynamic-table" class="rwd-table">
+    <thead>
+    <tr>
+      <th>Device ID</th>
+      <th>Lat</th>
+      <th>Lon</th>
+      <th>Speed</th>
+      <th>Activity</th>
+      <th>Barometer</th>
+      <th>Last Seen</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Table rows will be dynamically added here -->
+    </tbody>
+  </table>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Leaflet JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  var map;
+  var marker;
+  
+  // Function to fetch device location from API and display on map
+  function showDeviceLocation() {
+    fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
+      .then(response => response.json())
+      .then(data => {
+        const { lat, lon, deviceID, speed, activity, barometer, loggingTime } = data;
+        if (!map) {
+          map = L.map('map').setView([lat, lon], 16);
           L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
             maxZoom: 19,
+            attribution: 'Map data &copy; <a href="https://www.jawg.io/">Jawg</a>. Device data by Blitzd Media',
           }).addTo(map);
-          const popupContent = `
-            <h5 style="text-align: center;"><strong>Device Location:</strong><br />Device ID: ${deviceID}<br />Latitude: ${lat}<br />Longitude: ${lon}<br />Speed: ${speed}<br />Activity: ${activity}<br />Barometer: ${barometer}<br />Logging Time: ${loggingTime}</h5>
-          `;
-          L.marker([lat, lon]).addTo(map)
-            .bindPopup(popupContent).openPopup();
-        })
-        .catch(error => console.error('Error fetching device location:', error));
-    }
+        } else {
+          map.setView([lat, lon], 16);
+        }
+        const popupContent = `
+          <h5 style="text-align: center;"><strong>Device Location:</strong><br />Device ID: ${deviceID}<br />Latitude: ${lat}<br />Longitude: ${lon}<br />Speed: ${speed}<br />Activity: ${activity}<br />Barometer: ${barometer}<br />Logging Time: ${loggingTime}</h5>
+        `;
+        if (marker) {
+          map.removeLayer(marker);
+        }
+        marker = L.marker([lat, lon]).addTo(map)
+          .bindPopup(popupContent).openPopup();
+      })
+      .catch(error => console.error('Error fetching device location:', error));
+  }
 
-    // Show device location initially
+  // Function to update the table with device data
+  function updateTable() {
+    fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
+      .then(response => response.json())
+      .then(data => {
+        const newRow = $("<tr>");
+        newRow.append("<td>" + data.deviceID + "</td>");
+        newRow.append("<td>" + data.lat + "</td>");
+        newRow.append("<td>" + data.lon + "</td>");
+        newRow.append("<td>" + data.speed + "</td>");
+        newRow.append("<td>" + data.activity + "</td>");
+        newRow.append("<td>" + data.barometer + "</td>");
+        newRow.append("<td>" + data.loggingTime + "</td>");
+        $("#dynamic-table tbody").empty().append(newRow);
+      })
+      .catch(error => console.error('Error fetching device data:', error));
+  }
+
+  // Show device location and update table initially
+  showDeviceLocation();
+  updateTable();
+
+  // Refresh device location and table every 10 seconds
+  setInterval(function() {
     showDeviceLocation();
-
-    // Refresh device location every 10 seconds
-    setInterval(showDeviceLocation, 10000);
-  </script>
+    updateTable();
+  }, 10000);
+</script>
 </body>
 </html>
