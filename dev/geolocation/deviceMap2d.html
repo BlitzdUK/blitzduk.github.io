@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +18,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <!-- Page Description Meta Tag -->
   <meta name="description" content="This is an asset tracker to track and monitor devices and their sensor data on a map.">
-  <style>
-    body {
+  <style> body {
       background-color: black;
       color: #4AF626; /* Terminal green */
     }
@@ -41,46 +41,127 @@
     }
   </style>
 </head>
+
 <body>
-<div class="container">
-  <h1 class="mt-4"><b>Blitzd Media Asset &amp; Fleet Tracking</b></h1>
-  <p><br></p>
-  <div id="map" class="mt-4"></div>
-  <p> <br></p>
-  <table id="dynamic-table" class="rwd-table">
-    <thead>
-    <tr>
-      <th>Device ID</th>
-      <th>Lat</th>
-      <th>Lon</th>
-      <th>Speed</th>
-      <th>Activity</th>
-      <th>Barometer</th>
-      <th>Last Seen</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Table rows will be dynamically added here -->
-    </tbody>
-  </table>
-</div>
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Leaflet JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-  var map;
-  var marker;
-  
-  // Function to fetch device location from API and display on map
-  function showDeviceLocation() {
-    fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
-      .then(response => response.json())
-      .then(data => {
-        const { lat, lon, deviceID, speed, activity, barometer, loggingTime } = data;
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container"> <a class="navbar-brand" href="#">
+        <i class="fa d-inline fa-lg fa-stop-circle"></i>
+        <b> BRAND</b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar10">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#">FAQ</a> </li>
+        </ul> <a class="btn navbar-btn ml-md-2 btn-light text-dark">Contact us</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <h1 class="mt-4"><b>Blitzd Media Asset &amp; Fleet Tracking</b></h1>
+    <p><br></p>
+    <div id="map" class="mt-4"></div>
+    <p> <br></p>
+    <table id="dynamic-table" class="rwd-table">
+      <thead>
+        <tr>
+          <th>Device ID</th>
+          <th>Lat</th>
+          <th>Lon</th>
+          <th>Speed</th>
+          <th>Activity</th>
+          <th>Barometer</th>
+          <th>Last Seen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+  <!-- Bootstrap JS -->
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h6 class="">Heading 6</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-6 p-3">
+          <h5> <b>Main</b> </h5>
+          <ul class="list-unstyled">
+            <li> <a href="#">Home</a> </li>
+            <li> <a href="#">Features</a> </li>
+            <li> <a href="#">Pricing</a> </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6 p-3">
+          <h5> <b>Others</b> </h5>
+          <ul class="list-unstyled">
+            <li> <a href="#">FAQ</a> </li>
+            <li> <a href="#">Resources</a> </li>
+            <li> <a href="#">Career</a> </li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6 p-3">
+          <h5> <b>About</b> </h5>
+          <p class="mb-0"> I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls.</p>
+        </div>
+        <div class="col-lg-3 col-md-6 p-3">
+          <h5> <b>Follow us</b> </h5>
+          <div class="row">
+            <div class="col-md-12 d-flex align-items-center justify-content-between my-2"> <a href="#">
+                <i class="d-block fa fa-facebook-official text-muted fa-lg mr-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-google-plus-official text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-pinterest-p text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-reddit text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
+              </a> </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="mb-0 mt-2">© 2024 Blitzd Media. All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    var map;
+    var marker;
+    // Function to fetch device location from API and display on map
+    function showDeviceLocation() {
+      fetch('https://blitzd.gotdns.ch:1880/data/telemetry').then(response => response.json()).then(data => {
+        const {
+          lat,
+          lon,
+          deviceID,
+          speed,
+          activity,
+          barometer,
+          loggingTime
+        } = data;
         if (!map) {
           map = L.map('map').setView([lat, lon], 16);
           L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
@@ -96,17 +177,12 @@
         if (marker) {
           map.removeLayer(marker);
         }
-        marker = L.marker([lat, lon]).addTo(map)
-          .bindPopup(popupContent).openPopup();
-      })
-      .catch(error => console.error('Error fetching device location:', error));
-  }
-
-  // Function to update the table with device data
-  function updateTable() {
-    fetch('https://blitzd.gotdns.ch:1880/data/telemetry')
-      .then(response => response.json())
-      .then(data => {
+        marker = L.marker([lat, lon]).addTo(map).bindPopup(popupContent).openPopup();
+      }).catch(error => console.error('Error fetching device location:', error));
+    }
+    // Function to update the table with device data
+    function updateTable() {
+      fetch('https://blitzd.gotdns.ch:1880/data/telemetry').then(response => response.json()).then(data => {
         const newRow = $("<tr>");
         newRow.append("<td>" + data.deviceID + "</td>");
         newRow.append("<td>" + data.lat + "</td>");
@@ -116,19 +192,18 @@
         newRow.append("<td>" + data.barometer + "</td>");
         newRow.append("<td>" + data.loggingTime + "</td>");
         $("#dynamic-table tbody").empty().append(newRow);
-      })
-      .catch(error => console.error('Error fetching device data:', error));
-  }
-
-  // Show device location and update table initially
-  showDeviceLocation();
-  updateTable();
-
-  // Refresh device location and table every 10 seconds
-  setInterval(function() {
+      }).catch(error => console.error('Error fetching device data:', error));
+    }
+    // Show device location and update table initially
     showDeviceLocation();
     updateTable();
-  }, 10000);
-</script>
+    // Refresh device location and table every 10 seconds
+    setInterval(function() {
+      showDeviceLocation();
+      updateTable();
+    }, 10000);
+  </script>
+  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
 </body>
+
 </html>
