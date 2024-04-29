@@ -3,120 +3,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Denied</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      padding: 50px;
-      margin: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #444;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    .denied-message {
-      padding: 20px;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-    .denied-message h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-    .reasons {
-      text-align: left;
-      margin-top: 20px;
-      padding-left: 0;
-    }
-    .reasons li {
-      list-style: none;
-      margin-bottom: 10px;
-    }
-    .reasons li i {
-      margin-right: 10px;
-    }
-    @media only screen and (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
-      .denied-message h1 {
-        font-size: 1.5em;
-      }
-    }
-  </style>
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  .header {
+    padding: 20px;
+    color: white;
+    background-color: #dc3545; /* Bootstrap danger color */
+    animation: pulsate-bg 1s infinite;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  @keyframes pulsate-bg {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  .policy-list {
+    text-align: left;
+  }
+  .fa {
+    margin-right: 10px;
+    animation: pulsate-icon 1s infinite;
+  }
+  @keyframes pulsate-icon {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  .access-denied-gif {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+</style>
   </head>
-  <body><b> </b>
-    <div class="container" style="text-align: center;">
-      <div class="denied-message" style="text-align: center;">
-        <h1 style="text-align: center;"> <u><b><span style="color: red;">Access
-                Denied</span></b></u> </h1>
-        <h2 style="text-align: center; margin-left: -34px; width: 800px;"><b><span
-              style="color: red;">&#128683; Access was blocked for security reasons &#128683;</span></b></h2>
-        <h2 style="  text-align: center;"><b><span style="color: red;"> The
-              possible causes for this action are listed below</span></b></h2>
-        <p><br>
-        </p>
-        <ul class="reasons" style="text-align: center;">
-          <li>
-            <h3><b><span style="color: red;"><u><strong>VPN USAGE</strong></u> </span></b></h3>
-            <h3><b><span style="color: red;"></span></b></h3>
-          </li>
-          <li><span style="color: red;">Our system has identified that you could
-              be using a VPN. <br>
-            </span></li>
-          <li><span style="color: red;">While VPNs can protect your privacy,
-              they can also be used to circumvent geo-restrictions and mask
-              malicious activities.</span></li>
-          <li><b><span style=" color: red;"><br>
-              </span></b></li>
-          <li>
-            <h3><b><span style="color: red;"><u><strong>Geo-Restricted</strong></u></span></b></h3>
-          </li>
-          <li><b><span style=" color: red;"><u><br>
-                </u></span></b></li>
-          <li><span style="color: red;">The content you are trying to access is
-              not available in your region. <br>
-            </span></li>
-          <li><span style="color: red;">Certain services and pages are
-              restricted to specific geographic locations due to legal and
-              regulatory reasons.</span></li>
-          <li><span style=" color: red;"><br>
-            </span></li>
-          <li>
-            <h3><b><span style="color: red;"><u><strong>Malicious Traffic
-                      Detected</strong></u></span></b></h3>
-          </li>
-          <li><b><span style=" color: red;"><u><br>
-                </u></span></b></li>
-          <li><span style="color: red;">&nbsp;We have observed unusual traffic
-              patterns from your IP address that resemble those of automated
-              bots or other harmful entities. This measure is to protect our
-              services and users from potential threats.</span></li>
-          <li><span style=" color: red;"><br>
-            </span></li>
-          <li>
-            <h3><span style="color: red;"><u><b><strong>Tor Network Usage</strong></b></u></span></h3>
-          </li>
-          <li><b><span style=" color: red;"><br>
-              </span></b></li>
-          <li><span style="color: red;">It appears that you maybe connecting via
-              the Tor network. While Tor provides anonymity, it is often
-              associated with attempts to access services in ways that violate
-              terms of service.</span></li>
-        </ul>
-        <p style="text-align: center;"><b><span style="color: red;"><br>
-            </span></b></p>
-        <p style="text-align: center;"><b><span style="color: red;"><br>
-            </span></b></p>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6"> <img src="path-to-your-access-denied-gif.gif" alt="Access Denied"
+
+            class="access-denied-gif">
+          <div class="header">
+            <h1><u><b>Access Denied</b></u></h1>
+          </div>
+          <div class="card mt-4">
+            <div class="card-body">
+              <h1 class="card-title"><u><b>You Have Been Blocked<br>
+                  </b></u></h1>
+              <p class="card-text">Our network access security policy disallows
+                connections in certain situations.</p>
+              <div class="policy">
+                <p>This may occur if:</p>
+                <ul class="policy-list">
+                  <li><i class="fas fa-bug"></i> We detected malicious
+                    traffic from your network.</li>
+                  <li><i class="fas fa-user-shield"></i> You are using
+                    a VPN, proxy service, Tor, or I2P networks.</li>
+                  <li><i class="fas fa-globe-americas"></i> Your
+                    geolocation is restricted.</li>
+                  <li>Your country/ISP/IP has been manually blocked by us.</li>
+                </ul>
+                <p>In accordance with UK laws and regulations, including the
+                  foreign security sanctions list, access from companies
+                  associated with any sanctions is prohibited.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <b> </b>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
