@@ -1,6 +1,6 @@
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Denied</title>
     <!-- Bootstrap CSS -->
@@ -23,7 +23,7 @@
     padding: 20px;
     color: white;
     background-color: #dc3545; /* Bootstrap danger color */
-    animation: pulsate-bg 1s infinite;
+    animation: pulsate-bg 0.75s infinite;
     width: 100%;
     box-sizing: border-box;
   }
@@ -49,10 +49,9 @@
     height: auto;
     margin-bottom: 20px;
   }
-</style>
-  </head>
+</style> </head>
   <body>
-    <div class="container">
+    <div class="container" style="text-align: center;">
       <div class="row justify-content-center">
         <div class="col-md-6"> <img src="path-to-your-access-denied-gif.gif" alt="Access Denied"
 
@@ -62,33 +61,54 @@
           </div>
           <div class="card mt-4">
             <div class="card-body">
-              <h1 class="card-title"><u><b>You Have Been Blocked<br>
-                  </b></u></h1>
-              <p class="card-text">Our network access security policy disallows
-                connections in certain situations.</p>
+              <h1 class="card-title"><u><b>You Have Been Blocked</b></u></h1>
+              <p><br>
+              </p>
+              <h4 class="card-text">Our network access security policy
+                disallows connections in certain situations such as: </h4>
+              <p><br>
+              </p>
               <div class="policy">
-                <p>This may occur if:</p>
+                <h4> </h4>
+                <h4> </h4>
                 <ul class="policy-list">
-                  <li><i class="fas fa-bug"></i> We detected malicious
-                    traffic from your network.</li>
-                  <li><i class="fas fa-user-shield"></i> You are using
-                    a VPN, proxy service, Tor, or I2P networks.</li>
-                  <li><i class="fas fa-globe-americas"></i> Your
-                    geolocation is restricted.</li>
-                  <li>Your country/ISP/IP has been manually blocked by us.</li>
+                  <li>
+                    <h4> We detected malicious traffic from your network.</h4>
+                  </li>
                 </ul>
-                <p>In accordance with UK laws and regulations, including the
+                <h4> </h4>
+                <ul class="policy-list">
+                  <li>
+                    <h4> You are using a VPN, proxy service, Tor, or I2P
+                      networks.</h4>
+                  </li>
+                </ul>
+                <h4> </h4>
+                <ul class="policy-list">
+                  <li>
+                    <h4> Your geolocation is restricted.</h4>
+                  </li>
+                </ul>
+                <h4> </h4>
+                <ul class="policy-list">
+                  <li>
+                    <h4>Your country/ISP/IP has been manually blocked by us.</h4>
+                  </li>
+                </ul>
+                <h4> </h4>
+                <h4> </h4>
+                <h4>In accordance with UK laws and regulations, including the
                   foreign security sanctions list, access from companies
-                  associated with any sanctions is prohibited.</p>
+                  associated with any sanctions is prohibited.</h4>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div style="text-align: center;"><!-- Bootstrap JS and Popper.js -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.9/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script></div>
   </body>
 </html>
