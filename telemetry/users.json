@@ -1,8 +1,8 @@
 {
   "users": [
     {
-      "username": "user1",
-      "password": "hashed_password1",
+      "username": "blitzd",
+      "password": "$2a$12$hK47Z01Y6iKJ7pDhmdtS/.G8MEu0KA/45uft44KwyXdsvgpSGUR5i",
       "permissions": ["page1", "page2"]
     },
     {
