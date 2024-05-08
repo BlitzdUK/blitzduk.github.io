@@ -9,7 +9,6 @@
       "username": "user2",
       "password": "hashed_password2",
       "permissions": ["page2", "page3"]
-    },
-    // Add more users as needed
+    }
   ]
 }
