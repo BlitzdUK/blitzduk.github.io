@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
-  <!-- Apple Web App meta tags -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Admin Panel">
-  <link rel="apple-touch-icon" href="https://blitzd.uk/img/bmLetters.png">
-  <link rel="apple-touch-startup-image" href="https://blitzd.uk/img/bmLetters.png">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Page Description Meta Tag -->
-  <meta name="description" content="This is an asset tracker to track and monitor devices and their sensor data on a map.">
-  <style> body {
+      rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
+    <!-- Apple Web App meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Admin Panel">
+    <link rel="apple-touch-icon" href="https://blitzd.uk/img/bmLetters.png">
+    <link rel="apple-touch-startup-image" href="https://blitzd.uk/img/bmLetters.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Page Description Meta Tag -->
+    <meta name="description" content="This is an asset tracker to track and monitor devices and their sensor data on a map.">
+    <style> body {
       background-color: black;
       color: #4AF626; /* Terminal green */
     }
@@ -40,68 +41,68 @@
       text-align: center;
     }
   </style>
-</head>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container">&nbsp; <a class="navbar-brand" href="#"> <b> </b></a>
+        <h1 class="mt-4"><b>Blitzd Media</b></h1>
+        <a class="navbar-brand" href="#"></a><button class="navbar-toggler navbar-toggler-right border-0"
 
-<body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">&nbsp; <a class="navbar-brand" href="#"> <b> </b></a>
-      <h1 class="mt-4"><b>Blitzd Media</b></h1>
-      <a class="navbar-brand" href="#"></a><button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10"><span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar10">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">FAQ</a> </li>
-        </ul>
-        <a class="btn navbar-btn ml-md-2 btn-light text-dark">Contact us</a>
+          type="button" data-toggle="collapse" data-target="#navbar10"><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar10">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">FAQ</a> </li>
+          </ul>
+          <a class="btn navbar-btn ml-md-2 btn-light text-dark">Contact us</a> </div>
       </div>
-    </div>
-  </nav>
-  <div class="container">
-    <h2 class="mt-4"><b>Asset &amp; Fleet Tracking</b></h2>
-    <p><br>
-    </p>
-    <div id="map" class="mt-4"></div>
-    <p> </p>
-    <table class="rwd-table" id="dynamic-table" style="width: 1383px; height: 40px;">
-      <thead>
-        <tr>
-          <th>Device ID</th>
-          <th>Lat</th>
-          <th>Lon</th>
-          <th>Speed</th>
-          <th>Activity</th>
-          <th>Barometer</th>
-          <th>Last Seen</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Table rows will be dynamically added here -->
-      </tbody>
-    </table>
-  </div>
-  <!-- Bootstrap JS -->
-  <div class="py-5">
+    </nav>
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h6 class=""><br>
-          </h6>
-          <p><br>
-          </p>
+      <h2 class="mt-4"><b>Asset &amp; Fleet Tracking</b></h2>
+      <p><br>
+      </p>
+      <div id="map" class="mt-4"></div>
+      <p> </p>
+      <table class="rwd-table" id="dynamic-table" style="width: 1383px; height: 40px;">
+        <thead>
+          <tr>
+            <th>Device ID</th>
+            <th>Lat</th>
+            <th>Lon</th>
+            <th>Speed</th>
+            <th>Activity</th>
+            <th>Barometer</th>
+            <th>Last Seen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Bootstrap JS -->
+    <div class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h6 class=""><br>
+            </h6>
+            <p><br>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Leaflet JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
     var map;
     var marker;
     // Function to fetch device location from API and display on map
@@ -156,8 +157,6 @@
       showDeviceLocation();
       updateTable();
     }, 10000);
-  </script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
-</body>
-
+  </script> 
+  </body>
 </html>
