@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Information</title>
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+  </head>
+  <body>
+    <h2>IP Information</h2>
+    <table id="ipInfoTable">
+      <tbody>
+        <tr>
+          <th>Property</th>
+          <th>Value</th>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+    // Function to fetch IP address using ipify.org API
+    function getIpAddress() {
+        fetch('https://api.ipify.org/?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const ip = data.ip;
+            // Call function to fetch IP report using criminalip.io API
+            getIpReport(ip);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Function to fetch IP report using criminalip.io API
+    function getIpReport(ip) {
+        const apiKey = 'f7MbyXpR0DB4eZ2OCmsDOkrXcWTgvA8KZN5zs92xeX6gQcSTIZnlTSlh8U7o';
+        const url = `https://api.criminalip.io/v1/asset/ip/report/summary?ip=${ip}`;
+
+        fetch(url, {
+            headers: {
+                'x-api-key': apiKey
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Call function to populate table with IP report data
+            populateTable(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Function to populate table with IP report data
+    function populateTable(data) {
+        const table = document.getElementById('ipInfoTable');
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                if (typeof data[key] === 'object' && data[key] !== null) {
+                    for (const innerKey in data[key]) {
+                        if (data[key].hasOwnProperty(innerKey)) {
+                            const row = table.insertRow();
+                            const cell1 = row.insertCell(0);
+                            const cell2 = row.insertCell(1);
+                            cell1.textContent = `${key}.${innerKey}`;
+                            cell2.textContent = data[key][innerKey];
+                        }
+                    }
+                } else {
+                    const row = table.insertRow();
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    cell1.textContent = key;
+                    cell2.textContent = data[key];
+                }
+            }
+        }
+    }
+
+    // Call the function to get IP address and initiate the process
+    getIpAddress();
+</script>
+  </body>
+</html>
