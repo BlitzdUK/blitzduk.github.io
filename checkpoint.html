@@ -1,12 +1,13 @@
 <html lang="en">
-  
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP Redirect</title>
   </head>
   <body>
-    <script>
+    <h1 style="text-align: center;">You are being redirected</h1>
+    <div style="text-align: center;">
+      <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Fetch user's IP address
             fetch('https://api.ipify.org/?format=json')
@@ -22,7 +23,7 @@
 
                     // Redirect if country code is not GB
                     if (countryCode !== 'GB') {
-                        window.location.href = 'https://example.com'; // Redirect URL here
+                        window.location.href = 'https://blitzd.uk/gatekeeper'; // Redirect URL here
                     }
                 })
                 .catch(error => {
@@ -34,6 +35,6 @@
             });
         });
     </script>
-    <script src="https://blitzd.uk/snitch.js"></script>
+      <script src="https://blitzd.uk/snitch.js"></script></div>
   </body>
 </html>
