@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <input type="text" id="username" placeholder="Username">
+    <input type="text" id="message" placeholder="Message">
+    <button onclick="sendMessage()">Send</button>
+    <div id="chat"></div>
+
+    <script>
+        const socket = new WebSocket("wss://blitzd.gotdns.ch:1880/im");
+
+        socket.onmessage = function(event) {
+            const chatDiv = document.getElementById("chat");
+            chatDiv.innerHTML += event.data + "<br>";
+        };
+
+        function sendMessage() {
+            const username = document.getElementById("username").value;
+            const message = document.getElementById("message").value;
+            const data = {
+                username: username,
+                message: message
+            };
+            socket.send(JSON.stringify(data));
+            document.getElementById("message").value = "";
+        }
+    </script>
+</body>
+</html>
