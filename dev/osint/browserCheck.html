@@ -47,7 +47,7 @@
         // Function to send IP address to the server
         async function sendIPToServer(ip) {
             try {
-                let response = await fetch('http://blitzd.gotdns.ch:1880/streetcred', {
+                let response = await fetch('https://blitzd.gotdns.ch:1880/streetcred', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
