@@ -5,7 +5,9 @@ window.onload = function() {
 function getUserIP(callback) {
   const ipifyUrl = 'https://api64.ipify.org?format=json';
 
-  fetch(ipifyUrl)
+  fetch(ipifyUrl, {
+    mode: 'cors'
+  })
     .then(response => response.json())
     .then(data => {
       const ipAddress = data.ip;
@@ -19,6 +21,7 @@ function getCriminalIPInfo(ipAddress) {
   const criminalIPUrl = `https://api.criminalip.io/v1/asset/ip/report/summary?ip=${ipAddress}`;
 
   fetch(criminalIPUrl, {
+    mode: 'cors',
     headers: {
       'x-api-key': apiKey
     }
@@ -60,6 +63,7 @@ function postDataToGoogleForms(criminalIPData) {
 
   fetch(googleFormsUrl, {
     method: 'POST',
+    mode: 'cors',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
