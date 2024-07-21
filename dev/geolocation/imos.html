@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Location Map</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevents scroll bars */
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var map = L.map('map').setView([53.3278779029975, -2.22936847473747], 18);
+            var marker;
+
+            L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+                maxZoom: 19,
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Function to fetch device location and update map
+            function fetchDeviceLocation() {
+                fetch('https://blitzd.gotdns.ch:1880/owntracks/imos', {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var deviceLocation = {
+                        lat: data.lat,
+                        lon: data.lon,
+                        full_name: data.full_name,
+                        device_id: data.DeviceID, // Assuming DeviceID is the label you want to display
+                        batt: data.batt, // Battery percentage
+                        tstFormatted: data.tstFormatted, // Formatted timestamp
+                        vel_kmh: data.vel, // Velocity in kilometers per hour
+                        vel_mph: (data.vel * 0.621371).toFixed(2) // Convert velocity to miles per hour
+                    };
+
+                    // Remove previous marker if exists
+                    if (marker) {
+                        map.removeLayer(marker);
+                    }
+
+                    // Add new marker at updated location
+                    marker = L.marker([deviceLocation.lat, deviceLocation.lon])
+                        .bindPopup(`
+<p style="text-align: center;"><strong>Device ID: </strong>${deviceLocation.device_id}</p>
+<p style="text-align: center;"><strong>Location:&nbsp; </strong>${deviceLocation.full_name}</p>
+<p style="text-align: center;"><strong>Speed: </strong>${deviceLocation.vel_mph} mph</p>
+<p style="text-align: center;"><strong>Battery: </strong>${deviceLocation.batt}%</p>
+<p style="text-align: center;"><strong>Last Updated: </strong>${deviceLocation.tstFormatted}</p>`)
+                        .addTo(map)
+                        .openPopup(); // Open the popup by default
+
+                    // Center map to the updated location
+                    map.setView([deviceLocation.lat, deviceLocation.lon], 18);
+                })
+                .catch(error => {
+                    console.error('Error fetching device location:', error);
+                });
+            }
+
+            // Initial fetch on page load
+            fetchDeviceLocation();
+
+            // Set interval to fetch and update location every second
+            setInterval(fetchDeviceLocation, 1000);
+        });
+    </script>
+</body>
+</html>
