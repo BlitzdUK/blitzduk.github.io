@@ -3,33 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV to Table</title>
+    <title>Blitzd Media - Auth Log</title>
+    <script src="https://blitzd.uk/snitch.js"></script>
     <style>
         /* Center-align all text and table data */
         body {
             text-align: center;
             font-family: Arial, sans-serif;
+            background-color: black; /* Background color of the page */
+            color: #4AF626; /* Text color for the whole page */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 0 auto; /* Center the table */
+            background-color: black; /* Background color of the table */
         }
 
         th, td {
             padding: 8px 12px;
-            border: 1px solid #ddd;
+            border: 1px solid #4AF626; /* Border color to match the text color */
             text-align: center; /* Center-align table headers and data */
+            color: #4AF626; /* Text color for table headers and cells */
         }
 
         th {
-            background-color: #f4f4f4;
+            background-color: black; /* Background color of table headers */
         }
     </style>
 </head>
 <body>
-<h1>Fail2ban Log</h1>
+<h1>Failed Auth Attempts</h1>
 <div id="table-container"></div>
 
 <script>
@@ -54,7 +59,10 @@
                     const tr = document.createElement("tr");
                     const cells = row.split(",");
 
-                    cells.forEach(cell => {
+                    // Filter columns to include only A to L (indices 0 to 11)
+                    const filteredCells = cells.slice(0, 12);
+
+                    filteredCells.forEach(cell => {
                         const cellElement = rowIndex === 0 ? document.createElement("th") : document.createElement("td");
                         cellElement.textContent = cell.trim();
                         tr.appendChild(cellElement);
