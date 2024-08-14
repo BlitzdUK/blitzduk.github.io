@@ -1,0 +1,157 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Sensors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .sensor-data {
+            margin-bottom: 20px;
+        }
+        .sensor-data label {
+            font-weight: bold;
+        }
+        .sensor-data div {
+            margin: 5px 0;
+        }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Device Sensors Data</h1>
+    <div id="sensorData" style="text-align: center;">
+      <div class="sensor-data">
+        <h2>Accelerometer</h2>
+        <div><label>X:</label> <span id="accelX">N/A</span></div>
+        <div><label>Y:</label> <span id="accelY">N/A</span></div>
+        <div><label>Z:</label> <span id="accelZ">N/A</span></div>
+      </div>
+      <div class="sensor-data">
+        <h2>Gyroscope</h2>
+        <div><label>X:</label> <span id="gyroX">N/A</span></div>
+        <div><label>Y:</label> <span id="gyroY">N/A</span></div>
+        <div><label>Z:</label> <span id="gyroZ">N/A</span></div>
+      </div>
+      <div class="sensor-data">
+        <h2>Magnetometer</h2>
+        <div><label>Alpha:</label> <span id="magAlpha">N/A</span></div>
+        <div><label>Beta:</label> <span id="magBeta">N/A</span></div>
+        <div><label>Gamma:</label> <span id="magGamma">N/A</span></div>
+      </div>
+      <div class="sensor-data">
+        <h2>Geolocation</h2>
+        <div><label>Latitude:</label> <span id="geoLat">N/A</span></div>
+        <div><label>Longitude:</label> <span id="geoLon">N/A</span></div>
+        <div><label>Altitude:</label> <span id="geoAlt">N/A</span></div>
+        <div><label>Speed:</label> <span id="geoSpeed">N/A</span></div>
+        <div><label>Heading:</label> <span id="geoHeading">N/A</span></div>
+      </div>
+      <div class="sensor-data">
+        <h2>Ambient Light</h2>
+        <div><label>Light Level:</label> <span id="lightLevel">N/A</span></div>
+      </div>
+      <div class="sensor-data"> <button id="sendData">Send Sensor Data</button>
+      </div>
+    </div>
+    <div style="text-align: center;">
+      <script>
+        // Handling Accelerometer and Gyroscope
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', function(event) {
+                const { acceleration } = event;
+                document.getElementById('accelX').textContent = acceleration.x ? acceleration.x.toFixed(2) : 'N/A';
+                document.getElementById('accelY').textContent = acceleration.y ? acceleration.y.toFixed(2) : 'N/A';
+                document.getElementById('accelZ').textContent = acceleration.z ? acceleration.z.toFixed(2) : 'N/A';
+
+                const { rotationRate } = event;
+                document.getElementById('gyroX').textContent = rotationRate.alpha ? rotationRate.alpha.toFixed(2) : 'N/A';
+                document.getElementById('gyroY').textContent = rotationRate.beta ? rotationRate.beta.toFixed(2) : 'N/A';
+                document.getElementById('gyroZ').textContent = rotationRate.gamma ? rotationRate.gamma.toFixed(2) : 'N/A';
+            });
+        } else {
+            console.log("DeviceMotionEvent is not supported on this device.");
+        }
+
+        // Handling Magnetometer
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(event) {
+                document.getElementById('magAlpha').textContent = event.alpha ? event.alpha.toFixed(2) : 'N/A';
+                document.getElementById('magBeta').textContent = event.beta ? event.beta.toFixed(2) : 'N/A';
+                document.getElementById('magGamma').textContent = event.gamma ? event.gamma.toFixed(2) : 'N/A';
+            });
+        } else {
+            console.log("DeviceOrientationEvent is not supported on this device.");
+        }
+
+        // Handling Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('geoLat').textContent = position.coords.latitude;
+                document.getElementById('geoLon').textContent = position.coords.longitude;
+                document.getElementById('geoAlt').textContent = position.coords.altitude ? position.coords.altitude.toFixed(2) : 'N/A';
+                document.getElementById('geoSpeed').textContent = position.coords.speed ? position.coords.speed.toFixed(2) : 'N/A';
+                document.getElementById('geoHeading').textContent = position.coords.heading ? position.coords.heading.toFixed(2) : 'N/A';
+            }, function(error) {
+                console.error("Geolocation error: " + error.message);
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+
+        // Handling Ambient Light Sensor
+        if (window.AmbientLightSensor) {
+            const sensor = new AmbientLightSensor();
+            sensor.addEventListener('reading', () => {
+                document.getElementById('lightLevel').textContent = sensor.illuminance ? sensor.illuminance.toFixed(2) : 'N/A';
+            });
+            sensor.start();
+        } else {
+            console.log("AmbientLightSensor is not supported on this device.");
+        }
+
+        // Sending data
+        document.getElementById('sendData').addEventListener('click', function() {
+            const data = {
+                accelerometer: {
+                    x: document.getElementById('accelX').textContent,
+                    y: document.getElementById('accelY').textContent,
+                    z: document.getElementById('accelZ').textContent
+                },
+                gyroscope: {
+                    alpha: document.getElementById('gyroX').textContent,
+                    beta: document.getElementById('gyroY').textContent,
+                    gamma: document.getElementById('gyroZ').textContent
+                },
+                magnetometer: {
+                    alpha: document.getElementById('magAlpha').textContent,
+                    beta: document.getElementById('magBeta').textContent,
+                    gamma: document.getElementById('magGamma').textContent
+                },
+                geolocation: {
+                    latitude: document.getElementById('geoLat').textContent,
+                    longitude: document.getElementById('geoLon').textContent,
+                    altitude: document.getElementById('geoAlt').textContent,
+                    speed: document.getElementById('geoSpeed').textContent,
+                    heading: document.getElementById('geoHeading').textContent
+                },
+                ambientLight: {
+                    level: document.getElementById('lightLevel').textContent
+                }
+            };
+
+            fetch('https://blitzd.gotdns.ch:1880/dev/js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => console.log('Success:', result))
+            .catch(error => console.error('Error:', error));
+        });
+    </script></div>
+  </body>
+</html>
