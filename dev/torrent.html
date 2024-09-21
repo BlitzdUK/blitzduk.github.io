@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitzd Media Torrent Streamer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #181818;
+            color: #00FF00; /* Terminal green color */
+            height: 100vh; /* Full-screen height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .video-player {
+            background-color: #333;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .disclaimer {
+            color: #FF0000; /* Red color for disclaimer */
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .form-label, .btn-success {
+            color: #00FF00; /* Terminal green color */
+        }
+        .form-control {
+            background-color: #333;
+            color: #00FF00;
+            border: 1px solid #00FF00;
+        }
+        .btn-success {
+            background-color: #00FF00;
+            border: none;
+            color: #181818;
+        }
+        .btn-success:hover {
+            background-color: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">Blitzd Media Torrent Streamer</h1>
+
+        <!-- Form to input .torrent link -->
+        <form id="torrentForm" class="mb-4">
+            <div class="mb-3">
+                <label for="torrentLink" class="form-label">Paste .torrent Link</label>
+                <input type="text" class="form-control" id="torrentLink" placeholder="https://example.com/file.torrent">
+            </div>
+            <button type="submit" class="btn btn-success w-100">Play</button>
+        </form>
+
+        <!-- Disclaimer -->
+        <div id="disclaimer" class="disclaimer hidden">
+            <p>You are not to use any .torrent links of illegal or copyrighted media. We are not responsible for any copyright infringement violation whatsoever as the media is streamed from the end user’s browser, not our servers.</p>
+        </div>
+
+        <!-- Video player -->
+        <div class="video-player hidden" id="videoContainer">
+            <video id="videoPlayer" controls class="w-100" style="background-color: #000;">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    
+    <!-- WebTorrent library -->
+    <script src="https://cdn.jsdelivr.net/npm/webtorrent/webtorrent.min.js"></script>
+
+    <script>
+        const client = new WebTorrent();
+
+        document.getElementById('torrentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Display disclaimer
+            document.getElementById('disclaimer').classList.remove('hidden');
+
+            // Get the .torrent link from the input field
+            const torrentLinkInput = document.getElementById('torrentLink').value.trim();
+
+            if (!torrentLinkInput) {
+                alert("Please paste a .torrent link.");
+                return;
+            }
+
+            // Fetch the .torrent file through the proxy
+            const proxyUrl = `http://localhost:3000/proxy?url=${encodeURIComponent(torrentLinkInput)}`;
+
+            // Add the torrent link to WebTorrent
+            client.add(proxyUrl, function(torrent) {
+                // Find the first video file in the torrent
+                const file = torrent.files.find(file => file.name.endsWith('.mp4') || file.name.endsWith('.mkv') || file.name.endsWith('.webm'));
+
+                if (file) {
+                    // Stream the video in the video element
+                    document.getElementById('videoContainer').classList.remove('hidden');
+                    file.renderTo('video#videoPlayer', {
+                        autoplay: true,
+                        controls: true
+                    });
+                } else {
+                    alert('No video file found in the torrent.');
+                }
+            });
+        });
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
