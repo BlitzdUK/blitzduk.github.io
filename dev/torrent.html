@@ -96,8 +96,9 @@
                 return;
             }
 
-            // Fetch the .torrent file through the proxy
-            const proxyUrl = `http://localhost:3000/proxy?url=${encodeURIComponent(torrentLinkInput)}`;
+            // CORS Anywhere URL to bypass CORS restrictions
+            const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+            const proxyUrl = `${corsProxy}${torrentLinkInput}`;
 
             // Add the torrent link to WebTorrent
             client.add(proxyUrl, function(torrent) {
