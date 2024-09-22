@@ -66,23 +66,24 @@
             "Zimbabwe": { lat: -19.0154, lon: 29.1549, value: 1 }
         };
 
-        // Initialize the map
-        const map = L.map('map').setView([20, 0], 2);  // Centered on the world
+        // Initialize the map with a dark theme
+        const map = L.map('map').setView([20, 0], 2);
 
-        // Add OpenStreetMap tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // Add a dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd'
         }).addTo(map);
 
-        // Convert country data to the format required by leaflet-heat (lat, lon, intensity)
-        const heatData = Object.values(countryData).map(country => [country.lat, country.lon, country.value]);
-
-        // Create the heatmap layer and add to the map
-        L.heatLayer(heatData, {
-            radius: 25,   // Adjust the radius for better visibility
-            blur: 15,     // Adjust the blur for better heatmap effects
-            maxZoom: 5    // Max zoom level for heat intensity adjustment
-        }).addTo(map);
+        // Create circle markers for each country
+        for (const [country, data] of Object.entries(countryData)) {
+            L.circle([data.lat, data.lon], {
+                color: 'rgba(255, 0, 0, 0.6)',
+                fillColor: 'rgba(255, 0, 0, 0.6)',
+                fillOpacity: 0.6,
+                radius: data.value * 2000 // Scale the radius based on the value
+            }).addTo(map).bindPopup(`${country}: ${data.value}`);
+        }
     </script>
 
 </body>
