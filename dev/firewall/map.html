@@ -77,12 +77,23 @@
 
         // Create circle markers for each country
         for (const [country, data] of Object.entries(countryData)) {
+            // Circle for heatmap effect
             L.circle([data.lat, data.lon], {
                 color: 'rgba(255, 0, 0, 0.6)',
                 fillColor: 'rgba(255, 0, 0, 0.6)',
                 fillOpacity: 0.6,
                 radius: data.value * 2000 // Scale the radius based on the value
-            }).addTo(map).bindPopup(`${country}: ${data.value}`);
+            }).addTo(map);
+
+            // Marker for the country label
+            L.marker([data.lat, data.lon], {
+                icon: L.divIcon({
+                    className: 'country-label',
+                    html: `<div style="color: white; background: rgba(0, 0, 0, 0.7); padding: 5px; border-radius: 5px;">${country}: ${data.value}</div>`,
+                    iconSize: [100, 40],
+                    iconAnchor: [50, 20]
+                })
+            }).addTo(map);
         }
     </script>
 
