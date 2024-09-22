@@ -10,6 +10,13 @@
             height: 100vh;
             width: 100vw;
         }
+        .country-label {
+            color: white;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -19,6 +26,53 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
     <script>
+        // Example country coordinates with values
+        const countryCoordinates = {
+            "Algeria": { lat: 28.0339, lon: 1.6596 },
+            "Australia": { lat: -25.2744, lon: 133.7751 },
+            "Brazil": { lat: -14.2350, lon: -51.9253 },
+            "Canada": { lat: 56.1304, lon: -106.3468 },
+            "China": { lat: 35.8617, lon: 104.1954 },
+            "Costa Rica": { lat: 9.7489, lon: -83.7534 },
+            "France": { lat: 46.6034, lon: 1.8883 },
+            "Gabon": { lat: -0.8037, lon: 11.6094 },
+            "Germany": { lat: 51.1657, lon: 10.4515 },
+            "Hong Kong": { lat: 22.3193, lon: 114.1694 },
+            "India": { lat: 20.5937, lon: 78.9629 },
+            "Indonesia": { lat: -0.7893, lon: 113.9213 },
+            "Iran": { lat: 32.4279, lon: 53.6880 },
+            "Israel": { lat: 31.0461, lon: 34.8516 },
+            "Italy": { lat: 41.8719, lon: 12.5674 },
+            "Laos": { lat: 19.8563, lon: 102.4955 },
+            "Macau": { lat: 22.1987, lon: 113.5439 },
+            "Malaysia": { lat: 4.2105, lon: 101.9758 },
+            "Nigeria": { lat: 9.0820, lon: 8.6753 },
+            "Pakistan": { lat: 30.3753, lon: 69.3451 },
+            "Panama": { lat: 8.5380, lon: -80.7821 },
+            "Peru": { lat: -9.1899, lon: -75.0152 },
+            "Philippines": { lat: 12.8797, lon: 121.7740 },
+            "Poland": { lat: 51.9194, lon: 19.1451 },
+            "Portugal": { lat: 39.3999, lon: -8.2245 },
+            "Romania": { lat: 45.9432, lon: 24.9668 },
+            "Russia": { lat: 61.5240, lon: 105.3188 },
+            "Saudi Arabia": { lat: 23.8859, lon: 45.0792 },
+            "South Korea": { lat: 35.9078, lon: 127.7669 },
+            "Spain": { lat: 40.4637, lon: -3.7492 },
+            "Sweden": { lat: 60.1282, lon: 18.6435 },
+            "Syria": { lat: 34.8021, lon: 38.9968 },
+            "Taiwan": { lat: 23.6978, lon: 120.9605 },
+            "Tanzania": { lat: -6.3690, lon: 34.8888 },
+            "Thailand": { lat: 15.8700, lon: 100.9925 },
+            "Turkey": { lat: 38.9637, lon: 35.2433 },
+            "Ukraine": { lat: 48.3794, lon: 31.1656 },
+            "UAE": { lat: 23.4241, lon: 53.8478 },
+            "UK": { lat: 55.3781, lon: -3.4360 },
+            "USA": { lat: 37.0902, lon: -95.7129 },
+            "Venezuela": { lat: 6.4238, lon: -66.5897 },
+            "Vietnam": { lat: 14.0583, lon: 108.2772 },
+            "Zimbabwe": { lat: -19.0154, lon: 29.1549 }
+        };
+
         // Initialize the map with a dark theme
         const map = L.map('map').setView([20, 0], 2);
 
@@ -31,22 +85,24 @@
         // Fetch live JSON data from the API
         fetch('https://blitzd.gotdns.ch:1880/data/countries')
             .then(response => response.json())
-            .then(countryData => {
+            .then(data => {
                 // Create circle markers and labels for each country
-                for (const [country, data] of Object.entries(countryData)) {
+                for (const [country, value] of Object.entries(data)) {
+                    const { lat, lon } = countryCoordinates[country] || { lat: 0, lon: 0 }; // Fallback if not found
+
                     // Circle for heatmap effect
-                    L.circle([data.lat, data.lon], {
+                    L.circle([lat, lon], {
                         color: 'rgba(255, 0, 0, 0.6)',
                         fillColor: 'rgba(255, 0, 0, 0.6)',
                         fillOpacity: 0.6,
-                        radius: data.value * 2000 // Scale the radius based on the value
+                        radius: value * 2000 // Scale the radius based on the value
                     }).addTo(map);
 
                     // Marker for the country label
-                    L.marker([data.lat, data.lon], {
+                    L.marker([lat, lon], {
                         icon: L.divIcon({
                             className: 'country-label',
-                            html: `<div style="color: white; background: rgba(0, 0, 0, 0.7); padding: 5px; border-radius: 5px;">${country}: ${data.value}</div>`,
+                            html: `<div>${country}<br>${value}</div>`,
                             iconSize: [100, 40],
                             iconAnchor: [50, 20]
                         })
