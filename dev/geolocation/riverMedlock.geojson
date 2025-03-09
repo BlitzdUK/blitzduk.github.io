@@ -4,27 +4,6 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.057619,
-          53.566304,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Source of Medlock",
-        "styleUrl": "#icon-22",
-        "styleHash": "5b4d78a2",
-        "styleMapHash": {
-          "normal": "#icon-22-normal",
-          "highlight": "#icon-22-highlight"
-        },
-        "description": "See for photos of the source:<br>Photos of the Source of the River Medlock (http://integraldrift.wordpress.com/2013/01/06/the-source-of-the-river-medlock/)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
         "type": "LineString",
         "coordinates": [
           [
@@ -1620,90 +1599,6 @@
         "stroke": "#ff0000",
         "stroke-opacity": 1,
         "stroke-width": 5
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.26387,
-          53.473131,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Medlock flows into Irwell",
-        "styleUrl": "#icon-22",
-        "styleHash": "5b4d78a2",
-        "styleMapHash": {
-          "normal": "#icon-22-normal",
-          "highlight": "#icon-22-highlight"
-        },
-        "description": "Photos of whole river including where it joins the IrwellMedlock History (http://manchesterhistory.net/manchester/WATERWAYS/medlock/rivermedlock.html)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.233701,
-          53.474421,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Tunnel under UMIST",
-        "styleUrl": "#icon-22",
-        "styleHash": "5b4d78a2",
-        "styleMapHash": {
-          "normal": "#icon-22-normal",
-          "highlight": "#icon-22-highlight"
-        },
-        "description": "Tunnel under Umist (http://www.newmanchesterwalks.com/walks-tours/sunday-explorers/mapping-the-medlock-the-river-that-manchester-forgot-2/)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.068906,
-          53.557773,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Drained Strinesdale Resevoir",
-        "styleUrl": "#icon-22",
-        "styleHash": "5b4d78a2",
-        "styleMapHash": {
-          "normal": "#icon-22-normal",
-          "highlight": "#icon-22-highlight"
-        },
-        "description": "Strinesdale Resevoir (http://en.wikipedia.org/wiki/Strinesdale_Reservoir)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -2.175422,
-          53.49139,
-          0
-        ]
-      },
-      "properties": {
-        "name": "Clayton Vale",
-        "styleUrl": "#icon-22",
-        "styleHash": "5b4d78a2",
-        "styleMapHash": {
-          "normal": "#icon-22-normal",
-          "highlight": "#icon-22-highlight"
-        },
-        "description": "Clayton Vale (http://www.east-manchester.com/visiting/visiting-themes/parks-and-green-spaces/attractions/clayton-vale/index.htm)"
       }
     }
   ]
