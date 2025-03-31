@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Location History Visualizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        #info-panel {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            max-width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .legend {
+            line-height: 18px;
+            color: #555;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+        .file-input-container {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="controls">
+        <div class="file-input-container">
+            <input type="file" id="fileInput" accept=".json">
+            <button id="load-file">Load Location Data</button>
+        </div>
+        <button id="show-all">Show All Points</button>
+        <button id="show-path">Show Path</button>
+        <div class="legend">
+            <h4>Legend</h4>
+            <p><i style="background: #3388ff"></i>Visits</p>
+            <p><i style="background: #ff0000"></i>Activity Start</p>
+            <p><i style="background: #00ff00"></i>Activity End</p>
+        </div>
+    </div>
+    <div id="info-panel">
+        <p>Select your location-history.json file to begin</p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([51.505, -0.09], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Variables to store our data and markers
+        let locationData = [];
+        let visitMarkers = [];
+        let activityStartMarkers = [];
+        let activityEndMarkers = [];
+        let pathLines = [];
+        let currentPolyline = null;
+
+        // Function to parse geo location string
+        function parseGeoLocation(geoString) {
+            const parts = geoString.replace('geo:', '').split(',');
+            return {
+                lat: parseFloat(parts[0]),
+                lng: parseFloat(parts[1])
+            };
+        }
+
+        // Function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString();
+        }
+
+        // Function to create a popup content
+        function createPopupContent(item) {
+            let content = '';
+            
+            if (item.visit) {
+                content += `<h3>Visit</h3>
+                            <p><strong>Start:</strong> ${formatDate(item.startTime)}</p>
+                            <p><strong>End:</strong> ${formatDate(item.endTime)}</p>
+                            <p><strong>Probability:</strong> ${parseFloat(item.visit.probability) * 100}%</p>
+                            <p><strong>Type:</strong> ${item.visit.topCandidate.semanticType}</p>`;
+            } else if (item.activity) {
+                content += `<h3>Activity</h3>
+                            <p><strong>Start:</strong> ${formatDate(item.startTime)}</p>
+                            <p><strong>End:</strong> ${formatDate(item.endTime)}</p>
+                            <p><strong>Distance:</strong> ${parseFloat(item.activity.distanceMeters).toFixed(2)} meters</p>`;
+            }
+            
+            return content;
+        }
+
+        // Function to process the data and create markers
+        function processData(data) {
+            // Clear any existing markers and lines
+            clearAllMarkers();
+            
+            // Process each data point
+            data.forEach((item, index) => {
+                if (item.visit) {
+                    // This is a visit point
+                    const location = parseGeoLocation(item.visit.topCandidate.placeLocation);
+                    const marker = L.circleMarker([location.lat, location.lng], {
+                        radius: 8,
+                        fillColor: "#3388ff",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+                    
+                    marker.bindPopup(createPopupContent(item));
+                    marker.on('click', function() {
+                        document.getElementById('info-panel').innerHTML = createPopupContent(item);
+                    });
+                    
+                    visitMarkers.push(marker);
+                    
+                    // Add to path if enabled
+                    if (currentPolyline) {
+                        currentPolyline.addLatLng([location.lat, location.lng]);
+                    }
+                    
+                } else if (item.activity) {
+                    // This is an activity with start and end points
+                    const startLocation = parseGeoLocation(item.activity.start);
+                    const endLocation = parseGeoLocation(item.activity.end);
+                    
+                    // Create start marker
+                    const startMarker = L.circleMarker([startLocation.lat, startLocation.lng], {
+                        radius: 6,
+                        fillColor: "#ff0000",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+                    
+                    startMarker.bindPopup(`<h3>Activity Start</h3>${createPopupContent(item)}`);
+                    startMarker.on('click', function() {
+                        document.getElementById('info-panel').innerHTML = `<h3>Activity Start</h3>${createPopupContent(item)}`;
+                    });
+                    activityStartMarkers.push(startMarker);
+                    
+                    // Create end marker
+                    const endMarker = L.circleMarker([endLocation.lat, endLocation.lng], {
+                        radius: 6,
+                        fillColor: "#00ff00",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+                    
+                    endMarker.bindPopup(`<h3>Activity End</h3>${createPopupContent(item)}`);
+                    endMarker.on('click', function() {
+                        document.getElementById('info-panel').innerHTML = `<h3>Activity End</h3>${createPopupContent(item)}`;
+                    });
+                    activityEndMarkers.push(endMarker);
+                    
+                    // Create line for this activity
+                    const line = L.polyline([
+                        [startLocation.lat, startLocation.lng],
+                        [endLocation.lat, endLocation.lng]
+                    ], {color: 'blue', weight: 2}).addTo(map);
+                    
+                    line.bindPopup(`<h3>Activity Path</h3>${createPopupContent(item)}`);
+                    pathLines.push(line);
+                    
+                    // Add to path if enabled
+                    if (currentPolyline) {
+                        currentPolyline.addLatLng([startLocation.lat, startLocation.lng]);
+                        currentPolyline.addLatLng([endLocation.lat, endLocation.lng]);
+                    }
+                }
+            });
+            
+            // Fit map to bounds if we have data
+            if (visitMarkers.length > 0 || activityStartMarkers.length > 0 || activityEndMarkers.length > 0) {
+                const group = L.featureGroup([...visitMarkers, ...activityStartMarkers, ...activityEndMarkers]);
+                map.fitBounds(group.getBounds());
+            }
+            
+            document.getElementById('info-panel').innerHTML = `<p>Loaded ${data.length} location records</p>`;
+        }
+
+        // Function to clear all markers and lines
+        function clearAllMarkers() {
+            visitMarkers.forEach(marker => map.removeLayer(marker));
+            activityStartMarkers.forEach(marker => map.removeLayer(marker));
+            activityEndMarkers.forEach(marker => map.removeLayer(marker));
+            pathLines.forEach(line => map.removeLayer(line));
+            
+            visitMarkers = [];
+            activityStartMarkers = [];
+            activityEndMarkers = [];
+            pathLines = [];
+            
+            if (currentPolyline) {
+                map.removeLayer(currentPolyline);
+                currentPolyline = null;
+            }
+        }
+
+        // Function to show all points
+        function showAllPoints() {
+            if (locationData.length === 0) {
+                alert('Please load location data first');
+                return;
+            }
+            clearAllMarkers();
+            processData(locationData);
+        }
+
+        // Function to show path
+        function showPath() {
+            if (locationData.length === 0) {
+                alert('Please load location data first');
+                return;
+            }
+            clearAllMarkers();
+            
+            // Create a new polyline for the path
+            currentPolyline = L.polyline([], {color: 'red', weight: 3}).addTo(map);
+            
+            // Process data to build the path
+            processData(locationData);
+            
+            // Fit map to the path bounds if we have data
+            if (currentPolyline.getLatLngs().length > 0) {
+                map.fitBounds(currentPolyline.getBounds());
+            }
+        }
+
+        // Event listeners for buttons
+        document.getElementById('show-all').addEventListener('click', showAllPoints);
+        document.getElementById('show-path').addEventListener('click', showPath);
+
+        // File input handler
+        document.getElementById('load-file').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a JSON file first');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    locationData = JSON.parse(e.target.result);
+                    processData(locationData);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    document.getElementById('info-panel').innerHTML = 
+                        '<p>Error parsing JSON file. Please check console for details.</p>';
+                }
+            };
+            reader.onerror = function() {
+                alert('Error reading file');
+            };
+            reader.readAsText(file);
+        });
+
+        // Initialize with empty map
+        window.addEventListener('load', function() {
+            // Map is already initialized at the top
+            document.getElementById('info-panel').innerHTML = 
+                '<p>Select your location-history.json file to visualize your data</p>';
+        });
+    </script>
+</body>
+</html>
