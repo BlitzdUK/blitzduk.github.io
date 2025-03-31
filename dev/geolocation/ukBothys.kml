@@ -1,0 +1,1874 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+	<Document>
+		<gx:TimeStamp>2017-03-02T13:05:20.095Z</gx:TimeStamp>
+		<name>Bothy&apos;s</name>
+		<atom:author>
+			<atom:name>GalileoPro/3.6</atom:name>
+		</atom:author>
+		<Style id="BookmarkStyle_0">
+			<IconStyle>
+				<Icon>
+					<href>http://shared.galileo-app.com/static/img/bookmark/BookmarkStyle_0.png</href>
+				</Icon>
+			</IconStyle>
+		</Style>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.112Z</gx:TimeStamp>
+			<name>Achnanclach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.345992,58.427619,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.113Z</gx:TimeStamp>
+			<name>Croft House</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.0668816,58.4124246,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.114Z</gx:TimeStamp>
+			<name>Coiremor</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.858255,57.856452,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.115Z</gx:TimeStamp>
+			<name>The Schoolhouse</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.805429,57.935815,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.116Z</gx:TimeStamp>
+			<name>Glencoul</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.946112,58.229197,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.116Z</gx:TimeStamp>
+			<name>Bearnais</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.298599,57.434979,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.116Z</gx:TimeStamp>
+			<name>Camasunary</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.121502,57.192202,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.117Z</gx:TimeStamp>
+			<name>Camban</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.225897,57.214842,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.117Z</gx:TimeStamp>
+			<name>Coire Fionnaraich</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.420752,57.475767,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.117Z</gx:TimeStamp>
+			<name>Craig</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.72807,57.609096,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.119Z</gx:TimeStamp>
+			<name>Easan Dorcha (The Teahouse)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.321295,57.519777,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.119Z</gx:TimeStamp>
+			<name>The Lookout</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.343943,57.701814,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.119Z</gx:TimeStamp>
+			<name>Maol Bhuide</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.241416,57.372645,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.120Z</gx:TimeStamp>
+			<name>Ollisdal</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.636205,57.359513,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.120Z</gx:TimeStamp>
+			<name>Taigh Thormoid Dhuibh (Raasay)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.989203,57.500406,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.120Z</gx:TimeStamp>
+			<name>Uags</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.784645,57.347578,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.121Z</gx:TimeStamp>
+			<name>Uisinis</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-7.229364,57.281319,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.121Z</gx:TimeStamp>
+			<name>A&apos;Chuil</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.384713,56.97693,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.122Z</gx:TimeStamp>
+			<name>Dibidil</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.289097,56.951849,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.122Z</gx:TimeStamp>
+			<name>Gleann Dubh-lighe</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.376188,56.88277,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.122Z</gx:TimeStamp>
+			<name>Glenpean</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.396135,56.957742,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.123Z</gx:TimeStamp>
+			<name>Invermallie</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.066667,56.952779,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.123Z</gx:TimeStamp>
+			<name>Kinbreak</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.292389,57.012657,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.123Z</gx:TimeStamp>
+			<name>Oban</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.515771,56.952635,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.123Z</gx:TimeStamp>
+			<name>Sourlies</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.510146,56.997744,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.124Z</gx:TimeStamp>
+			<name>Suardalan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.505908,57.19744,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.124Z</gx:TimeStamp>
+			<name>Guirdil</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.417993,57.025603,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.126Z</gx:TimeStamp>
+			<name>Mark Cottage</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.850131,56.116604,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.131Z</gx:TimeStamp>
+			<name>Cruib</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.902856,55.976282,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.136Z</gx:TimeStamp>
+			<name>An Cladach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-6.086465,55.785959,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.137Z</gx:TimeStamp>
+			<name>Cadderlie</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.17497,56.484437,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.137Z</gx:TimeStamp>
+			<name>Carron</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.311128,56.144652,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.137Z</gx:TimeStamp>
+			<name>Doune Byre</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.696749,56.292623,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.159Z</gx:TimeStamp>
+			<name>Essan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.584015,56.875176,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.161Z</gx:TimeStamp>
+			<name>Glengarrisdale</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.790449,56.105683,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.185Z</gx:TimeStamp>
+			<name>Leacraithnaich</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.676379,56.5614,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.190Z</gx:TimeStamp>
+			<name>Peanmeanach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.754835,56.859362,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.190Z</gx:TimeStamp>
+			<name>Resourie</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.501269,56.780431,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.190Z</gx:TimeStamp>
+			<name>Rowchoish</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.68394,56.202122,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.191Z</gx:TimeStamp>
+			<name>Taigh Seumas a&apos; Ghlinne</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.226768,56.635023,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.192Z</gx:TimeStamp>
+			<name>Tomsleibhe</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.87023,56.466488,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.193Z</gx:TimeStamp>
+			<name>Ben Alder Cottage</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.458191,56.779302,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.194Z</gx:TimeStamp>
+			<name>Blackburn of Corrieyairack</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.671762,57.088563,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.195Z</gx:TimeStamp>
+			<name>Culra</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.423702,56.853668,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.196Z</gx:TimeStamp>
+			<name>Glenbuck</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.745388,57.057313,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.201Z</gx:TimeStamp>
+			<name>Gorton</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.64832,56.596557,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.202Z</gx:TimeStamp>
+			<name>Lairig Leacach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.816652,56.822049,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.202Z</gx:TimeStamp>
+			<name>Loch Chiarain</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.798372,56.730785,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.202Z</gx:TimeStamp>
+			<name>Luib Chonnal</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.646038,57.00553,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.203Z</gx:TimeStamp>
+			<name>Meanach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.839369,56.775696,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.203Z</gx:TimeStamp>
+			<name>Staoineag</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.789873,56.770522,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.203Z</gx:TimeStamp>
+			<name>Fords of Avon Refuge Hut</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.583338,57.10974,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.204Z</gx:TimeStamp>
+			<name>Allt Scheicheachan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.911331,56.841,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.204Z</gx:TimeStamp>
+			<name>Callater Stable</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.352724,56.943537,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.204Z</gx:TimeStamp>
+			<name>Charr</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.632676,56.937575,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.205Z</gx:TimeStamp>
+			<name>Corrour</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.680995,57.041981,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.206Z</gx:TimeStamp>
+			<name>Faindouran</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.520077,57.137476,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.207Z</gx:TimeStamp>
+			<name>Gelder Shiel Stable</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.224559,56.995169,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.207Z</gx:TimeStamp>
+			<name>Hutchinson Memorial Hut</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.613366,57.078809,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.208Z</gx:TimeStamp>
+			<name>Ruigh Aiteachain</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.900282,57.010991,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.208Z</gx:TimeStamp>
+			<name>Ryvoan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.646055,57.183503,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.112Z</gx:TimeStamp>
+			<name>Suileag</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.1447727,58.1397971,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.208Z</gx:TimeStamp>
+			<name>Shielin of Mark</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.090994,56.930822,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.209Z</gx:TimeStamp>
+			<name>Tarf Hotel (Feith Uaine)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.7644,56.888987,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.209Z</gx:TimeStamp>
+			<name>Greensykes</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.084874,55.289293,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.209Z</gx:TimeStamp>
+			<name>Brattleburn</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.553216,55.346242,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.210Z</gx:TimeStamp>
+			<name>Burlywhag</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.62165,55.284242,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.210Z</gx:TimeStamp>
+			<name>Clennoch</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.200681,55.276074,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.210Z</gx:TimeStamp>
+			<name>Gameshope</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.369228,55.452685,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.211Z</gx:TimeStamp>
+			<name>Kettleton Byre</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.715233,55.300038,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.215Z</gx:TimeStamp>
+			<name>Over Phawhope</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.291913,55.360967,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.221Z</gx:TimeStamp>
+			<name>Tunskeen</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.475248,55.184521,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.221Z</gx:TimeStamp>
+			<name>White Laggan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.402273,55.06823,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.232Z</gx:TimeStamp>
+			<name>Cross Fell (Greg&apos;s Hut)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.481147,54.713551,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.233Z</gx:TimeStamp>
+			<name>Green</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.409002,55.101129,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.233Z</gx:TimeStamp>
+			<name>Haughtongreen</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.333233,55.035761,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.233Z</gx:TimeStamp>
+			<name>Kershopehead</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.717386,55.168896,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.233Z</gx:TimeStamp>
+			<name>Mosedale Cottage</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.782409,54.478318,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.234Z</gx:TimeStamp>
+			<name>Roughside</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.40159,55.143388,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.234Z</gx:TimeStamp>
+			<name>Spithope</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.36736,55.344779,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.237Z</gx:TimeStamp>
+			<name>Wainhope</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-2.518752,55.225617,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.240Z</gx:TimeStamp>
+			<name>Warnscale Head</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.229349,54.50875,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.241Z</gx:TimeStamp>
+			<name>Moel Prysgau</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.749888,52.236004,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.241Z</gx:TimeStamp>
+			<name>Nant Rhys</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.711116,52.3990136,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.242Z</gx:TimeStamp>
+			<name>Nant Syddion </name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.8034824,52.3965923,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.242Z</gx:TimeStamp>
+			<name>Penrhos Isaf</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.874673,52.796933,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.242Z</gx:TimeStamp>
+			<name>Arenig Fawr</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.712143,52.926156,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.243Z</gx:TimeStamp>
+			<name>Dulyn</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.939178,53.178896,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.243Z</gx:TimeStamp>
+			<name>Grwyne Fawr</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.126731,51.973871,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.243Z</gx:TimeStamp>
+			<name>The Arch (Picnic Site)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.8148549,52.3641258,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.244Z</gx:TimeStamp>
+			<name>The Arch (Picnic Site)</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.8148528,52.3640572,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.244Z</gx:TimeStamp>
+			<name>Nant Syddion </name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.8036084,52.3966961,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.111Z</gx:TimeStamp>
+			<name>Strathchailleach</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.010325,58.544036,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.109Z</gx:TimeStamp>
+			<name>Shenavall</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.254028,57.776804,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.400Z</gx:TimeStamp>
+			<name>Nant Rhys</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.7113543,52.3988257,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.111Z</gx:TimeStamp>
+			<name>Strathan</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-5.010293,58.503596,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.095Z</gx:TimeStamp>
+			<name>Glendhu</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.928148,58.259267,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.110Z</gx:TimeStamp>
+			<name>Strabeg</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.755175,58.424863,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.401Z</gx:TimeStamp>
+			<name>Nant Syddion </name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-3.8036084,52.3966961,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.107Z</gx:TimeStamp>
+			<name>Kearvaig</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.9411451,58.6084815,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.108Z</gx:TimeStamp>
+			<name>Knockdamph</name>
+			<styleUrl>BookmarkStyle_0</styleUrl>
+			<Point>
+				<coordinates>-4.894987,57.914933,0</coordinates>
+			</Point>
+		</Placemark>
+		<Style id="TrackStyle_464646C8">
+			<LineStyle>
+				<color>C8464646</color>
+				<width>5</width>
+			</LineStyle>
+		</Style>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.401Z</gx:TimeStamp>
+			<name>Directions from Nant Rhys to Nant Syddion </name>
+			<styleUrl>TrackStyle_464646C8</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+-3.711350,52.398830,0.000000
+-3.711400,52.398850,0.000000
+-3.711480,52.398870,0.000000
+-3.711570,52.398890,0.000000
+-3.711590,52.398800,0.000000
+-3.711600,52.398610,0.000000
+-3.711640,52.398410,0.000000
+-3.711690,52.398220,0.000000
+-3.711740,52.398050,0.000000
+-3.711800,52.397950,0.000000
+-3.711950,52.397700,0.000000
+-3.712050,52.397570,0.000000
+-3.712120,52.397470,0.000000
+-3.712300,52.397300,0.000000
+-3.712530,52.397120,0.000000
+-3.712730,52.396980,0.000000
+-3.712980,52.396840,0.000000
+-3.713240,52.396730,0.000000
+-3.713470,52.396650,0.000000
+-3.713620,52.396600,0.000000
+-3.713670,52.396580,0.000000
+-3.713720,52.396570,0.000000
+-3.713800,52.396560,0.000000
+-3.713880,52.396570,0.000000
+-3.713930,52.396580,0.000000
+-3.714120,52.396630,0.000000
+-3.714390,52.396750,0.000000
+-3.716220,52.397470,0.000000
+-3.717050,52.397830,0.000000
+-3.717280,52.397910,0.000000
+-3.717380,52.397930,0.000000
+-3.717510,52.397970,0.000000
+-3.717600,52.397980,0.000000
+-3.717740,52.397980,0.000000
+-3.717860,52.397960,0.000000
+-3.718110,52.397910,0.000000
+-3.718620,52.397840,0.000000
+-3.718710,52.397820,0.000000
+-3.718770,52.397800,0.000000
+-3.718860,52.397790,0.000000
+-3.718890,52.397780,0.000000
+-3.718930,52.397760,0.000000
+-3.719000,52.397740,0.000000
+-3.719010,52.397730,0.000000
+-3.719110,52.397700,0.000000
+-3.719240,52.397640,0.000000
+-3.720010,52.397280,0.000000
+-3.720500,52.397080,0.000000
+-3.720980,52.396880,0.000000
+-3.721040,52.396860,0.000000
+-3.721100,52.396840,0.000000
+-3.721160,52.396820,0.000000
+-3.721270,52.396800,0.000000
+-3.721350,52.396780,0.000000
+-3.721500,52.396740,0.000000
+-3.722060,52.396600,0.000000
+-3.722430,52.396480,0.000000
+-3.722500,52.396460,0.000000
+-3.722640,52.396420,0.000000
+-3.722750,52.396390,0.000000
+-3.722810,52.396370,0.000000
+-3.722820,52.396330,0.000000
+-3.722800,52.396280,0.000000
+-3.722780,52.396220,0.000000
+-3.722780,52.396130,0.000000
+-3.722790,52.396070,0.000000
+-3.722820,52.395970,0.000000
+-3.722880,52.395870,0.000000
+-3.722930,52.395750,0.000000
+-3.722960,52.395660,0.000000
+-3.723010,52.395560,0.000000
+-3.723040,52.395470,0.000000
+-3.723020,52.395370,0.000000
+-3.723020,52.395260,0.000000
+-3.723010,52.395120,0.000000
+-3.722970,52.395000,0.000000
+-3.722860,52.394840,0.000000
+-3.722580,52.394520,0.000000
+-3.722210,52.394020,0.000000
+-3.721490,52.393130,0.000000
+-3.720980,52.392470,0.000000
+-3.720900,52.392310,0.000000
+-3.720830,52.392110,0.000000
+-3.720690,52.391480,0.000000
+-3.720580,52.391150,0.000000
+-3.720520,52.391020,0.000000
+-3.720510,52.390940,0.000000
+-3.720500,52.390810,0.000000
+-3.720560,52.390440,0.000000
+-3.720690,52.389820,0.000000
+-3.720730,52.389710,0.000000
+-3.720770,52.389610,0.000000
+-3.720870,52.389500,0.000000
+-3.720990,52.389420,0.000000
+-3.721240,52.389300,0.000000
+-3.721440,52.389230,0.000000
+-3.721590,52.389210,0.000000
+-3.721740,52.389220,0.000000
+-3.721880,52.389240,0.000000
+-3.722050,52.389280,0.000000
+-3.722190,52.389310,0.000000
+-3.722410,52.389340,0.000000
+-3.722610,52.389360,0.000000
+-3.722860,52.389380,0.000000
+-3.723040,52.389380,0.000000
+-3.723280,52.389370,0.000000
+-3.723510,52.389370,0.000000
+-3.723680,52.389390,0.000000
+-3.723890,52.389430,0.000000
+-3.724040,52.389480,0.000000
+-3.724170,52.389510,0.000000
+-3.724290,52.389510,0.000000
+-3.724450,52.389510,0.000000
+-3.724610,52.389510,0.000000
+-3.724630,52.389520,0.000000
+-3.724680,52.389540,0.000000
+-3.724880,52.389600,0.000000
+-3.725170,52.389690,0.000000
+-3.725490,52.389790,0.000000
+-3.726000,52.389980,0.000000
+-3.726400,52.390130,0.000000
+-3.726670,52.390240,0.000000
+-3.727140,52.390460,0.000000
+-3.727420,52.390600,0.000000
+-3.727760,52.390760,0.000000
+-3.728310,52.391040,0.000000
+-3.728640,52.391210,0.000000
+-3.728840,52.391320,0.000000
+-3.728990,52.391380,0.000000
+-3.729130,52.391420,0.000000
+-3.729220,52.391450,0.000000
+-3.729320,52.391470,0.000000
+-3.729480,52.391490,0.000000
+-3.729630,52.391500,0.000000
+-3.729760,52.391500,0.000000
+-3.729900,52.391490,0.000000
+-3.730090,52.391470,0.000000
+-3.730320,52.391450,0.000000
+-3.730550,52.391450,0.000000
+-3.730760,52.391470,0.000000
+-3.730920,52.391500,0.000000
+-3.731110,52.391580,0.000000
+-3.731480,52.391760,0.000000
+-3.732110,52.392100,0.000000
+-3.732620,52.392380,0.000000
+-3.732930,52.392540,0.000000
+-3.733090,52.392640,0.000000
+-3.733200,52.392710,0.000000
+-3.733310,52.392820,0.000000
+-3.733560,52.393230,0.000000
+-3.733770,52.393620,0.000000
+-3.733890,52.393860,0.000000
+-3.733960,52.394100,0.000000
+-3.734300,52.394900,0.000000
+-3.734530,52.395460,0.000000
+-3.734850,52.396230,0.000000
+-3.734970,52.396530,0.000000
+-3.734970,52.396570,0.000000
+-3.735160,52.396760,0.000000
+-3.735320,52.396850,0.000000
+-3.735530,52.396950,0.000000
+-3.735730,52.397030,0.000000
+-3.735960,52.397070,0.000000
+-3.736220,52.397090,0.000000
+-3.736440,52.397090,0.000000
+-3.737530,52.397070,0.000000
+-3.739230,52.396980,0.000000
+-3.739440,52.396960,0.000000
+-3.739570,52.396930,0.000000
+-3.739680,52.396900,0.000000
+-3.739790,52.396830,0.000000
+-3.739900,52.396740,0.000000
+-3.740000,52.396650,0.000000
+-3.740080,52.396520,0.000000
+-3.740260,52.395990,0.000000
+-3.740460,52.395260,0.000000
+-3.740570,52.394950,0.000000
+-3.740640,52.394720,0.000000
+-3.740700,52.394470,0.000000
+-3.740720,52.394350,0.000000
+-3.740740,52.394250,0.000000
+-3.740740,52.394230,0.000000
+-3.740750,52.394130,0.000000
+-3.740840,52.393880,0.000000
+-3.740920,52.393700,0.000000
+-3.740960,52.393550,0.000000
+-3.740970,52.393370,0.000000
+-3.740960,52.393030,0.000000
+-3.741010,52.392700,0.000000
+-3.741100,52.392470,0.000000
+-3.741200,52.392310,0.000000
+-3.741340,52.392150,0.000000
+-3.741500,52.392000,0.000000
+-3.741780,52.391810,0.000000
+-3.741940,52.391710,0.000000
+-3.742220,52.391640,0.000000
+-3.742530,52.391530,0.000000
+-3.742940,52.391410,0.000000
+-3.743640,52.391170,0.000000
+-3.743920,52.391110,0.000000
+-3.744190,52.391040,0.000000
+-3.744450,52.391000,0.000000
+-3.744820,52.391000,0.000000
+-3.745090,52.391010,0.000000
+-3.745410,52.391040,0.000000
+-3.745850,52.391070,0.000000
+-3.746190,52.391100,0.000000
+-3.746560,52.391140,0.000000
+-3.746800,52.391180,0.000000
+-3.747020,52.391250,0.000000
+-3.747260,52.391320,0.000000
+-3.747530,52.391410,0.000000
+-3.747980,52.391530,0.000000
+-3.748160,52.391560,0.000000
+-3.748680,52.391630,0.000000
+-3.749120,52.391670,0.000000
+-3.749440,52.391670,0.000000
+-3.749600,52.391660,0.000000
+-3.749860,52.391610,0.000000
+-3.750260,52.391510,0.000000
+-3.750580,52.391430,0.000000
+-3.750900,52.391290,0.000000
+-3.751230,52.391160,0.000000
+-3.751740,52.390990,0.000000
+-3.751850,52.390970,0.000000
+-3.752000,52.390930,0.000000
+-3.752230,52.390890,0.000000
+-3.752460,52.390870,0.000000
+-3.752670,52.390870,0.000000
+-3.752720,52.390880,0.000000
+-3.752760,52.390880,0.000000
+-3.753020,52.390960,0.000000
+-3.753230,52.391050,0.000000
+-3.753420,52.391150,0.000000
+-3.753640,52.391320,0.000000
+-3.753750,52.391420,0.000000
+-3.753850,52.391540,0.000000
+-3.753930,52.391640,0.000000
+-3.753950,52.391660,0.000000
+-3.754010,52.391850,0.000000
+-3.754040,52.392050,0.000000
+-3.754080,52.392750,0.000000
+-3.754090,52.393020,0.000000
+-3.754100,52.393150,0.000000
+-3.754070,52.393210,0.000000
+-3.754180,52.393300,0.000000
+-3.754330,52.393430,0.000000
+-3.754520,52.393540,0.000000
+-3.754780,52.393660,0.000000
+-3.754940,52.393750,0.000000
+-3.755120,52.393870,0.000000
+-3.755340,52.393720,0.000000
+-3.755510,52.393680,0.000000
+-3.755660,52.393650,0.000000
+-3.755900,52.393630,0.000000
+-3.756320,52.393540,0.000000
+-3.756340,52.393540,0.000000
+-3.756530,52.393550,0.000000
+-3.756680,52.393570,0.000000
+-3.756800,52.393560,0.000000
+-3.756940,52.393510,0.000000
+-3.757220,52.393390,0.000000
+-3.757420,52.393310,0.000000
+-3.757620,52.393230,0.000000
+-3.757830,52.393190,0.000000
+-3.758060,52.393290,0.000000
+-3.758350,52.393260,0.000000
+-3.758530,52.393240,0.000000
+-3.758630,52.393260,0.000000
+-3.758750,52.393330,0.000000
+-3.758820,52.393500,0.000000
+-3.758820,52.393840,0.000000
+-3.758770,52.394400,0.000000
+-3.758680,52.394730,0.000000
+-3.758620,52.395040,0.000000
+-3.758610,52.395080,0.000000
+-3.759220,52.395770,0.000000
+-3.759380,52.395940,0.000000
+-3.759500,52.396030,0.000000
+-3.760340,52.396580,0.000000
+-3.760670,52.396770,0.000000
+-3.760800,52.396840,0.000000
+-3.761200,52.396970,0.000000
+-3.761820,52.397190,0.000000
+-3.762120,52.397260,0.000000
+-3.762330,52.397300,0.000000
+-3.762510,52.397310,0.000000
+-3.762660,52.397310,0.000000
+-3.762900,52.397280,0.000000
+-3.763280,52.397170,0.000000
+-3.763500,52.397080,0.000000
+-3.764510,52.396470,0.000000
+-3.764670,52.396380,0.000000
+-3.764740,52.396310,0.000000
+-3.764810,52.396210,0.000000
+-3.764900,52.396120,0.000000
+-3.765210,52.395900,0.000000
+-3.765420,52.395760,0.000000
+-3.765530,52.395700,0.000000
+-3.766250,52.395440,0.000000
+-3.767550,52.395040,0.000000
+-3.767910,52.394950,0.000000
+-3.768120,52.394920,0.000000
+-3.768300,52.394900,0.000000
+-3.768440,52.394900,0.000000
+-3.768900,52.394950,0.000000
+-3.769140,52.394970,0.000000
+-3.769340,52.394970,0.000000
+-3.769580,52.394950,0.000000
+-3.770320,52.394830,0.000000
+-3.770450,52.394810,0.000000
+-3.770590,52.394810,0.000000
+-3.770670,52.394810,0.000000
+-3.770710,52.394790,0.000000
+-3.770760,52.394770,0.000000
+-3.770850,52.394660,0.000000
+-3.770930,52.394610,0.000000
+-3.771700,52.394210,0.000000
+-3.771810,52.394160,0.000000
+-3.772150,52.394080,0.000000
+-3.773600,52.393710,0.000000
+-3.773690,52.393680,0.000000
+-3.773800,52.393610,0.000000
+-3.774320,52.392640,0.000000
+-3.774490,52.392180,0.000000
+-3.774610,52.391830,0.000000
+-3.774660,52.391750,0.000000
+-3.774740,52.391680,0.000000
+-3.774890,52.391610,0.000000
+-3.775060,52.391540,0.000000
+-3.775290,52.391480,0.000000
+-3.775410,52.391450,0.000000
+-3.775540,52.391450,0.000000
+-3.775700,52.391470,0.000000
+-3.775840,52.391500,0.000000
+-3.776640,52.391680,0.000000
+-3.776790,52.391700,0.000000
+-3.776940,52.391710,0.000000
+-3.777920,52.391630,0.000000
+-3.778070,52.391630,0.000000
+-3.778210,52.391660,0.000000
+-3.778530,52.391790,0.000000
+-3.778730,52.391900,0.000000
+-3.778790,52.391980,0.000000
+-3.778840,52.392080,0.000000
+-3.778850,52.392160,0.000000
+-3.778880,52.392300,0.000000
+-3.778870,52.392440,0.000000
+-3.778880,52.392510,0.000000
+-3.778930,52.392570,0.000000
+-3.779030,52.392630,0.000000
+-3.779180,52.392670,0.000000
+-3.779320,52.392710,0.000000
+-3.779920,52.392790,0.000000
+-3.780090,52.392810,0.000000
+-3.780220,52.392800,0.000000
+-3.780730,52.392710,0.000000
+-3.780900,52.392700,0.000000
+-3.781290,52.392710,0.000000
+-3.781530,52.392730,0.000000
+-3.781680,52.392730,0.000000
+-3.781850,52.392710,0.000000
+-3.783140,52.392360,0.000000
+-3.784540,52.391990,0.000000
+-3.784640,52.391950,0.000000
+-3.785490,52.391470,0.000000
+-3.786080,52.391060,0.000000
+-3.786220,52.390930,0.000000
+-3.786550,52.390570,0.000000
+-3.786780,52.390390,0.000000
+-3.786940,52.390330,0.000000
+-3.787160,52.390260,0.000000
+-3.787720,52.390130,0.000000
+-3.787870,52.390080,0.000000
+-3.788210,52.389950,0.000000
+-3.788340,52.389920,0.000000
+-3.788510,52.389920,0.000000
+-3.788650,52.389980,0.000000
+-3.788730,52.390060,0.000000
+-3.789290,52.390690,0.000000
+-3.789350,52.390760,0.000000
+-3.789440,52.390810,0.000000
+-3.789520,52.390820,0.000000
+-3.789620,52.390820,0.000000
+-3.789720,52.390800,0.000000
+-3.790010,52.390670,0.000000
+-3.790110,52.390660,0.000000
+-3.790200,52.390670,0.000000
+-3.790290,52.390700,0.000000
+-3.790650,52.391000,0.000000
+-3.790780,52.391100,0.000000
+-3.790870,52.391120,0.000000
+-3.790930,52.391130,0.000000
+-3.791010,52.391120,0.000000
+-3.791200,52.391070,0.000000
+-3.791540,52.390980,0.000000
+-3.791720,52.390950,0.000000
+-3.791870,52.390950,0.000000
+-3.792090,52.390970,0.000000
+-3.792290,52.391000,0.000000
+-3.793050,52.391220,0.000000
+-3.793250,52.391260,0.000000
+-3.793430,52.391290,0.000000
+-3.793670,52.391330,0.000000
+-3.793840,52.391380,0.000000
+-3.794230,52.391540,0.000000
+-3.794600,52.391730,0.000000
+-3.794680,52.391760,0.000000
+-3.794790,52.391780,0.000000
+-3.794980,52.391810,0.000000
+-3.795450,52.391860,0.000000
+-3.795750,52.391910,0.000000
+-3.795980,52.391970,0.000000
+-3.796140,52.392030,0.000000
+-3.796580,52.392270,0.000000
+-3.796670,52.392310,0.000000
+-3.796770,52.392330,0.000000
+-3.796900,52.392490,0.000000
+-3.797010,52.392700,0.000000
+-3.797120,52.392870,0.000000
+-3.797250,52.392990,0.000000
+-3.797370,52.393060,0.000000
+-3.797430,52.393080,0.000000
+-3.797530,52.393110,0.000000
+-3.797710,52.393150,0.000000
+-3.797860,52.393150,0.000000
+-3.798030,52.393130,0.000000
+-3.798320,52.393080,0.000000
+-3.798540,52.393060,0.000000
+-3.798700,52.393090,0.000000
+-3.798870,52.393170,0.000000
+-3.798950,52.393240,0.000000
+-3.799050,52.393340,0.000000
+-3.799140,52.393600,0.000000
+-3.799410,52.394250,0.000000
+-3.799430,52.394470,0.000000
+-3.799390,52.394700,0.000000
+-3.799290,52.394910,0.000000
+-3.799150,52.395170,0.000000
+-3.799020,52.395420,0.000000
+-3.798840,52.395600,0.000000
+-3.798610,52.395730,0.000000
+-3.798340,52.395820,0.000000
+-3.798030,52.395880,0.000000
+-3.797660,52.395910,0.000000
+-3.797320,52.395910,0.000000
+-3.797020,52.395890,0.000000
+-3.796780,52.395880,0.000000
+-3.796610,52.395890,0.000000
+-3.796150,52.396040,0.000000
+-3.795790,52.396160,0.000000
+-3.795350,52.396280,0.000000
+-3.795020,52.396310,0.000000
+-3.794780,52.396320,0.000000
+-3.794460,52.396360,0.000000
+-3.794570,52.396420,0.000000
+-3.794900,52.396450,0.000000
+-3.795150,52.396430,0.000000
+-3.795510,52.396430,0.000000
+-3.795880,52.396460,0.000000
+-3.796210,52.396470,0.000000
+-3.796570,52.396510,0.000000
+-3.796640,52.396520,0.000000
+-3.796820,52.396530,0.000000
+-3.797060,52.396590,0.000000
+-3.797190,52.396670,0.000000
+-3.797330,52.396740,0.000000
+-3.797460,52.396760,0.000000
+-3.797750,52.396770,0.000000
+-3.798090,52.396760,0.000000
+-3.798670,52.396670,0.000000
+-3.799090,52.396590,0.000000
+-3.799370,52.396530,0.000000
+-3.799650,52.396420,0.000000
+-3.799900,52.396280,0.000000
+-3.800080,52.396150,0.000000
+-3.800310,52.395930,0.000000
+-3.800610,52.395500,0.000000
+-3.801010,52.394740,0.000000
+-3.801240,52.394140,0.000000
+-3.801290,52.393950,0.000000
+-3.801330,52.393720,0.000000
+-3.801350,52.392770,0.000000
+-3.801490,52.392620,0.000000
+-3.801760,52.392440,0.000000
+-3.802290,52.391760,0.000000
+-3.802410,52.391500,0.000000
+-3.802380,52.391220,0.000000
+-3.802460,52.390970,0.000000
+-3.802850,52.390500,0.000000
+-3.802990,52.390170,0.000000
+-3.803130,52.389840,0.000000
+-3.803280,52.389530,0.000000
+-3.803310,52.389470,0.000000
+-3.803470,52.389390,0.000000
+-3.803660,52.389260,0.000000
+-3.803820,52.389160,0.000000
+-3.804110,52.388870,0.000000
+-3.804410,52.388520,0.000000
+-3.804650,52.388250,0.000000
+-3.804910,52.387940,0.000000
+-3.805160,52.387680,0.000000
+-3.805520,52.387310,0.000000
+-3.805690,52.387040,0.000000
+-3.805860,52.386590,0.000000
+-3.806300,52.385830,0.000000
+-3.806410,52.385710,0.000000
+-3.806490,52.385890,0.000000
+-3.806540,52.385990,0.000000
+-3.806620,52.386090,0.000000
+-3.806720,52.386260,0.000000
+-3.806810,52.386390,0.000000
+-3.807210,52.386960,0.000000
+-3.807320,52.387130,0.000000
+-3.807380,52.387290,0.000000
+-3.807410,52.387400,0.000000
+-3.807430,52.387530,0.000000
+-3.807420,52.387690,0.000000
+-3.807410,52.387830,0.000000
+-3.807390,52.388020,0.000000
+-3.807380,52.388080,0.000000
+-3.807390,52.388130,0.000000
+-3.807440,52.388190,0.000000
+-3.807690,52.388250,0.000000
+-3.807830,52.388280,0.000000
+-3.808010,52.388340,0.000000
+-3.807980,52.388510,0.000000
+-3.807840,52.388770,0.000000
+-3.807670,52.389040,0.000000
+-3.807480,52.389280,0.000000
+-3.807200,52.389650,0.000000
+-3.807000,52.389950,0.000000
+-3.806820,52.390150,0.000000
+-3.806540,52.390400,0.000000
+-3.806130,52.390760,0.000000
+-3.805670,52.391110,0.000000
+-3.805230,52.391590,0.000000
+-3.804950,52.391860,0.000000
+-3.804760,52.392110,0.000000
+-3.804620,52.392360,0.000000
+-3.804460,52.392560,0.000000
+-3.804350,52.392790,0.000000
+-3.804270,52.392960,0.000000
+-3.804220,52.393090,0.000000
+-3.804200,52.393240,0.000000
+-3.804200,52.393430,0.000000
+-3.804150,52.393740,0.000000
+-3.804130,52.393910,0.000000
+-3.804130,52.394200,0.000000
+-3.804140,52.394440,0.000000
+-3.804160,52.394550,0.000000
+-3.804230,52.394680,0.000000
+-3.804300,52.394790,0.000000
+-3.804400,52.394910,0.000000
+-3.804430,52.395000,0.000000
+-3.804430,52.395140,0.000000
+-3.804420,52.395380,0.000000
+-3.804440,52.395660,0.000000
+-3.804440,52.395930,0.000000
+-3.804400,52.396150,0.000000
+-3.804320,52.396310,0.000000
+-3.804210,52.396410,0.000000
+-3.804070,52.396480,0.000000
+-3.803760,52.396630,0.000000
+-3.803610,52.396700,0.000000</coordinates>
+			</LineString>
+		</Placemark>
+		<Style id="TrackStyle_FF3333C8">
+			<LineStyle>
+				<color>C83333FF</color>
+				<width>5</width>
+			</LineStyle>
+		</Style>
+		<Placemark>
+			<gx:TimeStamp>2017-03-02T13:05:20.246Z</gx:TimeStamp>
+			<name>Directions from The Arch (Picnic Site) to Nant Syddion </name>
+			<styleUrl>TrackStyle_FF3333C8</styleUrl>
+			<LineString>
+				<tessellate>1</tessellate>
+				<coordinates>
+-3.814850,52.364060,0.000000
+-3.814640,52.364060,0.000000
+-3.814530,52.364150,0.000000
+-3.814390,52.364250,0.000000
+-3.814300,52.364310,0.000000
+-3.814250,52.364350,0.000000
+-3.814220,52.364370,0.000000
+-3.814190,52.364400,0.000000
+-3.814180,52.364420,0.000000
+-3.814160,52.364430,0.000000
+-3.814150,52.364450,0.000000
+-3.814140,52.364480,0.000000
+-3.814130,52.364500,0.000000
+-3.814120,52.364520,0.000000
+-3.814120,52.364550,0.000000
+-3.814110,52.364570,0.000000
+-3.814110,52.364600,0.000000
+-3.814110,52.364620,0.000000
+-3.814120,52.364650,0.000000
+-3.814120,52.364690,0.000000
+-3.814130,52.364730,0.000000
+-3.814140,52.364770,0.000000
+-3.814150,52.364800,0.000000
+-3.814160,52.364850,0.000000
+-3.814160,52.364870,0.000000
+-3.814170,52.364900,0.000000
+-3.814170,52.364930,0.000000
+-3.814170,52.364960,0.000000
+-3.814170,52.365000,0.000000
+-3.814170,52.365040,0.000000
+-3.814150,52.365090,0.000000
+-3.814150,52.365120,0.000000
+-3.814140,52.365160,0.000000
+-3.814120,52.365200,0.000000
+-3.814090,52.365290,0.000000
+-3.814060,52.365350,0.000000
+-3.814030,52.365420,0.000000
+-3.814010,52.365470,0.000000
+-3.813980,52.365560,0.000000
+-3.813950,52.365640,0.000000
+-3.813930,52.365680,0.000000
+-3.814040,52.365700,0.000000
+-3.814060,52.365710,0.000000
+-3.814090,52.365720,0.000000
+-3.814110,52.365740,0.000000
+-3.814130,52.365750,0.000000
+-3.814160,52.365780,0.000000
+-3.814170,52.365800,0.000000
+-3.814200,52.365830,0.000000
+-3.814230,52.365880,0.000000
+-3.814260,52.365930,0.000000
+-3.814280,52.365990,0.000000
+-3.814300,52.366060,0.000000
+-3.814340,52.366130,0.000000
+-3.814370,52.366200,0.000000
+-3.814410,52.366270,0.000000
+-3.814450,52.366350,0.000000
+-3.814500,52.366420,0.000000
+-3.814550,52.366490,0.000000
+-3.814600,52.366570,0.000000
+-3.814650,52.366640,0.000000
+-3.814700,52.366720,0.000000
+-3.814750,52.366790,0.000000
+-3.814810,52.366860,0.000000
+-3.814860,52.366920,0.000000
+-3.814930,52.366980,0.000000
+-3.815000,52.367040,0.000000
+-3.815060,52.367080,0.000000
+-3.815110,52.367100,0.000000
+-3.815180,52.367140,0.000000
+-3.815240,52.367170,0.000000
+-3.815330,52.367190,0.000000
+-3.815420,52.367220,0.000000
+-3.815510,52.367240,0.000000
+-3.815620,52.367260,0.000000
+-3.815720,52.367270,0.000000
+-3.815830,52.367280,0.000000
+-3.815900,52.367290,0.000000
+-3.815990,52.367290,0.000000
+-3.816170,52.367290,0.000000
+-3.816250,52.367290,0.000000
+-3.816350,52.367270,0.000000
+-3.816490,52.367290,0.000000
+-3.816620,52.367320,0.000000
+-3.816800,52.367390,0.000000
+-3.816880,52.367430,0.000000
+-3.816990,52.367490,0.000000
+-3.817070,52.367550,0.000000
+-3.817140,52.367630,0.000000
+-3.817150,52.367710,0.000000
+-3.817190,52.367850,0.000000
+-3.817200,52.368000,0.000000
+-3.817240,52.368420,0.000000
+-3.817240,52.368560,0.000000
+-3.817260,52.368640,0.000000
+-3.817290,52.368720,0.000000
+-3.817320,52.368780,0.000000
+-3.817380,52.368840,0.000000
+-3.817480,52.368910,0.000000
+-3.817570,52.368960,0.000000
+-3.817730,52.369000,0.000000
+-3.817890,52.369020,0.000000
+-3.818050,52.369020,0.000000
+-3.818220,52.369020,0.000000
+-3.818330,52.369030,0.000000
+-3.818440,52.369070,0.000000
+-3.818540,52.369120,0.000000
+-3.818610,52.369190,0.000000
+-3.818660,52.369260,0.000000
+-3.818670,52.369390,0.000000
+-3.818640,52.369540,0.000000
+-3.818550,52.369700,0.000000
+-3.818380,52.369970,0.000000
+-3.818250,52.370140,0.000000
+-3.818060,52.370300,0.000000
+-3.817740,52.370560,0.000000
+-3.817440,52.370850,0.000000
+-3.817220,52.371040,0.000000
+-3.817010,52.371140,0.000000
+-3.816850,52.371160,0.000000
+-3.816740,52.371220,0.000000
+-3.816620,52.371230,0.000000
+-3.816460,52.371260,0.000000
+-3.816340,52.371280,0.000000
+-3.816170,52.371310,0.000000
+-3.815990,52.371340,0.000000
+-3.815880,52.371370,0.000000
+-3.815770,52.371390,0.000000
+-3.815660,52.371410,0.000000
+-3.815550,52.371430,0.000000
+-3.815440,52.371440,0.000000
+-3.815320,52.371440,0.000000
+-3.815210,52.371450,0.000000
+-3.815120,52.371450,0.000000
+-3.815040,52.371450,0.000000
+-3.814990,52.371440,0.000000
+-3.814890,52.371440,0.000000
+-3.814830,52.371430,0.000000
+-3.814780,52.371420,0.000000
+-3.814710,52.371410,0.000000
+-3.814660,52.371390,0.000000
+-3.814550,52.371360,0.000000
+-3.814500,52.371340,0.000000
+-3.814420,52.371310,0.000000
+-3.814340,52.371260,0.000000
+-3.814270,52.371220,0.000000
+-3.814230,52.371180,0.000000
+-3.814150,52.371130,0.000000
+-3.814090,52.371080,0.000000
+-3.814020,52.371040,0.000000
+-3.813950,52.371010,0.000000
+-3.813880,52.370980,0.000000
+-3.813800,52.370960,0.000000
+-3.813700,52.370940,0.000000
+-3.813620,52.370930,0.000000
+-3.813530,52.370920,0.000000
+-3.813450,52.370920,0.000000
+-3.813360,52.370920,0.000000
+-3.813200,52.370920,0.000000
+-3.813110,52.370920,0.000000
+-3.812980,52.370930,0.000000
+-3.812910,52.370940,0.000000
+-3.812790,52.370980,0.000000
+-3.812720,52.371020,0.000000
+-3.812640,52.371060,0.000000
+-3.812550,52.371110,0.000000
+-3.812440,52.371160,0.000000
+-3.812340,52.371210,0.000000
+-3.812200,52.371280,0.000000
+-3.812100,52.371310,0.000000
+-3.811980,52.371350,0.000000
+-3.811790,52.371410,0.000000
+-3.811710,52.371440,0.000000
+-3.811580,52.371490,0.000000
+-3.811620,52.371540,0.000000
+-3.811690,52.371600,0.000000
+-3.811720,52.371630,0.000000
+-3.811740,52.371640,0.000000
+-3.811770,52.371660,0.000000
+-3.811800,52.371670,0.000000
+-3.811830,52.371670,0.000000
+-3.811870,52.371680,0.000000
+-3.811910,52.371680,0.000000
+-3.811950,52.371680,0.000000
+-3.811980,52.371680,0.000000
+-3.812020,52.371680,0.000000
+-3.812070,52.371670,0.000000
+-3.812110,52.371660,0.000000
+-3.812150,52.371650,0.000000
+-3.812200,52.371620,0.000000
+-3.812280,52.371590,0.000000
+-3.812460,52.371520,0.000000
+-3.812530,52.371500,0.000000
+-3.812580,52.371480,0.000000
+-3.812640,52.371470,0.000000
+-3.812770,52.371470,0.000000
+-3.813010,52.371470,0.000000
+-3.813240,52.371500,0.000000
+-3.813420,52.371530,0.000000
+-3.813500,52.371550,0.000000
+-3.813560,52.371580,0.000000
+-3.813620,52.371610,0.000000
+-3.813670,52.371640,0.000000
+-3.813800,52.371720,0.000000
+-3.813960,52.371830,0.000000
+-3.814180,52.371960,0.000000
+-3.814420,52.372050,0.000000
+-3.814570,52.372100,0.000000
+-3.814730,52.372130,0.000000
+-3.814840,52.372140,0.000000
+-3.814950,52.372150,0.000000
+-3.815050,52.372160,0.000000
+-3.815180,52.372150,0.000000
+-3.815360,52.372160,0.000000
+-3.815550,52.372170,0.000000
+-3.815810,52.372220,0.000000
+-3.816130,52.372290,0.000000
+-3.816380,52.372340,0.000000
+-3.816570,52.372380,0.000000
+-3.816890,52.372440,0.000000
+-3.817290,52.372480,0.000000
+-3.817680,52.372520,0.000000
+-3.818010,52.372560,0.000000
+-3.818210,52.372610,0.000000
+-3.818340,52.372670,0.000000
+-3.818510,52.372770,0.000000
+-3.818590,52.372900,0.000000
+-3.818610,52.373040,0.000000
+-3.818520,52.373200,0.000000
+-3.818360,52.373300,0.000000
+-3.818160,52.373400,0.000000
+-3.817760,52.373550,0.000000
+-3.817470,52.373690,0.000000
+-3.817200,52.373880,0.000000
+-3.816990,52.374040,0.000000
+-3.816730,52.374220,0.000000
+-3.816520,52.374360,0.000000
+-3.816300,52.374510,0.000000
+-3.815920,52.374790,0.000000
+-3.815500,52.375080,0.000000
+-3.815140,52.375320,0.000000
+-3.814760,52.375580,0.000000
+-3.814480,52.375760,0.000000
+-3.814220,52.375960,0.000000
+-3.814050,52.376110,0.000000
+-3.813910,52.376260,0.000000
+-3.813780,52.376490,0.000000
+-3.813710,52.376620,0.000000
+-3.813640,52.376750,0.000000
+-3.813600,52.376800,0.000000
+-3.813570,52.376830,0.000000
+-3.813510,52.376870,0.000000
+-3.813460,52.376900,0.000000
+-3.813400,52.376930,0.000000
+-3.813250,52.377010,0.000000
+-3.813090,52.377090,0.000000
+-3.812920,52.377160,0.000000
+-3.812560,52.377340,0.000000
+-3.812290,52.377460,0.000000
+-3.812100,52.377520,0.000000
+-3.811880,52.377590,0.000000
+-3.811640,52.377650,0.000000
+-3.811350,52.377740,0.000000
+-3.811110,52.377810,0.000000
+-3.810900,52.377870,0.000000
+-3.810600,52.377970,0.000000
+-3.810360,52.378070,0.000000
+-3.810210,52.378150,0.000000
+-3.810090,52.378230,0.000000
+-3.809970,52.378340,0.000000
+-3.809890,52.378440,0.000000
+-3.809780,52.378540,0.000000
+-3.809610,52.378680,0.000000
+-3.809500,52.378770,0.000000
+-3.809420,52.378870,0.000000
+-3.809370,52.378950,0.000000
+-3.809310,52.379040,0.000000
+-3.809160,52.379250,0.000000
+-3.809030,52.379400,0.000000
+-3.808900,52.379570,0.000000
+-3.808810,52.379690,0.000000
+-3.808680,52.379820,0.000000
+-3.808480,52.380010,0.000000
+-3.808390,52.380090,0.000000
+-3.808270,52.380200,0.000000
+-3.808060,52.380350,0.000000
+-3.807840,52.380480,0.000000
+-3.807720,52.380570,0.000000
+-3.807600,52.380660,0.000000
+-3.807480,52.380720,0.000000
+-3.807360,52.380790,0.000000
+-3.807160,52.380880,0.000000
+-3.807070,52.380920,0.000000
+-3.807000,52.380960,0.000000
+-3.806920,52.381030,0.000000
+-3.806840,52.381120,0.000000
+-3.806720,52.381190,0.000000
+-3.806600,52.381240,0.000000
+-3.806490,52.381290,0.000000
+-3.806280,52.381340,0.000000
+-3.805990,52.381410,0.000000
+-3.805880,52.381430,0.000000
+-3.805690,52.381470,0.000000
+-3.805550,52.381490,0.000000
+-3.805430,52.381510,0.000000
+-3.805280,52.381530,0.000000
+-3.805000,52.381560,0.000000
+-3.804770,52.381620,0.000000
+-3.804580,52.381720,0.000000
+-3.804540,52.381750,0.000000
+-3.804450,52.381830,0.000000
+-3.804350,52.381900,0.000000
+-3.804250,52.381970,0.000000
+-3.804120,52.382060,0.000000
+-3.804020,52.382110,0.000000
+-3.803890,52.382170,0.000000
+-3.803710,52.382240,0.000000
+-3.803500,52.382320,0.000000
+-3.803430,52.382360,0.000000
+-3.803370,52.382400,0.000000
+-3.803320,52.382440,0.000000
+-3.803280,52.382480,0.000000
+-3.803250,52.382520,0.000000
+-3.803210,52.382570,0.000000
+-3.803210,52.382620,0.000000
+-3.803200,52.382660,0.000000
+-3.803200,52.382690,0.000000
+-3.803210,52.382730,0.000000
+-3.803210,52.382770,0.000000
+-3.803210,52.382790,0.000000
+-3.803210,52.382810,0.000000
+-3.803230,52.382840,0.000000
+-3.803260,52.382860,0.000000
+-3.803310,52.382880,0.000000
+-3.803350,52.382890,0.000000
+-3.803400,52.382900,0.000000
+-3.803460,52.382910,0.000000
+-3.803530,52.382920,0.000000
+-3.803580,52.382920,0.000000
+-3.803650,52.382920,0.000000
+-3.803710,52.382920,0.000000
+-3.804130,52.382930,0.000000
+-3.804200,52.382940,0.000000
+-3.804260,52.382940,0.000000
+-3.804340,52.382950,0.000000
+-3.804390,52.382960,0.000000
+-3.804450,52.382970,0.000000
+-3.804750,52.382980,0.000000
+-3.804880,52.382980,0.000000
+-3.804980,52.382990,0.000000
+-3.805050,52.383000,0.000000
+-3.805130,52.383020,0.000000
+-3.805190,52.383030,0.000000
+-3.805230,52.383050,0.000000
+-3.805300,52.383070,0.000000
+-3.805360,52.383080,0.000000
+-3.805440,52.383110,0.000000
+-3.805520,52.383140,0.000000
+-3.805620,52.383190,0.000000
+-3.805670,52.383220,0.000000
+-3.805750,52.383280,0.000000
+-3.805930,52.383400,0.000000
+-3.806050,52.383490,0.000000
+-3.806080,52.383510,0.000000
+-3.806130,52.383550,0.000000
+-3.806180,52.383590,0.000000
+-3.806220,52.383630,0.000000
+-3.806240,52.383660,0.000000
+-3.806260,52.383680,0.000000
+-3.806270,52.383710,0.000000
+-3.806290,52.383760,0.000000
+-3.806310,52.383810,0.000000
+-3.806320,52.383860,0.000000
+-3.806340,52.383940,0.000000
+-3.806350,52.384010,0.000000
+-3.806360,52.384050,0.000000
+-3.806380,52.384110,0.000000
+-3.806390,52.384200,0.000000
+-3.806400,52.384310,0.000000
+-3.806410,52.384390,0.000000
+-3.806420,52.384460,0.000000
+-3.806430,52.384530,0.000000
+-3.806440,52.384610,0.000000
+-3.806450,52.384650,0.000000
+-3.806480,52.384770,0.000000
+-3.806500,52.384860,0.000000
+-3.806510,52.384920,0.000000
+-3.806530,52.385010,0.000000
+-3.806540,52.385080,0.000000
+-3.806560,52.385190,0.000000
+-3.806560,52.385220,0.000000
+-3.806560,52.385270,0.000000
+-3.806540,52.385340,0.000000
+-3.806530,52.385380,0.000000
+-3.806410,52.385710,0.000000
+-3.806490,52.385890,0.000000
+-3.806540,52.385990,0.000000
+-3.806620,52.386090,0.000000
+-3.806720,52.386260,0.000000
+-3.806810,52.386390,0.000000
+-3.807210,52.386960,0.000000
+-3.807320,52.387130,0.000000
+-3.807380,52.387290,0.000000
+-3.807410,52.387400,0.000000
+-3.807430,52.387530,0.000000
+-3.807420,52.387690,0.000000
+-3.807410,52.387830,0.000000
+-3.807390,52.388020,0.000000
+-3.807380,52.388080,0.000000
+-3.807390,52.388130,0.000000
+-3.807440,52.388190,0.000000
+-3.807690,52.388250,0.000000
+-3.807830,52.388280,0.000000
+-3.808010,52.388340,0.000000
+-3.807980,52.388510,0.000000
+-3.807840,52.388770,0.000000
+-3.807670,52.389040,0.000000
+-3.807480,52.389280,0.000000
+-3.807200,52.389650,0.000000
+-3.807000,52.389950,0.000000
+-3.806820,52.390150,0.000000
+-3.806540,52.390400,0.000000
+-3.806130,52.390760,0.000000
+-3.805670,52.391110,0.000000
+-3.805230,52.391590,0.000000
+-3.804950,52.391860,0.000000
+-3.804760,52.392110,0.000000
+-3.804620,52.392360,0.000000
+-3.804460,52.392560,0.000000
+-3.804350,52.392790,0.000000
+-3.804270,52.392960,0.000000
+-3.804220,52.393090,0.000000
+-3.804200,52.393240,0.000000
+-3.804200,52.393430,0.000000
+-3.804150,52.393740,0.000000
+-3.804130,52.393910,0.000000
+-3.804130,52.394200,0.000000
+-3.804140,52.394440,0.000000
+-3.804160,52.394550,0.000000
+-3.804230,52.394680,0.000000
+-3.804300,52.394790,0.000000
+-3.804400,52.394910,0.000000
+-3.804430,52.395000,0.000000
+-3.804430,52.395140,0.000000
+-3.804420,52.395380,0.000000
+-3.804440,52.395660,0.000000
+-3.804440,52.395930,0.000000
+-3.804400,52.396150,0.000000
+-3.804320,52.396310,0.000000
+-3.804210,52.396410,0.000000
+-3.804070,52.396480,0.000000
+-3.803760,52.396630,0.000000
+-3.803610,52.396700,0.000000</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>
+
