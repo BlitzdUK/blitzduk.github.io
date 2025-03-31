@@ -18,19 +18,22 @@
             padding: 20px;
             background-color: #121212;
             color: #e0e0e0;
+            text-align: center;
         }
         #disclaimer {
             padding: 15px;
-            margin: 20px 0;
+            margin: 20px auto;
             border-radius: 5px;
             background-color: #3a1a1a;
             border: 2px solid #7b2c2c;
             color: #ff8a8a;
+            max-width: 800px;
         }
         #status {
             padding: 15px;
-            margin: 20px 0;
+            margin: 20px auto;
             border-radius: 5px;
+            max-width: 800px;
         }
         .restricted {
             background-color: #3a1a1a;
@@ -59,7 +62,8 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin: 20px auto;
+            display: block;
         }
         button:hover {
             background-color: #1565c0;
@@ -68,22 +72,25 @@
             height: 500px;
             width: 100%;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 20px auto;
             border: 1px solid #333;
         }
         #restricted-areas-list {
-            margin-top: 20px;
+            margin: 20px auto;
             background-color: #1e1e1e;
             padding: 15px;
             border-radius: 5px;
             max-height: 200px;
             overflow-y: auto;
+            max-width: 800px;
         }
         .area-item {
             padding: 8px;
-            margin: 5px 0;
+            margin: 5px auto;
             border-left: 4px solid #ff5252;
             background-color: #2a2a2a;
+            max-width: 90%;
+            text-align: center;
         }
         .area-item.active {
             border-left: 4px solid #4caf50;
@@ -94,6 +101,9 @@
             background: #1e1e1e;
             border-radius: 5px;
             line-height: 1.5;
+            text-align: left;
+            margin: 0 auto;
+            width: fit-content;
         }
         .legend i {
             width: 20px;
@@ -101,6 +111,14 @@
             float: left;
             margin-right: 8px;
             opacity: 0.7;
+        }
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+        p {
+            text-align: center;
+            max-width: 800px;
+            margin: 10px auto;
         }
     </style>
 </head>
@@ -230,7 +248,7 @@
                         allRestrictedLayers.push(polygonLayer);
                         
                         // Add popup with name
-                        polygonLayer.bindPopup(`<b>${name}</b><br><small>Always verify with official sources</small>`);
+                        polygonLayer.bindPopup(`<div style="text-align:center"><b>${name}</b><br><small>Always verify with official sources</small></div>`);
                         
                         // Create GeoJSON feature for point-in-polygon check
                         const geoJsonFeature = {
@@ -275,7 +293,7 @@
                     fillOpacity: 0.8
                 }).addTo(map);
                 
-                userMarker.bindPopup("Your location<br><small>Accuracy: ±" + Math.round(accuracy) + " meters</small>").openPopup();
+                userMarker.bindPopup(`<div style="text-align:center">Your location<br><small>Accuracy: ±${Math.round(accuracy)} meters</small></div>`).openPopup();
                 
                 // Add accuracy circle
                 userAccuracyCircle = L.circle([latitude, longitude], {
