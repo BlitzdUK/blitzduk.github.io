@@ -24,6 +24,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            max-width: 300px;
         }
         #info-panel {
             position: absolute;
@@ -41,6 +42,7 @@
         .legend {
             line-height: 18px;
             color: #555;
+            margin-bottom: 10px;
         }
         .legend i {
             width: 18px;
@@ -51,6 +53,14 @@
         }
         .file-input-container {
             margin-bottom: 10px;
+        }
+        button {
+            margin: 2px 0;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-mode {
+            background-color: #ffcccc;
         }
     </style>
 </head>
@@ -63,11 +73,14 @@
         </div>
         <button id="show-all">Show All Points</button>
         <button id="show-path">Show Path</button>
+        <button id="delete-mode">Enable Delete Mode</button>
+        <button id="download-data">Download Updated Data</button>
         <div class="legend">
             <h4>Legend</h4>
             <p><i style="background: #3388ff"></i>Visits</p>
             <p><i style="background: #ff0000"></i>Activity Start</p>
             <p><i style="background: #00ff00"></i>Activity End</p>
+            <p><i style="background: #ffcc00"></i>Selected for Deletion</p>
         </div>
     </div>
     <div id="info-panel">
@@ -89,6 +102,9 @@
         let activityEndMarkers = [];
         let pathLines = [];
         let currentPolyline = null;
+        let deleteMode = false;
+        let markersToDelete = new Set();
+        let selectedMarkers = new Map(); // Stores marker to data index mapping
 
         // Function to parse geo location string
         function parseGeoLocation(geoString) {
@@ -106,7 +122,7 @@
         }
 
         // Function to create a popup content
-        function createPopupContent(item) {
+        function createPopupContent(item, index) {
             let content = '';
             
             if (item.visit) {
@@ -122,6 +138,10 @@
                             <p><strong>Distance:</strong> ${parseFloat(item.activity.distanceMeters).toFixed(2)} meters</p>`;
             }
             
+            if (deleteMode) {
+                content += `<button class="delete-btn" data-index="${index}">${markersToDelete.has(index) ? 'Undo Delete' : 'Delete This Point'}</button>`;
+            }
+            
             return content;
         }
 
@@ -129,6 +149,8 @@
         function processData(data) {
             // Clear any existing markers and lines
             clearAllMarkers();
+            selectedMarkers.clear();
+            markersToDelete.clear();
             
             // Process each data point
             data.forEach((item, index) => {
@@ -137,19 +159,30 @@
                     const location = parseGeoLocation(item.visit.topCandidate.placeLocation);
                     const marker = L.circleMarker([location.lat, location.lng], {
                         radius: 8,
-                        fillColor: "#3388ff",
+                        fillColor: markersToDelete.has(index) ? "#ffcc00" : "#3388ff",
                         color: "#000",
                         weight: 1,
                         opacity: 1,
                         fillOpacity: 0.8
                     }).addTo(map);
                     
-                    marker.bindPopup(createPopupContent(item));
+                    marker.bindPopup(createPopupContent(item, index));
                     marker.on('click', function() {
-                        document.getElementById('info-panel').innerHTML = createPopupContent(item);
+                        document.getElementById('info-panel').innerHTML = createPopupContent(item, index);
+                        // Handle click events in the popup after it's opened
+                        setTimeout(() => {
+                            document.querySelectorAll('.delete-btn').forEach(btn => {
+                                btn.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                    const idx = parseInt(this.getAttribute('data-index'));
+                                    toggleDeleteMarker(idx);
+                                });
+                            });
+                        }, 50);
                     });
                     
                     visitMarkers.push(marker);
+                    selectedMarkers.set(marker, index);
                     
                     // Add to path if enabled
                     if (currentPolyline) {
@@ -164,34 +197,54 @@
                     // Create start marker
                     const startMarker = L.circleMarker([startLocation.lat, startLocation.lng], {
                         radius: 6,
-                        fillColor: "#ff0000",
+                        fillColor: markersToDelete.has(index) ? "#ffcc00" : "#ff0000",
                         color: "#000",
                         weight: 1,
                         opacity: 1,
                         fillOpacity: 0.8
                     }).addTo(map);
                     
-                    startMarker.bindPopup(`<h3>Activity Start</h3>${createPopupContent(item)}`);
+                    startMarker.bindPopup(`<h3>Activity Start</h3>${createPopupContent(item, index)}`);
                     startMarker.on('click', function() {
-                        document.getElementById('info-panel').innerHTML = `<h3>Activity Start</h3>${createPopupContent(item)}`;
+                        document.getElementById('info-panel').innerHTML = `<h3>Activity Start</h3>${createPopupContent(item, index)}`;
+                        setTimeout(() => {
+                            document.querySelectorAll('.delete-btn').forEach(btn => {
+                                btn.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                    const idx = parseInt(this.getAttribute('data-index'));
+                                    toggleDeleteMarker(idx);
+                                });
+                            });
+                        }, 50);
                     });
                     activityStartMarkers.push(startMarker);
+                    selectedMarkers.set(startMarker, index);
                     
                     // Create end marker
                     const endMarker = L.circleMarker([endLocation.lat, endLocation.lng], {
                         radius: 6,
-                        fillColor: "#00ff00",
+                        fillColor: markersToDelete.has(index) ? "#ffcc00" : "#00ff00",
                         color: "#000",
                         weight: 1,
                         opacity: 1,
                         fillOpacity: 0.8
                     }).addTo(map);
                     
-                    endMarker.bindPopup(`<h3>Activity End</h3>${createPopupContent(item)}`);
+                    endMarker.bindPopup(`<h3>Activity End</h3>${createPopupContent(item, index)}`);
                     endMarker.on('click', function() {
-                        document.getElementById('info-panel').innerHTML = `<h3>Activity End</h3>${createPopupContent(item)}`;
+                        document.getElementById('info-panel').innerHTML = `<h3>Activity End</h3>${createPopupContent(item, index)}`;
+                        setTimeout(() => {
+                            document.querySelectorAll('.delete-btn').forEach(btn => {
+                                btn.addEventListener('click', function(e) {
+                                    e.stopPropagation();
+                                    const idx = parseInt(this.getAttribute('data-index'));
+                                    toggleDeleteMarker(idx);
+                                });
+                            });
+                        }, 50);
                     });
                     activityEndMarkers.push(endMarker);
+                    selectedMarkers.set(endMarker, index);
                     
                     // Create line for this activity
                     const line = L.polyline([
@@ -199,7 +252,7 @@
                         [endLocation.lat, endLocation.lng]
                     ], {color: 'blue', weight: 2}).addTo(map);
                     
-                    line.bindPopup(`<h3>Activity Path</h3>${createPopupContent(item)}`);
+                    line.bindPopup(`<h3>Activity Path</h3>${createPopupContent(item, index)}`);
                     pathLines.push(line);
                     
                     // Add to path if enabled
@@ -244,6 +297,7 @@
                 return;
             }
             clearAllMarkers();
+            currentPolyline = null;
             processData(locationData);
         }
 
@@ -267,9 +321,67 @@
             }
         }
 
+        // Toggle delete mode
+        function toggleDeleteMode() {
+            deleteMode = !deleteMode;
+            const btn = document.getElementById('delete-mode');
+            if (deleteMode) {
+                btn.textContent = 'Disable Delete Mode';
+                btn.classList.add('delete-mode');
+                document.getElementById('info-panel').innerHTML = '<p>Delete mode enabled. Click on markers to select for deletion.</p>';
+            } else {
+                btn.textContent = 'Enable Delete Mode';
+                btn.classList.remove('delete-mode');
+                document.getElementById('info-panel').innerHTML = '<p>Delete mode disabled.</p>';
+            }
+            // Refresh markers to update their appearance
+            if (locationData.length > 0) {
+                processData(locationData);
+            }
+        }
+
+        // Toggle marker for deletion
+        function toggleDeleteMarker(index) {
+            if (markersToDelete.has(index)) {
+                markersToDelete.delete(index);
+            } else {
+                markersToDelete.add(index);
+            }
+            // Refresh the display
+            processData(locationData);
+            // Update info panel
+            document.getElementById('info-panel').innerHTML = 
+                `<p>Selected ${markersToDelete.size} locations for deletion. Click "Download Updated Data" to save changes.</p>`;
+        }
+
+        // Download updated JSON data
+        function downloadUpdatedData() {
+            if (locationData.length === 0) {
+                alert('No data loaded');
+                return;
+            }
+            
+            // Filter out deleted markers
+            const updatedData = locationData.filter((_, index) => !markersToDelete.has(index));
+            
+            // Create download link
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(updatedData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "updated-location-history.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            document.body.removeChild(downloadAnchor);
+            
+            document.getElementById('info-panel').innerHTML = 
+                `<p>Downloaded updated data with ${updatedData.length} locations (removed ${markersToDelete.size} locations).</p>`;
+        }
+
         // Event listeners for buttons
         document.getElementById('show-all').addEventListener('click', showAllPoints);
         document.getElementById('show-path').addEventListener('click', showPath);
+        document.getElementById('delete-mode').addEventListener('click', toggleDeleteMode);
+        document.getElementById('download-data').addEventListener('click', downloadUpdatedData);
 
         // File input handler
         document.getElementById('load-file').addEventListener('click', function() {
@@ -286,6 +398,8 @@
                 try {
                     locationData = JSON.parse(e.target.result);
                     processData(locationData);
+                    document.getElementById('info-panel').innerHTML = 
+                        `<p>Loaded ${locationData.length} location records</p>`;
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                     document.getElementById('info-panel').innerHTML = 
