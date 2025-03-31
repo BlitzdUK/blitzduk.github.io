@@ -70,6 +70,24 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 5px;
         }
+        #restricted-areas-list {
+            margin-top: 20px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .area-item {
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 4px solid #ff5252;
+            background-color: #2a2a2a;
+        }
+        .area-item.active {
+            border-left: 4px solid #4caf50;
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
@@ -81,6 +99,11 @@
     <div id="status" class="loading">Click the button to check your location against restricted airspace areas.</div>
     
     <div id="map"></div>
+    
+    <div id="restricted-areas-list" style="display: none;">
+        <h3>Restricted Areas You're In:</h3>
+        <div id="areas-container"></div>
+    </div>
     
     <script>
         // Initialize map with dark theme
@@ -101,6 +124,8 @@
         let kmlLayer = null;
         let userMarker = null;
         let userAccuracyCircle = null;
+        let allRestrictedAreas = [];
+        let currentRestrictedAreas = [];
 
         document.getElementById('checkLocation').addEventListener('click', function() {
             checkRestrictedAirspace();
@@ -108,8 +133,14 @@
         
         async function checkRestrictedAirspace() {
             const statusElement = document.getElementById('status');
+            const areasList = document.getElementById('restricted-areas-list');
+            const areasContainer = document.getElementById('areas-container');
+            
             statusElement.className = 'loading';
             statusElement.textContent = 'Loading restricted airspace data...';
+            areasList.style.display = 'none';
+            areasContainer.innerHTML = '';
+            currentRestrictedAreas = [];
             
             try {
                 // Clear previous map elements
@@ -155,6 +186,19 @@
                 const kmlLoadPromise = new Promise((resolve) => {
                     kmlLayer.on('loaded', function(e) {
                         map.addLayer(kmlLayer);
+                        
+                        // Store all restricted areas for checking
+                        allRestrictedAreas = [];
+                        kmlLayer.eachLayer(function(layer) {
+                            if (layer.feature && layer.feature.geometry) {
+                                allRestrictedAreas.push({
+                                    layer: layer,
+                                    feature: layer.feature,
+                                    name: layer.feature.properties.name || 'Unnamed Restricted Area'
+                                });
+                            }
+                        });
+                        
                         resolve(e);
                     });
                 });
@@ -202,34 +246,69 @@
                 // Step 5: Check if location is within any restricted area
                 statusElement.textContent = 'Checking airspace restrictions...';
                 
-                // Extract polygons from KML layer for Turf.js checking
-                let inRestrictedArea = false;
-                let restrictedAreaName = '';
-                
-                kmlLayer.eachLayer(function(layer) {
-                    if (layer.feature && layer.feature.geometry) {
-                        const geoJson = layer.feature;
-                        if (turf.booleanPointInPolygon(userLocation, geoJson)) {
-                            inRestrictedArea = true;
-                            restrictedAreaName = geoJson.properties.name || 'Restricted Area';
-                            
-                            // Highlight the restricted area
-                            if (layer.setStyle) {
-                                layer.setStyle({
-                                    color: '#ff5252',
-                                    fillColor: '#ff5252',
-                                    fillOpacity: 0.5,
-                                    weight: 3
-                                });
-                            }
+                // Check against all restricted areas
+                allRestrictedAreas.forEach(area => {
+                    if (turf.booleanPointInPolygon(userLocation, area.feature)) {
+                        currentRestrictedAreas.push(area);
+                        
+                        // Highlight the restricted area
+                        if (area.layer.setStyle) {
+                            area.layer.setStyle({
+                                color: '#ff5252',
+                                fillColor: '#ff5252',
+                                fillOpacity: 0.5,
+                                weight: 3
+                            });
+                        }
+                        
+                        // Add to the list
+                        const areaElement = document.createElement('div');
+                        areaElement.className = 'area-item active';
+                        areaElement.textContent = area.name;
+                        areasContainer.appendChild(areaElement);
+                        
+                        // Add click handler to zoom to area
+                        areaElement.addEventListener('click', function() {
+                            map.fitBounds(area.layer.getBounds());
+                        });
+                    } else {
+                        // Reset style for areas we're not in
+                        if (area.layer.setStyle) {
+                            area.layer.setStyle({
+                                color: '#ff0000',
+                                fillColor: '#ff0000',
+                                fillOpacity: 0.3,
+                                weight: 2
+                            });
                         }
                     }
                 });
                 
                 // Step 6: Display result
-                if (inRestrictedArea) {
+                if (currentRestrictedAreas.length > 0) {
                     statusElement.className = 'restricted';
-                    statusElement.textContent = `⚠️ Warning: You are currently within restricted airspace (${restrictedAreaName}).`;
+                    statusElement.textContent = `⚠️ Warning: You are currently within ${currentRestrictedAreas.length} restricted airspace area(s).`;
+                    areasList.style.display = 'block';
+                    
+                    // Sort by area size (smallest first) to better show nested areas
+                    currentRestrictedAreas.sort((a, b) => {
+                        const areaA = turf.area(a.feature);
+                        const areaB = turf.area(b.feature);
+                        return areaA - areaB;
+                    });
+                    
+                    // Update list with sorted order
+                    areasContainer.innerHTML = '';
+                    currentRestrictedAreas.forEach(area => {
+                        const areaElement = document.createElement('div');
+                        areaElement.className = 'area-item active';
+                        areaElement.textContent = area.name;
+                        areasContainer.appendChild(areaElement);
+                        
+                        areaElement.addEventListener('click', function() {
+                            map.fitBounds(area.layer.getBounds());
+                        });
+                    });
                 } else {
                     statusElement.className = 'clear';
                     statusElement.textContent = '✅ You are not in restricted airspace.';
