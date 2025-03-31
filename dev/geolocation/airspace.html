@@ -6,11 +6,12 @@
     <title>Restricted Airspace Check</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet KML -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-kml@1.0.2/dist/leaflet-kml.min.js"></script>
     <!-- Turf.js for geospatial calculations -->
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <!-- KML parser -->
+    <script src="https://unpkg.com/tokml@0.1.0/dist/tokml.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,12 +65,6 @@
             margin-top: 20px;
             border: 1px solid #333;
         }
-        .map-info {
-            color: #333;
-            padding: 6px 8px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 5px;
-        }
         #restricted-areas-list {
             margin-top: 20px;
             background-color: #1e1e1e;
@@ -87,6 +82,19 @@
         .area-item.active {
             border-left: 4px solid #4caf50;
             background-color: #333;
+        }
+        .legend {
+            padding: 10px;
+            background: #1e1e1e;
+            border-radius: 5px;
+            line-height: 1.5;
+        }
+        .legend i {
+            width: 20px;
+            height: 20px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -120,11 +128,25 @@
             maxZoom: 19
         }).addTo(map);
 
+        // Add legend
+        const legend = L.control({position: 'bottomright'});
+        legend.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = `
+                <h4>Legend</h4>
+                <div><i style="background: #ff5252"></i> Restricted Area</div>
+                <div><i style="background: #4aedff"></i> Your Location</div>
+                <div><i style="background: #4aedff; opacity: 0.2"></i> Accuracy Circle</div>
+                <div><i style="background: #ff5252; opacity: 0.5"></i> Active Restriction</div>
+            `;
+            return div;
+        };
+        legend.addTo(map);
+
         // Variables to store map elements
-        let kmlLayer = null;
+        let allRestrictedLayers = [];
         let userMarker = null;
         let userAccuracyCircle = null;
-        let allRestrictedAreas = [];
         let currentRestrictedAreas = [];
 
         document.getElementById('checkLocation').addEventListener('click', function() {
@@ -144,7 +166,8 @@
             
             try {
                 // Clear previous map elements
-                if (kmlLayer) map.removeLayer(kmlLayer);
+                allRestrictedLayers.forEach(layer => map.removeLayer(layer));
+                allRestrictedLayers = [];
                 if (userMarker) map.removeLayer(userMarker);
                 if (userAccuracyCircle) map.removeLayer(userAccuracyCircle);
 
@@ -158,52 +181,61 @@
                 
                 const kmlText = await kmlResponse.text();
                 
-                // Step 2: Parse KML and add to map
+                // Step 2: Parse KML to XML DOM
                 statusElement.textContent = 'Processing airspace data...';
+                const parser = new DOMParser();
+                const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
                 
-                // Create a Blob from the KML text
-                const kmlBlob = new Blob([kmlText], { type: 'application/vnd.google-earth.kml+xml' });
-                const kmlUrlObj = URL.createObjectURL(kmlBlob);
+                // Extract Placemarks
+                const placemarks = kmlDoc.getElementsByTagName('Placemark');
                 
-                // Create KML layer
-                kmlLayer = new L.KML(kmlUrlObj, {
-                    async: true,
-                    styles: {
-                        polygon: {
+                // Process each Placemark
+                for (let placemark of placemarks) {
+                    const nameElement = placemark.getElementsByTagName('name')[0];
+                    const polygonElement = placemark.getElementsByTagName('Polygon')[0];
+                    
+                    if (nameElement && polygonElement) {
+                        const name = nameElement.textContent || 'Unnamed Restricted Area';
+                        const coordinatesText = polygonElement.getElementsByTagName('coordinates')[0].textContent;
+                        
+                        // Convert KML coordinates to Leaflet LatLng array
+                        const coordinates = coordinatesText.trim().split(/\s+/).map(coord => {
+                            const [lon, lat] = coord.split(',').map(Number);
+                            return [lat, lon];
+                        });
+                        
+                        // Create polygon layer
+                        const polygonLayer = L.polygon([coordinates], {
                             color: '#ff0000',
                             fillColor: '#ff0000',
                             fillOpacity: 0.3,
                             weight: 2
-                        },
-                        line: {
-                            color: '#ff0000',
-                            weight: 2
-                        }
-                    }
-                });
-                
-                // Wait for KML to load
-                const kmlLoadPromise = new Promise((resolve) => {
-                    kmlLayer.on('loaded', function(e) {
-                        map.addLayer(kmlLayer);
+                        }).addTo(map);
                         
-                        // Store all restricted areas for checking
-                        allRestrictedAreas = [];
-                        kmlLayer.eachLayer(function(layer) {
-                            if (layer.feature && layer.feature.geometry) {
-                                allRestrictedAreas.push({
-                                    layer: layer,
-                                    feature: layer.feature,
-                                    name: layer.feature.properties.name || 'Unnamed Restricted Area'
-                                });
+                        // Store for later reference
+                        allRestrictedLayers.push(polygonLayer);
+                        
+                        // Add popup with name
+                        polygonLayer.bindPopup(`<b>${name}</b>`);
+                        
+                        // Create GeoJSON feature for point-in-polygon check
+                        const geoJsonFeature = {
+                            type: 'Feature',
+                            properties: { name },
+                            geometry: {
+                                type: 'Polygon',
+                                coordinates: [coordinates.map(coord => [coord[1], coord[0]])] // Convert back to [lon,lat]
                             }
-                        });
+                        };
                         
-                        resolve(e);
-                    });
-                });
+                        // Store the GeoJSON feature with the layer
+                        polygonLayer.feature = geoJsonFeature;
+                    }
+                }
                 
-                await kmlLoadPromise;
+                if (allRestrictedLayers.length === 0) {
+                    throw new Error('No restricted areas found in KML file');
+                }
                 
                 // Step 3: Get device location
                 statusElement.textContent = 'Getting your current location...';
@@ -247,40 +279,31 @@
                 statusElement.textContent = 'Checking airspace restrictions...';
                 
                 // Check against all restricted areas
-                allRestrictedAreas.forEach(area => {
-                    if (turf.booleanPointInPolygon(userLocation, area.feature)) {
-                        currentRestrictedAreas.push(area);
+                allRestrictedLayers.forEach(layer => {
+                    if (layer.feature && turf.booleanPointInPolygon(userLocation, layer.feature)) {
+                        currentRestrictedAreas.push({
+                            layer: layer,
+                            name: layer.feature.properties.name
+                        });
                         
                         // Highlight the restricted area
-                        if (area.layer.setStyle) {
-                            area.layer.setStyle({
-                                color: '#ff5252',
-                                fillColor: '#ff5252',
-                                fillOpacity: 0.5,
-                                weight: 3
-                            });
-                        }
+                        layer.setStyle({
+                            color: '#ff5252',
+                            fillColor: '#ff5252',
+                            fillOpacity: 0.5,
+                            weight: 3
+                        });
                         
                         // Add to the list
                         const areaElement = document.createElement('div');
                         areaElement.className = 'area-item active';
-                        areaElement.textContent = area.name;
+                        areaElement.textContent = layer.feature.properties.name;
                         areasContainer.appendChild(areaElement);
                         
                         // Add click handler to zoom to area
                         areaElement.addEventListener('click', function() {
-                            map.fitBounds(area.layer.getBounds());
+                            map.fitBounds(layer.getBounds());
                         });
-                    } else {
-                        // Reset style for areas we're not in
-                        if (area.layer.setStyle) {
-                            area.layer.setStyle({
-                                color: '#ff0000',
-                                fillColor: '#ff0000',
-                                fillOpacity: 0.3,
-                                weight: 2
-                            });
-                        }
                     }
                 });
                 
@@ -292,8 +315,8 @@
                     
                     // Sort by area size (smallest first) to better show nested areas
                     currentRestrictedAreas.sort((a, b) => {
-                        const areaA = turf.area(a.feature);
-                        const areaB = turf.area(b.feature);
+                        const areaA = turf.area(a.layer.feature);
+                        const areaB = turf.area(b.layer.feature);
                         return areaA - areaB;
                     });
                     
