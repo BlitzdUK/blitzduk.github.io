@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restricted Airspace Check</title>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .restricted {
+            background-color: #ffebee;
+            border: 1px solid #ef9a9a;
+            color: #c62828;
+        }
+        .clear {
+            background-color: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            color: #2e7d32;
+        }
+        .loading {
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            color: #1565c0;
+        }
+        .error {
+            background-color: #fff3e0;
+            border: 1px solid #ffcc80;
+            color: #e65100;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0d8aee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restricted Airspace Check</h1>
+    <p>This tool checks if your current location is within restricted airspace areas.</p>
+    
+    <button id="checkLocation">Check My Location</button>
+    
+    <div id="status" class="loading">Click the button to check your location against restricted airspace areas.</div>
+    
+    <script>
+        document.getElementById('checkLocation').addEventListener('click', function() {
+            checkRestrictedAirspace();
+        });
+        
+        async function checkRestrictedAirspace() {
+            const statusElement = document.getElementById('status');
+            statusElement.className = 'loading';
+            statusElement.textContent = 'Loading restricted airspace data...';
+            
+            try {
+                // Step 1: Fetch KML data
+                const kmlUrl = 'https://blitzd.uk/dev/geolocation/restrictedAirspace.kml';
+                const kmlResponse = await fetch(kmlUrl);
+                
+                if (!kmlResponse.ok) {
+                    throw new Error(`Failed to fetch KML: ${kmlResponse.status} ${kmlResponse.statusText}`);
+                }
+                
+                const kmlText = await kmlResponse.text();
+                
+                // Step 2: Parse KML to GeoJSON (simplified - in a real app you'd want a proper KML parser)
+                const parser = new DOMParser();
+                const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
+                
+                // Extract Placemarks with Polygon data
+                const placemarks = kmlDoc.getElementsByTagName('Placemark');
+                const restrictedAreas = [];
+                
+                for (let placemark of placemarks) {
+                    const nameElement = placemark.getElementsByTagName('name')[0];
+                    const polygonElement = placemark.getElementsByTagName('Polygon')[0];
+                    
+                    if (nameElement && polygonElement) {
+                        const name = nameElement.textContent;
+                        const coordinatesText = polygonElement.getElementsByTagName('coordinates')[0].textContent;
+                        
+                        // Convert KML coordinates to GeoJSON format
+                        const coordinates = coordinatesText.trim().split(' ').map(coord => {
+                            const [lon, lat] = coord.split(',').map(Number);
+                            return [lon, lat];
+                        });
+                        
+                        // Create a GeoJSON polygon (Turf.js expects this format)
+                        const polygon = {
+                            type: 'Feature',
+                            properties: { name },
+                            geometry: {
+                                type: 'Polygon',
+                                coordinates: [coordinates]
+                            }
+                        };
+                        
+                        restrictedAreas.push(polygon);
+                    }
+                }
+                
+                if (restrictedAreas.length === 0) {
+                    throw new Error('No restricted areas found in KML file');
+                }
+                
+                // Step 3: Get device location
+                statusElement.textContent = 'Getting your current location...';
+                
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    });
+                });
+                
+                const { latitude, longitude } = position.coords;
+                const userLocation = turf.point([longitude, latitude]);
+                
+                // Step 4: Check if location is within any restricted area
+                let inRestrictedArea = false;
+                let restrictedAreaName = '';
+                
+                for (const area of restrictedAreas) {
+                    if (turf.booleanPointInPolygon(userLocation, area)) {
+                        inRestrictedArea = true;
+                        restrictedAreaName = area.properties.name;
+                        break;
+                    }
+                }
+                
+                // Step 5: Display result
+                if (inRestrictedArea) {
+                    statusElement.className = 'restricted';
+                    statusElement.textContent = `⚠️ Warning: You are currently within restricted airspace (${restrictedAreaName}).`;
+                } else {
+                    statusElement.className = 'clear';
+                    statusElement.textContent = '✅ You are not in restricted airspace.';
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                statusElement.className = 'error';
+                statusElement.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
