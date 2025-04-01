@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restricted Airspace Check</title>
     <!-- Leaflet CSS -->
@@ -11,241 +11,141 @@
     <!-- Turf.js for geospatial calculations -->
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <style>
-        :root {
-            --primary-color: #1e88e5;
-            --primary-hover: #1565c0;
-            --restricted-color: #ff5252;
-            --clear-color: #4caf50;
-            --loading-color: #4aedff;
-            --error-color: #ffcc80;
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-light: #e0e0e0;
-            --text-muted: #aaaaaa;
-        }
-        
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
         }
-        
         #disclaimer {
             padding: 15px;
             margin: 20px auto;
-            border-radius: 8px;
+            border-radius: 5px;
             background-color: #3a1a1a;
             border: 2px solid #7b2c2c;
             color: #ff8a8a;
             max-width: 800px;
         }
-        
-        #status-container {
-            margin: 20px auto;
-            max-width: 800px;
-        }
-        
-        #location-name {
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            background-color: var(--bg-card);
-            font-size: 1.1em;
-            text-align: center;
-        }
-        
         #status {
             padding: 15px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            margin: 20px auto;
+            border-radius: 5px;
+            max-width: 800px;
         }
-        
         .restricted {
-            background-color: rgba(255, 82, 82, 0.1);
-            border: 1px solid var(--restricted-color);
-            color: var(--restricted-color);
+            background-color: #3a1a1a;
+            border: 1px solid #7b2c2c;
+            color: #ff8a8a;
         }
-        
         .clear {
-            background-color: rgba(76, 175, 80, 0.1);
-            border: 1px solid var(--clear-color);
-            color: var(--clear-color);
+            background-color: #1a3a1a;
+            border: 1px solid #2c7b2c;
+            color: #8aff8a;
         }
-        
         .loading {
-            background-color: rgba(74, 237, 255, 0.1);
-            border: 1px solid var(--loading-color);
-            color: var(--loading-color);
+            background-color: #1a2a3a;
+            border: 1px solid #2c4c7b;
+            color: #8ac4ff;
         }
-        
         .error {
-            background-color: rgba(255, 204, 128, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
+            background-color: #3a2a1a;
+            border: 1px solid #7b5c2c;
+            color: #ffcc80;
         }
-        
         button {
-            padding: 12px 24px;
-            background-color: var(--primary-color);
+            padding: 10px 15px;
+            background-color: #1e88e5;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
             margin: 20px auto;
             display: block;
-            font-size: 1em;
-            font-weight: 500;
-            transition: background-color 0.3s;
         }
-        
         button:hover {
-            background-color: var(--primary-hover);
+            background-color: #1565c0;
         }
-        
-        button:disabled {
-            background-color: #666;
-            cursor: not-allowed;
-        }
-        
         #map {
             height: 500px;
             width: 100%;
             border-radius: 8px;
             margin: 20px auto;
             border: 1px solid #333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        
         #restricted-areas-list {
             margin: 20px auto;
-            background-color: var(--bg-card);
+            background-color: #1e1e1e;
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 5px;
             max-height: 200px;
             overflow-y: auto;
             max-width: 800px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-        
         .area-item {
-            padding: 10px 15px;
-            margin: 8px auto;
-            border-left: 4px solid var(--restricted-color);
+            padding: 8px;
+            margin: 5px auto;
+            border-left: 4px solid #ff5252;
             background-color: #2a2a2a;
-            border-radius: 4px;
             max-width: 90%;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            text-align: center;
         }
-        
-        .area-item:hover {
-            background-color: #333;
-            transform: translateX(5px);
-        }
-        
         .area-item.active {
-            border-left: 4px solid var(--clear-color);
+            border-left: 4px solid #4caf50;
+            background-color: #333;
         }
-        
         .legend {
             padding: 10px;
-            background: var(--bg-card);
-            border-radius: 6px;
+            background: #1e1e1e;
+            border-radius: 5px;
             line-height: 1.5;
             text-align: left;
             margin: 0 auto;
             width: fit-content;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-        
         .legend i {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             float: left;
             margin-right: 8px;
-            opacity: 0.8;
-            border-radius: 3px;
+            opacity: 0.7;
         }
-        
         h1, h2, h3, h4 {
             text-align: center;
-            margin-top: 0;
         }
-        
-        h1 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-        
         p {
             text-align: center;
             max-width: 800px;
             margin: 10px auto;
-            color: var(--text-muted);
-        }
-        
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            
-            #map {
-                height: 400px;
-            }
-            
-            button {
-                width: 100%;
-                padding: 15px;
-            }
         }
     </style>
   </head>
   <body>
     <h1>Restricted Airspace Check</h1>
-    <p>Check if your current location is within restricted airspace areas</p>
-    
+    <p>This tool checks if your current location is within restricted airspace
+      areas and displays them on a map.</p>
     <!-- Safety Disclaimer -->
     <div id="disclaimer">
       <h3>⚠️ IMPORTANT SAFETY NOTICE ⚠️</h3>
-      <p><strong>DO NOT RELY ON THIS TOOL WHEN YOUR SAFETY OR ANYBODY ELSE'S SAFETY IS AT RISK.</strong></p>
-      <p>This application is provided for informational purposes only. Always consult official sources for airspace information.</p>
+      <p><strong>DO NOT RELY ON THIS TOOL WHEN YOUR SAFETY OR ANYBODY ELSE'S
+          SAFETY IS AT RISK.</strong></p>
+      <p>This application is provided for informational purposes only. Always
+        consult official sources for airspace information and never use this
+        tool as your sole reference for flight planning or navigation.</p>
+      <p>The developers of this tool make no warranties about the accuracy,
+        completeness, or reliability of this information. Use at
+        your own risk.</p>
     </div>
-    
     <button id="checkLocation">Check My Location</button>
-    
-    <div id="status-container">
-        <div id="location-name" style="display: none;"></div>
-        <div id="status" class="loading">Click the button to check your location against restricted airspace areas.</div>
-    </div>
-    
+    <div id="status" class="loading">Click the button to check your location
+      against restricted airspace areas.</div>
     <div id="map"></div>
-    
     <div id="restricted-areas-list" style="display: none;">
-      <h3>Nearby Restricted Areas</h3>
+      <h3>Restricted Areas You're In:</h3>
       <div id="areas-container"></div>
     </div>
-    
     <script>
         // Initialize map with dark theme
         const map = L.map('map', {
@@ -281,24 +181,18 @@
         let userMarker = null;
         let userAccuracyCircle = null;
         let currentRestrictedAreas = [];
-        
-        // DOM elements
-        const checkLocationBtn = document.getElementById('checkLocation');
-        const statusElement = document.getElementById('status');
-        const locationNameElement = document.getElementById('location-name');
-        const areasList = document.getElementById('restricted-areas-list');
-        const areasContainer = document.getElementById('areas-container');
-        
-        checkLocationBtn.addEventListener('click', function() {
+
+        document.getElementById('checkLocation').addEventListener('click', function() {
             checkRestrictedAirspace();
         });
         
         async function checkRestrictedAirspace() {
-            // UI updates
-            checkLocationBtn.disabled = true;
+            const statusElement = document.getElementById('status');
+            const areasList = document.getElementById('restricted-areas-list');
+            const areasContainer = document.getElementById('areas-container');
+            
             statusElement.className = 'loading';
-            statusElement.innerHTML = '<span class="loading-spinner"></span> Loading restricted airspace data...';
-            locationNameElement.style.display = 'none';
+            statusElement.textContent = 'Loading restricted airspace data...';
             areasList.style.display = 'none';
             areasContainer.innerHTML = '';
             currentRestrictedAreas = [];
@@ -312,18 +206,16 @@
 
                 // Step 1: Fetch KML data
                 const kmlUrl = 'https://blitzd.uk/dev/geolocation/restrictedAirspace.kml';
-                statusElement.innerHTML = '<span class="loading-spinner"></span> Downloading airspace data...';
-                
                 const kmlResponse = await fetch(kmlUrl);
                 
                 if (!kmlResponse.ok) {
-                    throw new Error(`Failed to fetch airspace data: ${kmlResponse.status}`);
+                    throw new Error(`Failed to fetch KML: ${kmlResponse.status} ${kmlResponse.statusText}`);
                 }
                 
                 const kmlText = await kmlResponse.text();
                 
                 // Step 2: Parse KML to XML DOM
-                statusElement.innerHTML = '<span class="loading-spinner"></span> Processing airspace data...';
+                statusElement.textContent = 'Processing airspace data...';
                 const parser = new DOMParser();
                 const kmlDoc = parser.parseFromString(kmlText, 'text/xml');
                 
@@ -347,10 +239,10 @@
                         
                         // Create polygon layer
                         const polygonLayer = L.polygon([coordinates], {
-                            color: '#ff5252',
-                            fillColor: '#ff5252',
-                            fillOpacity: 0.2,
-                            weight: 1
+                            color: '#ff0000',
+                            fillColor: '#ff0000',
+                            fillOpacity: 0.3,
+                            weight: 2
                         }).addTo(map);
                         
                         // Store for later reference
@@ -365,7 +257,7 @@
                             properties: { name },
                             geometry: {
                                 type: 'Polygon',
-                                coordinates: [coordinates.map(coord => [coord[1], coord[0]]) // Convert back to [lon,lat]
+                                coordinates: [coordinates.map(coord => [coord[1], coord[0]])] // Convert back to [lon,lat]
                             }
                         };
                         
@@ -375,16 +267,16 @@
                 }
                 
                 if (allRestrictedLayers.length === 0) {
-                    throw new Error('No restricted areas found in the database');
+                    throw new Error('No restricted areas found in KML file');
                 }
                 
                 // Step 3: Get device location
-                statusElement.innerHTML = '<span class="loading-spinner"></span> Getting your current location...';
+                statusElement.textContent = 'Getting your current location...';
                 
                 const position = await new Promise((resolve, reject) => {
                     navigator.geolocation.getCurrentPosition(resolve, reject, {
                         enableHighAccuracy: true,
-                        timeout: 15000,
+                        timeout: 10000,
                         maximumAge: 0
                     });
                 });
@@ -392,24 +284,7 @@
                 const { latitude, longitude, accuracy } = position.coords;
                 const userLocation = turf.point([longitude, latitude]);
                 
-                // Step 4: Get location name from OpenWeatherMap API
-                try {
-                    const reverseGeocodeUrl = `https://app.owm.io/app/1.1/geo/reverse?lat=${latitude}&lon=${longitude}&appid=dd8770c04bfc20b2f1885e5f1c901125&deviceid=011006FD-129A-458E-8A98-7283010A3558`;
-                    const response = await fetch(reverseGeocodeUrl);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data && data.display_name) {
-                            locationNameElement.textContent = data.display_name;
-                            locationNameElement.style.display = 'block';
-                        }
-                    }
-                } catch (e) {
-                    console.log('Could not fetch location name:', e);
-                    // This is non-critical, so we don't show an error to the user
-                }
-                
-                // Step 5: Add user location to map
+                // Step 4: Add user location to map
                 userMarker = L.circleMarker([latitude, longitude], {
                     radius: 8,
                     fillColor: "#4aedff",
@@ -426,15 +301,15 @@
                     radius: accuracy,
                     color: "#4aedff",
                     fillColor: "#4aedff",
-                    fillOpacity: 0.1,
+                    fillOpacity: 0.2,
                     weight: 1
                 }).addTo(map);
                 
                 // Center map on user location
-                map.setView([latitude, longitude], 14);
+                map.setView([latitude, longitude], 12);
                 
-                // Step 6: Check if location is within any restricted area
-                statusElement.innerHTML = '<span class="loading-spinner"></span> Checking airspace restrictions...';
+                // Step 5: Check if location is within any restricted area
+                statusElement.textContent = 'Checking airspace restrictions...';
                 
                 // Check against all restricted areas
                 allRestrictedLayers.forEach(layer => {
@@ -465,10 +340,11 @@
                     }
                 });
                 
-                // Step 7: Display result
+                // Step 6: Display result
                 if (currentRestrictedAreas.length > 0) {
                     statusElement.className = 'restricted';
-                    statusElement.innerHTML = `⚠️ <strong>Warning:</strong> You are within ${currentRestrictedAreas.length} restricted airspace area(s)`;
+                    statusElement.innerHTML = `⚠️ <strong>Warning:</strong> You are currently within ${currentRestrictedAreas.length} restricted airspace area(s).<br>
+                    <small>This information may be incomplete or inaccurate. Always consult official sources.</small>`;
                     areasList.style.display = 'block';
                     
                     // Sort by area size (smallest first) to better show nested areas
@@ -492,18 +368,17 @@
                     });
                 } else {
                     statusElement.className = 'clear';
-                    statusElement.innerHTML = '✅ <strong>No restricted airspace detected</strong>';
+                    statusElement.innerHTML = '✅ <strong>You are not in restricted airspace.</strong><br><small>This information may be incomplete. Always verify with official sources.</small>';
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
                 statusElement.className = 'error';
-                statusElement.innerHTML = `❌ <strong>Error:</strong> ${error.message}`;
+                statusElement.innerHTML = `❌ <strong>Error:</strong> ${error.message}<br>
+                <small>This tool cannot provide reliable information at this time. Consult official sources.</small>`;
                 
                 // If we have a map but failed to get location, show a generic view
                 map.setView([51.505, -0.09], 6);
-            } finally {
-                checkLocationBtn.disabled = false;
             }
         }
     </script>
