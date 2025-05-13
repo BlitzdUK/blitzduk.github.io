@@ -57,7 +57,7 @@
       grid-template-columns: repeat(10, 1fr);
       gap: 2px;
       width: 90vmin;
-      height: calc(90vmin * 1.6);
+      height: calc(90vmin * 1.5); /* Changed from 1.6 to 1.5 for 15 rows */
       background: #333;
       padding: 2px;
       border-radius: 6px;
@@ -247,7 +247,7 @@ let score = 0;
 let blocksPlaced = 0;
 let linesCleared = 0;
 const cols = 10;
-const rows = 16;
+const rows = 15; // Changed from 16 to 15
 const totalCells = cols * rows;
 
 for (let i = 0; i < totalCells; i++) {
