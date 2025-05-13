@@ -1,309 +1,423 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-   <title>BlockCraft Puzzle</title>
-   <style>
-     * { box-sizing: border-box; margin: 0; padding: 0; }
-     html, body {
-       height: 100%;
-       overflow: hidden;
-       font-family: sans-serif;
-       background: #1e1e1e;
-       color: #fff;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-     }
-     h1 {
-       margin: 10px;
-       font-size: 1.5rem;
-       color: #ffe799;
-     }
-     #score {
-       font-size: 1rem;
-       margin-bottom: 5px;
-     }
-     #gameContainer {
-       flex: 1;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       justify-content: flex-start;
-       overflow: hidden;
-       width: 100%;
-     }
-     #board {
-       display: grid;
-       grid-template-columns: repeat(10, 1fr);
-       gap: 2px;
-       width: 90vmin;
-       height: calc(90vmin * 1.6);
-       background: #333;
-       padding: 2px;
-       border-radius: 6px;
-       margin-bottom: 8px;
-     }
-     .cell {
-       background: #555;
-       width: 100%;
-       aspect-ratio: 1;
-       border-radius: 3px;
-       transition: background-color 0.3s ease;
-     }
-     .filled {
-       background: #fff;
-     }
-     .ghost {
-       background: rgba(255, 255, 255, 0.2);
-     }
-     #pieces {
-       display: flex;
-       flex-wrap: wrap;
-       gap: 8px;
-       justify-content: center;
-       max-width: 90vmin;
-       margin: 5px;
-       touch-action: none;
-     }
-     .piece {
-       display: grid;
-       grid-template-columns: repeat(4, 1fr);
-       gap: 2px;
-       width: 18vmin;
-       touch-action: none;
-     }
-     .block {
-       border-radius: 3px;
-       width: 100%;
-       aspect-ratio: 1;
-     }
-     .animate-clear {
-       animation: fadeOut 0.4s forwards;
-     }
-     @keyframes fadeOut {
-       to { opacity: 0; }
-     }
-     footer {
-       font-size: 0.8rem;
-       color: #ffe799;
-       text-align: center;
-       padding: 5px;
-     }
-     footer a {
-       color: #ffe799;
-       text-decoration: underline;
-     }
-   </style>
- </head>
- <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>BlockCraft Puzzle</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin: 10px;
+      font-size: 1.5rem;
+      color: #ffe799;
+    }
+    #scoreContainer {
+      display: flex;
+      justify-content: space-around;
+      width: 90vmin;
+      margin-bottom: 10px;
+    }
+    .score-box {
+      background: #333;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-align: center;
+      min-width: 80px;
+    }
+    .score-label {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    .score-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffe799;
+    }
+    #gameContainer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+      width: 100%;
+    }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 2px;
+      width: 90vmin;
+      height: calc(90vmin * 1.6);
+      background: #333;
+      padding: 2px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .cell {
+      background: #555;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 3px;
+      transition: transform 0.1s;
+    }
+    .filled {
+      background: #fff;
+    }
+    .ghost {
+      position: absolute;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #pieces {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 90vmin;
+      margin: 5px;
+      touch-action: none;
+    }
+    .piece {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      width: 18vmin;
+      touch-action: none;
+      position: relative;
+    }
+    .block {
+      border-radius: 3px;
+      width: 100%;
+      aspect-ratio: 1;
+      transition: transform 0.1s;
+    }
+    .animate-drop {
+      animation: dropScale 0.3s ease-out;
+    }
+    @keyframes dropScale {
+      0% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .animate-clear {
+      animation: fadeOut 0.4s forwards;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: scale(0.8); }
+    }
+    .animate-line {
+      animation: lineClear 0.4s;
+    }
+    @keyframes lineClear {
+      0% { background-color: white; }
+      50% { background-color: #ffe799; transform: scale(1.1); }
+      100% { background-color: white; transform: scale(1); }
+    }
+    footer {
+      font-size: 0.8rem;
+      color: #ffe799;
+      text-align: center;
+      padding: 5px;
+    }
+    footer a {
+      color: #ffe799;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
 
- <h1>BlockCraft Puzzle</h1>
- <div id="score">Score: 0</div>
- <div id="gameContainer">
-   <div id="board"></div>
-   <div id="pieces"></div>
- </div>
- <footer>&copy; 2025 Blitzd Media. Contact: <a href="https://m.me/BlitzdMedia" target="_blank">m.me/BlitzdMedia</a></footer>
+<h1>BlockCraft Puzzle</h1>
+<div id="scoreContainer">
+  <div class="score-box">
+    <div class="score-label">Score</div>
+    <div id="score" class="score-value">0</div>
+  </div>
+  <div class="score-box">
+    <div class="score-label">Blocks</div>
+    <div id="blocksPlaced" class="score-value">0</div>
+  </div>
+  <div class="score-box">
+    <div class="score-label">Lines</div>
+    <div id="linesCleared" class="score-value">0</div>
+  </div>
+</div>
+<div id="gameContainer">
+  <div id="board"></div>
+  <div id="pieces"></div>
+</div>
+<footer>&copy; 2025 Blitzd Media. Contact: <a href="https://m.me/BlitzdMedia" target="_blank">m.me/BlitzdMedia</a></footer>
 
- <script>
- const board = document.getElementById('board');
- const piecesContainer = document.getElementById('pieces');
- const scoreDisplay = document.getElementById('score');
- let score = 0;
- const cols = 10;
- const rows = 16;
- const totalCells = cols * rows;
+<script>
+const board = document.getElementById('board');
+const piecesContainer = document.getElementById('pieces');
+const scoreDisplay = document.getElementById('score');
+const blocksPlacedDisplay = document.getElementById('blocksPlaced');
+const linesClearedDisplay = document.getElementById('linesCleared');
 
- for (let i = 0; i < totalCells; i++) {
-   const cell = document.createElement('div');
-   cell.className = 'cell';
-   cell.dataset.index = i;
-   board.appendChild(cell);
- }
- const cells = Array.from(document.querySelectorAll('.cell'));
+let score = 0;
+let blocksPlaced = 0;
+let linesCleared = 0;
+const cols = 10;
+const rows = 16;
+const totalCells = cols * rows;
 
- const shapes = [
-   // I-piece
-   [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
-   // J-piece
-   [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],
-   // L-piece
-   [[0,0,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],
-   // O-piece
-   [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]],
-   // S-piece
-   [[0,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]],
-   // T-piece
-   [[0,1,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],
-   // Z-piece
-   [[1,1,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]
- ];
- const colors = ['#00ffff', '#0000ff', '#ffa500', '#ffff00', '#00ff00', '#800080', '#ff0000'];
+for (let i = 0; i < totalCells; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.dataset.index = i;
+  board.appendChild(cell);
+}
+const cells = Array.from(document.querySelectorAll('.cell'));
 
- function randomColor() {
-   return colors[Math.floor(Math.random() * colors.length)];
- }
+const shapes = [
+  [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
+  [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]], // O
+  [[0,1,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // T
+  [[0,0,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // L
+  [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // J
+  [[0,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]], // S
+  [[1,1,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]  // Z
+];
+const colors = ['#f5a623','#50e3c2','#f8e71c','#bd10e0','#7ed321','#ff3366','#4a90e2'];
 
- function createPiece(shape) {
-   const piece = document.createElement('div');
-   piece.className = 'piece';
-   const pieceColor = randomColor();
-   let positions = [];
+function randomColor() {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
-   shape.forEach((row, y) => {
-     row.forEach((val, x) => {
-       const block = document.createElement('div');
-       if (val) {
-         block.className = 'block';
-         block.style.background = pieceColor;
-         positions.push({ x, y });
-       }
-       piece.appendChild(block);
-     });
-   });
+function createPiece(shape) {
+  const piece = document.createElement('div');
+  piece.className = 'piece';
+  const pieceColor = randomColor();
+  let positions = [];
 
-   piecesContainer.appendChild(piece);
+  shape.forEach((row, y) => {
+    row.forEach((val, x) => {
+      const block = document.createElement('div');
+      if (val) {
+        block.className = 'block';
+        block.style.background = pieceColor;
+        positions.push({ x, y });
+      }
+      piece.appendChild(block);
+    });
+  });
 
-   let offsetX = 0, offsetY = 0;
-   let currentGhostCells = [];
+  piecesContainer.appendChild(piece);
 
-   function updateGhost(x, y) {
-     clearGhost();
-     currentGhostCells = [];
-     let canPlaceGhost = true;
-     positions.forEach(pos => {
-       const ghostX = x + pos.x;
-       const ghostY = y + pos.y;
-       if (ghostX >= cols || ghostY >= rows) {
-         canPlaceGhost = false;
-         return;
-       }
-       const index = ghostY * cols + ghostX;
-       if (cells[index] && cells[index].classList.contains('filled')) {
-         canPlaceGhost = false;
-         return;
-       }
-     });
+  let offsetX = 0, offsetY = 0;
+  let ghostPiece = null;
+  let lastValidPosition = null;
 
-     if (canPlaceGhost) {
-       positions.forEach(pos => {
-         const ghostX = x + pos.x;
-         const ghostY = y + pos.y;
-         const index = ghostY * cols + ghostX;
-         if (cells[index]) {
-           cells[index].classList.add('ghost');
-           currentGhostCells.push(cells[index]);
-         }
-       });
-     }
-   }
+  function updateGhostPiece(clientX, clientY) {
+    // Remove previous ghost piece if exists
+    if (ghostPiece) {
+      ghostPiece.remove();
+      ghostPiece = null;
+    }
 
-   function clearGhost() {
-     currentGhostCells.forEach(cell => cell.classList.remove('ghost'));
-   }
+    const targetCell = cells.find(cell => {
+      const rect = cell.getBoundingClientRect();
+      return clientX > rect.left && clientX < rect.right && 
+             clientY > rect.top && clientY < rect.bottom;
+    });
 
-   piece.addEventListener('touchstart', e => {
-     e.preventDefault();
-     offsetX = e.touches[0].clientX - piece.getBoundingClientRect().left;
-     offsetY = e.touches[0].clientY - piece.getBoundingClientRect().top;
-     piece.style.position = 'fixed';
-     piece.style.zIndex = 1000;
-   }, { passive: false });
+    if (targetCell) {
+      const startIndex = parseInt(targetCell.dataset.index);
+      const startX = startIndex % cols;
+      const startY = Math.floor(startIndex / cols);
+      let canPlace = true;
+      
+      // Check if piece can be placed here
+      positions.forEach(pos => {
+        const x = startX + pos.x;
+        const y = startY + pos.y;
+        if (x >= cols || y >= rows) canPlace = false;
+        const idx = y * cols + x;
+        if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+      });
 
-   piece.addEventListener('touchmove', e => {
-     e.preventDefault();
-     piece.style.left = (e.touches[0].clientX - offsetX) + 'px';
-     piece.style.top = (e.touches[0].clientY - offsetY) + 'px';
+      if (canPlace) {
+        lastValidPosition = { startX, startY };
+        ghostPiece = document.createElement('div');
+        ghostPiece.className = 'ghost';
+        ghostPiece.style.width = `${piece.offsetWidth}px`;
+        ghostPiece.style.height = `${piece.offsetHeight}px`;
+        ghostPiece.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
+        ghostPiece.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
+        
+        // Create ghost blocks
+        shape.forEach((row, y) => {
+          row.forEach((val, x) => {
+            if (val) {
+              const ghostBlock = document.createElement('div');
+              ghostBlock.className = 'block';
+              ghostBlock.style.background = pieceColor;
+              ghostBlock.style.opacity = '0.3';
+              ghostBlock.style.position = 'absolute';
+              ghostBlock.style.width = `${piece.children[0].offsetWidth}px`;
+              ghostBlock.style.height = `${piece.children[0].offsetHeight}px`;
+              ghostBlock.style.left = `${x * (piece.children[0].offsetWidth + 2)}px`;
+              ghostBlock.style.top = `${y * (piece.children[0].offsetHeight + 2)}px`;
+              ghostPiece.appendChild(ghostBlock);
+            }
+          });
+        });
+        
+        board.appendChild(ghostPiece);
+      }
+    }
+  }
 
-     const dropX = e.touches[0].clientX;
-     const dropY = e.touches[0].clientY;
-     const targetCell = cells.find(cell => {
-       const rect = cell.getBoundingClientRect();
-       return dropX > rect.left && dropX < rect.right && dropY > rect.top && dropY < rect.bottom;
-     });
+  piece.addEventListener('touchstart', e => {
+    e.preventDefault();
+    offsetX = e.touches[0].clientX - piece.getBoundingClientRect().left;
+    offsetY = e.touches[0].clientY - piece.getBoundingClientRect().top;
+    piece.style.position = 'fixed';
+    piece.style.zIndex = 1000;
+    updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: false });
 
-     if (targetCell) {
-       const startIndex = parseInt(targetCell.dataset.index);
-       const startX = startIndex % cols;
-       const startY = Math.floor(startIndex / cols);
-       updateGhost(startX, startY);
-     } else {
-       clearGhost();
-     }
-   }, { passive: false });
+  piece.addEventListener('touchmove', e => {
+    e.preventDefault();
+    piece.style.left = (e.touches[0].clientX - offsetX) + 'px';
+    piece.style.top = (e.touches[0].clientY - offsetY) + 'px';
+    updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: false });
 
-   piece.addEventListener('touchend', e => {
-     e.preventDefault();
-     clearGhost();
-     const dropX = e.changedTouches[0].clientX;
-     const dropY = e.changedTouches[0].clientY;
-     const targetCell = cells.find(cell => {
-       const rect = cell.getBoundingClientRect();
-       return dropX > rect.left && dropX < rect.right && dropY > rect.top && dropY < rect.bottom;
-     });
-     if (targetCell) {
-       const startIndex = parseInt(targetCell.dataset.index);
-       const startX = startIndex % cols;
-       const startY = Math.floor(startIndex / cols);
-       let canPlace = true;
-       positions.forEach(pos => {
-         const x = startX + pos.x;
-         const y = startY + pos.y;
-         if (x >= cols || y >= rows) canPlace = false;
-         const idx = y * cols + x;
-         if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
-       });
-       if (canPlace) {
-         positions.forEach(pos => {
-           const x = startX + pos.x;
-           const y = startY + pos.y;
-           const idx = y * cols + x;
-           cells[idx].classList.add('filled');
-           cells[idx].style.background = pieceColor;
-         });
-         score += positions.length * 10;
-         checkLines();
-       }
-     }
-     piece.remove();
-     if (piecesContainer.children.length === 0) generatePieces();
-   }, { passive: false });
- }
+  piece.addEventListener('touchend', e => {
+    e.preventDefault();
+    
+    // Remove ghost piece
+    if (ghostPiece) {
+      ghostPiece.remove();
+      ghostPiece = null;
+    }
 
- function generatePieces() {
-   piecesContainer.innerHTML = '';
-   for (let i = 0; i < 3; i++) {
-     const shape = shapes[Math.floor(Math.random() * shapes.length)];
-     createPiece(shape);
-   }
- }
+    if (lastValidPosition) {
+      const { startX, startY } = lastValidPosition;
+      let canPlace = true;
+      
+      // Final check
+      positions.forEach(pos => {
+        const x = startX + pos.x;
+        const y = startY + pos.y;
+        if (x >= cols || y >= rows) canPlace = false;
+        const idx = y * cols + x;
+        if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+      });
 
- function checkLines() {
-   let linesCleared = 0;
-   for (let y = 0; y < rows; y++) {
-     const row = cells.slice(y * cols, y * cols + cols);
-     if (row.every(cell => cell.classList.contains('filled'))) {
-       linesCleared++;
-       row.forEach(cell => {
-         cell.classList.add('animate-clear');
-         setTimeout(() => {
-           cell.classList.remove('filled', 'animate-clear');
-           cell.style.background = '';
-         }, 400);
-       });
-     }
-   }
-   if (linesCleared > 0) {
-     score += 100 * linesCleared;
-     scoreDisplay.textContent = 'Score: ' + score;
-   }
- }
+      if (canPlace) {
+        // Place the piece with animation
+        positions.forEach(pos => {
+          const x = startX + pos.x;
+          const y = startY + pos.y;
+          const idx = y * cols + x;
+          cells[idx].classList.add('filled');
+          cells[idx].style.background = pieceColor;
+          cells[idx].classList.add('animate-drop');
+          setTimeout(() => {
+            cells[idx].classList.remove('animate-drop');
+          }, 300);
+        });
+        
+        blocksPlaced += positions.length;
+        score += positions.length * 10;
+        updateScore();
+        checkLines();
+      }
+    }
+    
+    piece.remove();
+    if (piecesContainer.children.length === 0) generatePieces();
+  }, { passive: false });
+}
 
- document.addEventListener('touchstart', () => { }, { passive: false });
- generatePieces();
- </script>
+function generatePieces() {
+  piecesContainer.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    createPiece(shape);
+  }
+}
 
- </body>
- </html>
+function checkLines() {
+  let linesClearedThisTime = 0;
+  
+  for (let y = 0; y < rows; y++) {
+    const row = cells.slice(y * cols, y * cols + cols);
+    if (row.every(cell => cell.classList.contains('filled'))) {
+      linesClearedThisTime++;
+      row.forEach(cell => {
+        cell.classList.add('animate-line');
+        setTimeout(() => {
+          cell.classList.add('animate-clear');
+          setTimeout(() => {
+            cell.classList.remove('filled', 'animate-clear', 'animate-line');
+            cell.style.background = '';
+          }, 400);
+        }, 100);
+      });
+    }
+  }
+  
+  if (linesClearedThisTime > 0) {
+    linesCleared += linesClearedThisTime;
+    const lineBonus = [0, 100, 300, 500, 800][Math.min(linesClearedThisTime, 4)];
+    score += lineBonus;
+    updateScore();
+    
+    // After clearing lines, shift blocks down
+    setTimeout(() => {
+      for (let y = rows - 1; y >= 0; y--) {
+        for (let x = 0; x < cols; x++) {
+          const idx = y * cols + x;
+          if (!cells[idx].classList.contains('filled')) {
+            // Find the first filled cell above this one
+            for (let y2 = y - 1; y2 >= 0; y2--) {
+              const idx2 = y2 * cols + x;
+              if (cells[idx2].classList.contains('filled')) {
+                // Move the block down
+                cells[idx].classList.add('filled');
+                cells[idx].style.background = cells[idx2].style.background;
+                cells[idx].classList.add('animate-drop');
+                setTimeout(() => {
+                  cells[idx].classList.remove('animate-drop');
+                }, 300);
+                
+                // Clear the original position
+                cells[idx2].classList.remove('filled');
+                cells[idx2].style.background = '';
+                break;
+              }
+            }
+          }
+        }
+      }
+    }, 500);
+  }
+}
+
+function updateScore() {
+  scoreDisplay.textContent = score;
+  blocksPlacedDisplay.textContent = blocksPlaced;
+  linesClearedDisplay.textContent = linesCleared;
+}
+
+document.addEventListener('touchstart', () => { }, { passive: false });
+generatePieces();
+</script>
+
+</body>
+</html>
