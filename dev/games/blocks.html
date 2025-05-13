@@ -124,6 +124,67 @@
       50% { background-color: #ffe799; transform: scale(1.1); }
       100% { background-color: white; transform: scale(1); }
     }
+    #controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    #dpad {
+      display: grid;
+      grid-template-areas:
+        ". up ."
+        "left . right"
+        ". down .";
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .dpad-btn {
+      width: 50px;
+      height: 50px;
+      background: #333;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #ffe799;
+      user-select: none;
+      cursor: pointer;
+    }
+    .dpad-btn:active {
+      background: #555;
+    }
+    #up {
+      grid-area: up;
+    }
+    #left {
+      grid-area: left;
+    }
+    #right {
+      grid-area: right;
+    }
+    #down {
+      grid-area: down;
+    }
+    #rotate-btn {
+      width: 80px;
+      height: 50px;
+      background: #333;
+      border-radius: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: #ffe799;
+      user-select: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    #rotate-btn:active {
+      background: #555;
+    }
     footer {
       font-size: 0.8rem;
       color: #ffe799;
@@ -156,6 +217,15 @@
 <div id="gameContainer">
   <div id="board"></div>
   <div id="pieces"></div>
+  <div id="controls">
+    <div id="dpad">
+      <div id="up" class="dpad-btn">↑</div>
+      <div id="left" class="dpad-btn">←</div>
+      <div id="right" class="dpad-btn">→</div>
+      <div id="down" class="dpad-btn">↓</div>
+    </div>
+    <div id="rotate-btn">ROTATE</div>
+  </div>
 </div>
 <footer>&copy; 2025 Blitzd Media. Contact: <a href="https://m.me/BlitzdMedia" target="_blank">m.me/BlitzdMedia</a></footer>
 
@@ -165,6 +235,13 @@ const piecesContainer = document.getElementById('pieces');
 const scoreDisplay = document.getElementById('score');
 const blocksPlacedDisplay = document.getElementById('blocksPlaced');
 const linesClearedDisplay = document.getElementById('linesCleared');
+
+// Control buttons
+const upBtn = document.getElementById('up');
+const leftBtn = document.getElementById('left');
+const rightBtn = document.getElementById('right');
+const downBtn = document.getElementById('down');
+const rotateBtn = document.getElementById('rotate-btn');
 
 let score = 0;
 let blocksPlaced = 0;
@@ -192,156 +269,308 @@ const shapes = [
 ];
 const colors = ['#f5a623','#50e3c2','#f8e71c','#bd10e0','#7ed321','#ff3366','#4a90e2'];
 
+let currentPiece = null;
+let currentPositions = [];
+let currentColor = '';
+let currentRotation = 0;
+let currentPieceElement = null;
+let currentOffsetX = 0;
+let currentOffsetY = 0;
+let currentGhostPiece = null;
+let currentValidPosition = null;
+
 function randomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function rotateMatrix(matrix) {
+  const N = matrix.length;
+  const rotated = Array(N).fill().map(() => Array(N).fill(0));
+  
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      rotated[x][N-1-y] = matrix[y][x];
+    }
+  }
+  
+  return rotated;
 }
 
 function createPiece(shape) {
   const piece = document.createElement('div');
   piece.className = 'piece';
-  const pieceColor = randomColor();
-  let positions = [];
+  currentColor = randomColor();
+  currentPositions = [];
+  currentRotation = 0;
 
   shape.forEach((row, y) => {
     row.forEach((val, x) => {
       const block = document.createElement('div');
       if (val) {
         block.className = 'block';
-        block.style.background = pieceColor;
-        positions.push({ x, y });
+        block.style.background = currentColor;
+        currentPositions.push({ x, y });
       }
       piece.appendChild(block);
     });
   });
 
   piecesContainer.appendChild(piece);
+  currentPiece = shape;
+  currentPieceElement = piece;
 
-  let offsetX = 0, offsetY = 0;
-  let ghostPiece = null;
-  let lastValidPosition = null;
+  updateGhostPiece(0, 0); // Initialize ghost piece
 
-  function updateGhostPiece(clientX, clientY) {
-    // Remove previous ghost piece if exists
-    if (ghostPiece) {
-      ghostPiece.remove();
-      ghostPiece = null;
-    }
+  // Touch events
+  piece.addEventListener('touchstart', handleTouchStart, { passive: false });
+  piece.addEventListener('touchmove', handleTouchMove, { passive: false });
+  piece.addEventListener('touchend', handleTouchEnd, { passive: false });
 
-    const targetCell = cells.find(cell => {
-      const rect = cell.getBoundingClientRect();
-      return clientX > rect.left && clientX < rect.right && 
-             clientY > rect.top && clientY < rect.bottom;
-    });
+  // Button events
+  upBtn.addEventListener('mousedown', moveUp);
+  leftBtn.addEventListener('mousedown', moveLeft);
+  rightBtn.addEventListener('mousedown', moveRight);
+  downBtn.addEventListener('mousedown', moveDown);
+  rotateBtn.addEventListener('mousedown', rotateCurrentPiece);
 
-    if (targetCell) {
-      const startIndex = parseInt(targetCell.dataset.index);
-      const startX = startIndex % cols;
-      const startY = Math.floor(startIndex / cols);
-      let canPlace = true;
-      
-      // Check if piece can be placed here
-      positions.forEach(pos => {
-        const x = startX + pos.x;
-        const y = startY + pos.y;
-        if (x >= cols || y >= rows) canPlace = false;
-        const idx = y * cols + x;
-        if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+  // Touch events for buttons
+  upBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveUp(); }, { passive: false });
+  leftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); }, { passive: false });
+  rightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); }, { passive: false });
+  downBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveDown(); }, { passive: false });
+  rotateBtn.addEventListener('touchstart', (e) => { e.preventDefault(); rotateCurrentPiece(); }, { passive: false });
+}
+
+function moveUp() {
+  if (currentPieceElement) {
+    const rect = currentPieceElement.getBoundingClientRect();
+    updateGhostPiece(rect.left + rect.width/2, rect.top - 20);
+    updateCurrentPiecePosition();
+  }
+}
+
+function moveLeft() {
+  if (currentPieceElement) {
+    const rect = currentPieceElement.getBoundingClientRect();
+    updateGhostPiece(rect.left - 20, rect.top + rect.height/2);
+    updateCurrentPiecePosition();
+  }
+}
+
+function moveRight() {
+  if (currentPieceElement) {
+    const rect = currentPieceElement.getBoundingClientRect();
+    updateGhostPiece(rect.left + rect.width + 20, rect.top + rect.height/2);
+    updateCurrentPiecePosition();
+  }
+}
+
+function moveDown() {
+  if (currentPieceElement) {
+    const rect = currentPieceElement.getBoundingClientRect();
+    updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height + 20);
+    updateCurrentPiecePosition();
+  }
+}
+
+function rotateCurrentPiece() {
+  if (currentPiece) {
+    currentRotation = (currentRotation + 1) % 4;
+    currentPiece = rotateMatrix(currentPiece);
+    
+    // Update positions
+    currentPositions = [];
+    currentPiece.forEach((row, y) => {
+      row.forEach((val, x) => {
+        if (val) currentPositions.push({ x, y });
       });
-
-      if (canPlace) {
-        lastValidPosition = { startX, startY };
-        ghostPiece = document.createElement('div');
-        ghostPiece.className = 'ghost';
-        ghostPiece.style.width = `${piece.offsetWidth}px`;
-        ghostPiece.style.height = `${piece.offsetHeight}px`;
-        ghostPiece.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
-        ghostPiece.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
-        
-        // Create ghost blocks
-        shape.forEach((row, y) => {
-          row.forEach((val, x) => {
-            if (val) {
-              const ghostBlock = document.createElement('div');
-              ghostBlock.className = 'block';
-              ghostBlock.style.background = pieceColor;
-              ghostBlock.style.opacity = '0.3';
-              ghostBlock.style.position = 'absolute';
-              ghostBlock.style.width = `${piece.children[0].offsetWidth}px`;
-              ghostBlock.style.height = `${piece.children[0].offsetHeight}px`;
-              ghostBlock.style.left = `${x * (piece.children[0].offsetWidth + 2)}px`;
-              ghostBlock.style.top = `${y * (piece.children[0].offsetHeight + 2)}px`;
-              ghostPiece.appendChild(ghostBlock);
-            }
-          });
-        });
-        
-        board.appendChild(ghostPiece);
-      }
+    });
+    
+    // Clear and recreate the piece element
+    const oldPiece = currentPieceElement;
+    if (oldPiece) {
+      oldPiece.remove();
+    }
+    
+    const piece = document.createElement('div');
+    piece.className = 'piece';
+    
+    currentPiece.forEach((row, y) => {
+      row.forEach((val, x) => {
+        const block = document.createElement('div');
+        if (val) {
+          block.className = 'block';
+          block.style.background = currentColor;
+        }
+        piece.appendChild(block);
+      });
+    });
+    
+    piecesContainer.appendChild(piece);
+    currentPieceElement = piece;
+    
+    // Reattach event listeners
+    piece.addEventListener('touchstart', handleTouchStart, { passive: false });
+    piece.addEventListener('touchmove', handleTouchMove, { passive: false });
+    piece.addEventListener('touchend', handleTouchEnd, { passive: false });
+    
+    // Update ghost piece
+    if (currentPieceElement) {
+      const rect = currentPieceElement.getBoundingClientRect();
+      updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height/2);
     }
   }
+}
 
-  piece.addEventListener('touchstart', e => {
-    e.preventDefault();
-    offsetX = e.touches[0].clientX - piece.getBoundingClientRect().left;
-    offsetY = e.touches[0].clientY - piece.getBoundingClientRect().top;
-    piece.style.position = 'fixed';
-    piece.style.zIndex = 1000;
-    updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: false });
-
-  piece.addEventListener('touchmove', e => {
-    e.preventDefault();
-    piece.style.left = (e.touches[0].clientX - offsetX) + 'px';
-    piece.style.top = (e.touches[0].clientY - offsetY) + 'px';
-    updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: false });
-
-  piece.addEventListener('touchend', e => {
-    e.preventDefault();
+function updateCurrentPiecePosition() {
+  if (currentValidPosition && currentPieceElement) {
+    const { startX, startY } = currentValidPosition;
+    const cell = cells[startY * cols + startX];
+    const boardRect = board.getBoundingClientRect();
+    const cellRect = cell.getBoundingClientRect();
     
-    // Remove ghost piece
-    if (ghostPiece) {
-      ghostPiece.remove();
-      ghostPiece = null;
-    }
+    currentPieceElement.style.position = 'fixed';
+    currentPieceElement.style.left = (cellRect.left - boardRect.left + board.offsetLeft) + 'px';
+    currentPieceElement.style.top = (cellRect.top - boardRect.top + board.offsetTop) + 'px';
+    currentPieceElement.style.transform = 'translate(0, 0)';
+  }
+}
 
-    if (lastValidPosition) {
-      const { startX, startY } = lastValidPosition;
-      let canPlace = true;
+function handleTouchStart(e) {
+  e.preventDefault();
+  currentOffsetX = e.touches[0].clientX - e.target.getBoundingClientRect().left;
+  currentOffsetY = e.touches[0].clientY - e.target.getBoundingClientRect().top;
+  currentPieceElement.style.position = 'fixed';
+  currentPieceElement.style.zIndex = 1000;
+  updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
+}
+
+function handleTouchMove(e) {
+  e.preventDefault();
+  currentPieceElement.style.left = (e.touches[0].clientX - currentOffsetX) + 'px';
+  currentPieceElement.style.top = (e.touches[0].clientY - currentOffsetY) + 'px';
+  updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
+}
+
+function handleTouchEnd(e) {
+  e.preventDefault();
+  placeCurrentPiece();
+}
+
+function updateGhostPiece(clientX, clientY) {
+  // Remove previous ghost piece if exists
+  if (currentGhostPiece) {
+    currentGhostPiece.remove();
+    currentGhostPiece = null;
+  }
+
+  const targetCell = cells.find(cell => {
+    const rect = cell.getBoundingClientRect();
+    return clientX > rect.left && clientX < rect.right && 
+           clientY > rect.top && clientY < rect.bottom;
+  });
+
+  if (targetCell) {
+    const startIndex = parseInt(targetCell.dataset.index);
+    const startX = startIndex % cols;
+    const startY = Math.floor(startIndex / cols);
+    let canPlace = true;
+    
+    // Check if piece can be placed here
+    currentPositions.forEach(pos => {
+      const x = startX + pos.x;
+      const y = startY + pos.y;
+      if (x >= cols || y >= rows) canPlace = false;
+      const idx = y * cols + x;
+      if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+    });
+
+    if (canPlace) {
+      currentValidPosition = { startX, startY };
+      currentGhostPiece = document.createElement('div');
+      currentGhostPiece.className = 'ghost';
+      currentGhostPiece.style.width = `${currentPieceElement.offsetWidth}px`;
+      currentGhostPiece.style.height = `${currentPieceElement.offsetHeight}px`;
+      currentGhostPiece.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
+      currentGhostPiece.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
       
-      // Final check
-      positions.forEach(pos => {
+      // Create ghost blocks
+      currentPiece.forEach((row, y) => {
+        row.forEach((val, x) => {
+          if (val) {
+            const ghostBlock = document.createElement('div');
+            ghostBlock.className = 'block';
+            ghostBlock.style.background = currentColor;
+            ghostBlock.style.opacity = '0.3';
+            ghostBlock.style.position = 'absolute';
+            ghostBlock.style.width = `${currentPieceElement.children[0].offsetWidth}px`;
+            ghostBlock.style.height = `${currentPieceElement.children[0].offsetHeight}px`;
+            ghostBlock.style.left = `${x * (currentPieceElement.children[0].offsetWidth + 2)}px`;
+            ghostBlock.style.top = `${y * (currentPieceElement.children[0].offsetHeight + 2)}px`;
+            currentGhostPiece.appendChild(ghostBlock);
+          }
+        });
+      });
+      
+      board.appendChild(currentGhostPiece);
+    }
+  }
+}
+
+function placeCurrentPiece() {
+  // Remove ghost piece
+  if (currentGhostPiece) {
+    currentGhostPiece.remove();
+    currentGhostPiece = null;
+  }
+
+  if (currentValidPosition && currentPieceElement) {
+    const { startX, startY } = currentValidPosition;
+    let canPlace = true;
+    
+    // Final check
+    currentPositions.forEach(pos => {
+      const x = startX + pos.x;
+      const y = startY + pos.y;
+      if (x >= cols || y >= rows) canPlace = false;
+      const idx = y * cols + x;
+      if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+    });
+
+    if (canPlace) {
+      // Place the piece with animation
+      currentPositions.forEach(pos => {
         const x = startX + pos.x;
         const y = startY + pos.y;
-        if (x >= cols || y >= rows) canPlace = false;
         const idx = y * cols + x;
-        if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
+        cells[idx].classList.add('filled');
+        cells[idx].style.background = currentColor;
+        cells[idx].classList.add('animate-drop');
+        setTimeout(() => {
+          cells[idx].classList.remove('animate-drop');
+        }, 300);
       });
-
-      if (canPlace) {
-        // Place the piece with animation
-        positions.forEach(pos => {
-          const x = startX + pos.x;
-          const y = startY + pos.y;
-          const idx = y * cols + x;
-          cells[idx].classList.add('filled');
-          cells[idx].style.background = pieceColor;
-          cells[idx].classList.add('animate-drop');
-          setTimeout(() => {
-            cells[idx].classList.remove('animate-drop');
-          }, 300);
-        });
-        
-        blocksPlaced += positions.length;
-        score += positions.length * 10;
-        updateScore();
-        checkLines();
-      }
+      
+      blocksPlaced += currentPositions.length;
+      score += currentPositions.length * 10;
+      updateScore();
+      checkLines();
     }
-    
-    piece.remove();
-    if (piecesContainer.children.length === 0) generatePieces();
-  }, { passive: false });
+  }
+  
+  if (currentPieceElement) {
+    currentPieceElement.remove();
+    currentPieceElement = null;
+  }
+  
+  // Remove button event listeners
+  upBtn.removeEventListener('mousedown', moveUp);
+  leftBtn.removeEventListener('mousedown', moveLeft);
+  rightBtn.removeEventListener('mousedown', moveRight);
+  downBtn.removeEventListener('mousedown', moveDown);
+  rotateBtn.removeEventListener('mousedown', rotateCurrentPiece);
+  
+  if (piecesContainer.children.length === 0) generatePieces();
 }
 
 function generatePieces() {
