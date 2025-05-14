@@ -57,7 +57,7 @@
       grid-template-columns: repeat(10, 1fr);
       gap: 2px;
       width: 90vmin;
-      height: calc(90vmin * 1.5); /* Changed from 1.6 to 1.5 for 15 rows */
+      height: calc(90vmin * 1.5);
       background: #333;
       padding: 2px;
       border-radius: 6px;
@@ -247,9 +247,10 @@ let score = 0;
 let blocksPlaced = 0;
 let linesCleared = 0;
 const cols = 10;
-const rows = 15; // Changed from 16 to 15
+const rows = 15;
 const totalCells = cols * rows;
 
+// Initialize board cells
 for (let i = 0; i < totalCells; i++) {
   const cell = document.createElement('div');
   cell.className = 'cell';
@@ -269,15 +270,17 @@ const shapes = [
 ];
 const colors = ['#f5a623','#50e3c2','#f8e71c','#bd10e0','#7ed321','#ff3366','#4a90e2'];
 
-let currentPiece = null;
-let currentPositions = [];
-let currentColor = '';
-let currentRotation = 0;
-let currentPieceElement = null;
-let currentOffsetX = 0;
-let currentOffsetY = 0;
-let currentGhostPiece = null;
-let currentValidPosition = null;
+let activePiece = {
+  element: null,
+  shape: null,
+  positions: [],
+  color: '',
+  rotation: 0,
+  offsetX: 0,
+  offsetY: 0,
+  ghost: null,
+  validPosition: null
+};
 
 function randomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
@@ -299,29 +302,41 @@ function rotateMatrix(matrix) {
 function createPiece(shape) {
   const piece = document.createElement('div');
   piece.className = 'piece';
-  currentColor = randomColor();
-  currentPositions = [];
-  currentRotation = 0;
+  const color = randomColor();
+  const positions = [];
 
   shape.forEach((row, y) => {
     row.forEach((val, x) => {
       const block = document.createElement('div');
       if (val) {
         block.className = 'block';
-        block.style.background = currentColor;
-        currentPositions.push({ x, y });
+        block.style.background = color;
+        positions.push({ x, y });
       }
       piece.appendChild(block);
     });
   });
 
   piecesContainer.appendChild(piece);
-  currentPiece = shape;
-  currentPieceElement = piece;
 
-  updateGhostPiece(0, 0); // Initialize ghost piece
+  // Set active piece
+  activePiece = {
+    element: piece,
+    shape: JSON.parse(JSON.stringify(shape)),
+    positions: [...positions],
+    color,
+    rotation: 0,
+    offsetX: 0,
+    offsetY: 0,
+    ghost: null,
+    validPosition: null
+  };
 
-  // Touch events
+  // Initialize ghost piece
+  updateGhostPiece(piece.getBoundingClientRect().left + piece.offsetWidth/2, 
+                  piece.getBoundingClientRect().top + piece.offsetHeight/2);
+
+  // Add event listeners
   piece.addEventListener('touchstart', handleTouchStart, { passive: false });
   piece.addEventListener('touchmove', handleTouchMove, { passive: false });
   piece.addEventListener('touchend', handleTouchEnd, { passive: false });
@@ -331,137 +346,147 @@ function createPiece(shape) {
   leftBtn.addEventListener('mousedown', moveLeft);
   rightBtn.addEventListener('mousedown', moveRight);
   downBtn.addEventListener('mousedown', moveDown);
-  rotateBtn.addEventListener('mousedown', rotateCurrentPiece);
+  rotateBtn.addEventListener('mousedown', rotateActivePiece);
 
   // Touch events for buttons
   upBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveUp(); }, { passive: false });
   leftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); }, { passive: false });
   rightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); }, { passive: false });
   downBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveDown(); }, { passive: false });
-  rotateBtn.addEventListener('touchstart', (e) => { e.preventDefault(); rotateCurrentPiece(); }, { passive: false });
+  rotateBtn.addEventListener('touchstart', (e) => { e.preventDefault(); rotateActivePiece(); }, { passive: false });
 }
 
 function moveUp() {
-  if (currentPieceElement) {
-    const rect = currentPieceElement.getBoundingClientRect();
+  if (activePiece.element) {
+    const rect = activePiece.element.getBoundingClientRect();
     updateGhostPiece(rect.left + rect.width/2, rect.top - 20);
-    updateCurrentPiecePosition();
+    updateActivePiecePosition();
   }
 }
 
 function moveLeft() {
-  if (currentPieceElement) {
-    const rect = currentPieceElement.getBoundingClientRect();
+  if (activePiece.element) {
+    const rect = activePiece.element.getBoundingClientRect();
     updateGhostPiece(rect.left - 20, rect.top + rect.height/2);
-    updateCurrentPiecePosition();
+    updateActivePiecePosition();
   }
 }
 
 function moveRight() {
-  if (currentPieceElement) {
-    const rect = currentPieceElement.getBoundingClientRect();
+  if (activePiece.element) {
+    const rect = activePiece.element.getBoundingClientRect();
     updateGhostPiece(rect.left + rect.width + 20, rect.top + rect.height/2);
-    updateCurrentPiecePosition();
+    updateActivePiecePosition();
   }
 }
 
 function moveDown() {
-  if (currentPieceElement) {
-    const rect = currentPieceElement.getBoundingClientRect();
+  if (activePiece.element) {
+    const rect = activePiece.element.getBoundingClientRect();
     updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height + 20);
-    updateCurrentPiecePosition();
+    updateActivePiecePosition();
   }
 }
 
-function rotateCurrentPiece() {
-  if (currentPiece) {
-    currentRotation = (currentRotation + 1) % 4;
-    currentPiece = rotateMatrix(currentPiece);
-    
-    // Update positions
-    currentPositions = [];
-    currentPiece.forEach((row, y) => {
-      row.forEach((val, x) => {
-        if (val) currentPositions.push({ x, y });
-      });
+function rotateActivePiece() {
+  if (!activePiece.element) return;
+
+  // Rotate the shape
+  const newShape = rotateMatrix(activePiece.shape);
+  const newPositions = [];
+  
+  newShape.forEach((row, y) => {
+    row.forEach((val, x) => {
+      if (val) newPositions.push({ x, y });
     });
+  });
+
+  // Check if rotation is valid
+  if (activePiece.validPosition) {
+    const { startX, startY } = activePiece.validPosition;
+    let canRotate = true;
     
-    // Clear and recreate the piece element
-    const oldPiece = currentPieceElement;
-    if (oldPiece) {
-      oldPiece.remove();
-    }
-    
-    const piece = document.createElement('div');
-    piece.className = 'piece';
-    
-    currentPiece.forEach((row, y) => {
-      row.forEach((val, x) => {
-        const block = document.createElement('div');
-        if (val) {
-          block.className = 'block';
-          block.style.background = currentColor;
-        }
-        piece.appendChild(block);
-      });
+    newPositions.forEach(pos => {
+      const x = startX + pos.x;
+      const y = startY + pos.y;
+      if (x >= cols || y >= rows) canRotate = false;
+      const idx = y * cols + x;
+      if (cells[idx] && cells[idx].classList.contains('filled')) canRotate = false;
     });
-    
-    piecesContainer.appendChild(piece);
-    currentPieceElement = piece;
-    
-    // Reattach event listeners
-    piece.addEventListener('touchstart', handleTouchStart, { passive: false });
-    piece.addEventListener('touchmove', handleTouchMove, { passive: false });
-    piece.addEventListener('touchend', handleTouchEnd, { passive: false });
-    
-    // Update ghost piece
-    if (currentPieceElement) {
-      const rect = currentPieceElement.getBoundingClientRect();
+
+    if (canRotate) {
+      // Update active piece
+      activePiece.shape = newShape;
+      activePiece.positions = newPositions;
+      activePiece.rotation = (activePiece.rotation + 1) % 4;
+
+      // Update the visual piece
+      const piece = activePiece.element;
+      piece.innerHTML = '';
+      
+      newShape.forEach((row, y) => {
+        row.forEach((val, x) => {
+          const block = document.createElement('div');
+          if (val) {
+            block.className = 'block';
+            block.style.background = activePiece.color;
+          }
+          piece.appendChild(block);
+        });
+      });
+
+      // Update ghost piece
+      const rect = piece.getBoundingClientRect();
       updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height/2);
     }
   }
 }
 
-function updateCurrentPiecePosition() {
-  if (currentValidPosition && currentPieceElement) {
-    const { startX, startY } = currentValidPosition;
+function updateActivePiecePosition() {
+  if (activePiece.validPosition && activePiece.element) {
+    const { startX, startY } = activePiece.validPosition;
     const cell = cells[startY * cols + startX];
     const boardRect = board.getBoundingClientRect();
     const cellRect = cell.getBoundingClientRect();
     
-    currentPieceElement.style.position = 'fixed';
-    currentPieceElement.style.left = (cellRect.left - boardRect.left + board.offsetLeft) + 'px';
-    currentPieceElement.style.top = (cellRect.top - boardRect.top + board.offsetTop) + 'px';
-    currentPieceElement.style.transform = 'translate(0, 0)';
+    activePiece.element.style.position = 'fixed';
+    activePiece.element.style.left = (cellRect.left - boardRect.left + board.offsetLeft) + 'px';
+    activePiece.element.style.top = (cellRect.top - boardRect.top + board.offsetTop) + 'px';
+    activePiece.element.style.transform = 'translate(0, 0)';
   }
 }
 
 function handleTouchStart(e) {
   e.preventDefault();
-  currentOffsetX = e.touches[0].clientX - e.target.getBoundingClientRect().left;
-  currentOffsetY = e.touches[0].clientY - e.target.getBoundingClientRect().top;
-  currentPieceElement.style.position = 'fixed';
-  currentPieceElement.style.zIndex = 1000;
+  if (!activePiece.element) return;
+  
+  const rect = activePiece.element.getBoundingClientRect();
+  activePiece.offsetX = e.touches[0].clientX - rect.left;
+  activePiece.offsetY = e.touches[0].clientY - rect.top;
+  activePiece.element.style.position = 'fixed';
+  activePiece.element.style.zIndex = 1000;
   updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
 }
 
 function handleTouchMove(e) {
   e.preventDefault();
-  currentPieceElement.style.left = (e.touches[0].clientX - currentOffsetX) + 'px';
-  currentPieceElement.style.top = (e.touches[0].clientY - currentOffsetY) + 'px';
+  if (!activePiece.element) return;
+  
+  activePiece.element.style.left = (e.touches[0].clientX - activePiece.offsetX) + 'px';
+  activePiece.element.style.top = (e.touches[0].clientY - activePiece.offsetY) + 'px';
   updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
 }
 
 function handleTouchEnd(e) {
   e.preventDefault();
-  placeCurrentPiece();
+  placeActivePiece();
 }
 
 function updateGhostPiece(clientX, clientY) {
   // Remove previous ghost piece if exists
-  if (currentGhostPiece) {
-    currentGhostPiece.remove();
-    currentGhostPiece = null;
+  if (activePiece.ghost) {
+    activePiece.ghost.remove();
+    activePiece.ghost = null;
   }
 
   const targetCell = cells.find(cell => {
@@ -477,7 +502,7 @@ function updateGhostPiece(clientX, clientY) {
     let canPlace = true;
     
     // Check if piece can be placed here
-    currentPositions.forEach(pos => {
+    activePiece.positions.forEach(pos => {
       const x = startX + pos.x;
       const y = startY + pos.y;
       if (x >= cols || y >= rows) canPlace = false;
@@ -486,50 +511,50 @@ function updateGhostPiece(clientX, clientY) {
     });
 
     if (canPlace) {
-      currentValidPosition = { startX, startY };
-      currentGhostPiece = document.createElement('div');
-      currentGhostPiece.className = 'ghost';
-      currentGhostPiece.style.width = `${currentPieceElement.offsetWidth}px`;
-      currentGhostPiece.style.height = `${currentPieceElement.offsetHeight}px`;
-      currentGhostPiece.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
-      currentGhostPiece.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
+      activePiece.validPosition = { startX, startY };
+      activePiece.ghost = document.createElement('div');
+      activePiece.ghost.className = 'ghost';
+      activePiece.ghost.style.width = `${activePiece.element.offsetWidth}px`;
+      activePiece.ghost.style.height = `${activePiece.element.offsetHeight}px`;
+      activePiece.ghost.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
+      activePiece.ghost.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
       
       // Create ghost blocks
-      currentPiece.forEach((row, y) => {
+      activePiece.shape.forEach((row, y) => {
         row.forEach((val, x) => {
           if (val) {
             const ghostBlock = document.createElement('div');
             ghostBlock.className = 'block';
-            ghostBlock.style.background = currentColor;
+            ghostBlock.style.background = activePiece.color;
             ghostBlock.style.opacity = '0.3';
             ghostBlock.style.position = 'absolute';
-            ghostBlock.style.width = `${currentPieceElement.children[0].offsetWidth}px`;
-            ghostBlock.style.height = `${currentPieceElement.children[0].offsetHeight}px`;
-            ghostBlock.style.left = `${x * (currentPieceElement.children[0].offsetWidth + 2)}px`;
-            ghostBlock.style.top = `${y * (currentPieceElement.children[0].offsetHeight + 2)}px`;
-            currentGhostPiece.appendChild(ghostBlock);
+            ghostBlock.style.width = `${activePiece.element.children[0].offsetWidth}px`;
+            ghostBlock.style.height = `${activePiece.element.children[0].offsetHeight}px`;
+            ghostBlock.style.left = `${x * (activePiece.element.children[0].offsetWidth + 2)}px`;
+            ghostBlock.style.top = `${y * (activePiece.element.children[0].offsetHeight + 2)}px`;
+            activePiece.ghost.appendChild(ghostBlock);
           }
         });
       });
       
-      board.appendChild(currentGhostPiece);
+      board.appendChild(activePiece.ghost);
     }
   }
 }
 
-function placeCurrentPiece() {
+function placeActivePiece() {
   // Remove ghost piece
-  if (currentGhostPiece) {
-    currentGhostPiece.remove();
-    currentGhostPiece = null;
+  if (activePiece.ghost) {
+    activePiece.ghost.remove();
+    activePiece.ghost = null;
   }
 
-  if (currentValidPosition && currentPieceElement) {
-    const { startX, startY } = currentValidPosition;
+  if (activePiece.validPosition && activePiece.element) {
+    const { startX, startY } = activePiece.validPosition;
     let canPlace = true;
     
     // Final check
-    currentPositions.forEach(pos => {
+    activePiece.positions.forEach(pos => {
       const x = startX + pos.x;
       const y = startY + pos.y;
       if (x >= cols || y >= rows) canPlace = false;
@@ -539,28 +564,29 @@ function placeCurrentPiece() {
 
     if (canPlace) {
       // Place the piece with animation
-      currentPositions.forEach(pos => {
+      activePiece.positions.forEach(pos => {
         const x = startX + pos.x;
         const y = startY + pos.y;
         const idx = y * cols + x;
         cells[idx].classList.add('filled');
-        cells[idx].style.background = currentColor;
+        cells[idx].style.background = activePiece.color;
         cells[idx].classList.add('animate-drop');
         setTimeout(() => {
           cells[idx].classList.remove('animate-drop');
         }, 300);
       });
       
-      blocksPlaced += currentPositions.length;
-      score += currentPositions.length * 10;
+      blocksPlaced += activePiece.positions.length;
+      score += activePiece.positions.length * 10;
       updateScore();
       checkLines();
     }
   }
   
-  if (currentPieceElement) {
-    currentPieceElement.remove();
-    currentPieceElement = null;
+  // Clean up current piece
+  if (activePiece.element) {
+    activePiece.element.remove();
+    activePiece.element = null;
   }
   
   // Remove button event listeners
@@ -568,9 +594,12 @@ function placeCurrentPiece() {
   leftBtn.removeEventListener('mousedown', moveLeft);
   rightBtn.removeEventListener('mousedown', moveRight);
   downBtn.removeEventListener('mousedown', moveDown);
-  rotateBtn.removeEventListener('mousedown', rotateCurrentPiece);
+  rotateBtn.removeEventListener('mousedown', rotateActivePiece);
   
-  if (piecesContainer.children.length === 0) generatePieces();
+  // Generate new pieces if needed
+  if (piecesContainer.children.length === 0) {
+    generatePieces();
+  }
 }
 
 function generatePieces() {
