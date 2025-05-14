@@ -9,17 +9,25 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       background: #1e1e1e;
       color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
+      touch-action: manipulation;
     }
     h1 {
       margin: 10px;
       font-size: 1.5rem;
       color: #ffe799;
+      text-align: center;
+    }
+    #game-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
     }
     #scoreContainer {
       display: flex;
@@ -33,6 +41,7 @@
       border-radius: 6px;
       text-align: center;
       min-width: 80px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
     .score-label {
       font-size: 0.8rem;
@@ -63,52 +72,60 @@
       border-radius: 6px;
       margin-bottom: 8px;
       position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
     .cell {
-      background: #555;
+      background: #444;
       width: 100%;
       aspect-ratio: 1;
       border-radius: 3px;
-      transition: transform 0.1s;
+      transition: all 0.2s ease;
     }
     .filled {
       background: #fff;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
     }
     .ghost {
       position: absolute;
-      opacity: 0.4;
+      opacity: 0.5;
       pointer-events: none;
       z-index: 10;
+      transition: all 0.1s ease;
     }
     #pieces {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
       justify-content: center;
       max-width: 90vmin;
-      margin: 5px;
+      margin: 10px;
       touch-action: none;
     }
     .piece {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 2px;
-      width: 18vmin;
+      width: 20vmin;
       touch-action: none;
       position: relative;
+      transition: transform 0.1s;
+    }
+    .piece:active {
+      transform: scale(1.05);
     }
     .block {
       border-radius: 3px;
       width: 100%;
       aspect-ratio: 1;
-      transition: transform 0.1s;
+      transition: all 0.1s;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.3);
     }
     .animate-drop {
       animation: dropScale 0.3s ease-out;
     }
     @keyframes dropScale {
-      0% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1.2); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
     }
     .animate-clear {
       animation: fadeOut 0.4s forwards;
@@ -117,18 +134,23 @@
       to { opacity: 0; transform: scale(0.8); }
     }
     .animate-line {
-      animation: lineClear 0.4s;
+      animation: lineClear 0.6s;
     }
     @keyframes lineClear {
-      0% { background-color: white; }
-      50% { background-color: #ffe799; transform: scale(1.1); }
+      0% { background-color: white; transform: scale(1); }
+      30% { background-color: #ffe799; transform: scale(1.1); }
       100% { background-color: white; transform: scale(1); }
     }
     #controls {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 10px;
+      margin: 10px 0;
+      width: 100%;
+    }
+    #dpad-container {
+      display: flex;
+      justify-content: center;
       margin-bottom: 10px;
     }
     #dpad {
@@ -138,23 +160,27 @@
         "left . right"
         ". down .";
       gap: 8px;
-      margin-bottom: 10px;
     }
-    .dpad-btn {
-      width: 50px;
-      height: 50px;
+    .control-btn {
+      width: 60px;
+      height: 60px;
       background: #333;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
+      font-size: 28px;
       color: #ffe799;
       user-select: none;
       cursor: pointer;
+      border: none;
+      outline: none;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      transition: all 0.1s;
     }
-    .dpad-btn:active {
+    .control-btn:active {
       background: #555;
+      transform: scale(0.95);
     }
     #up {
       grid-area: up;
@@ -168,8 +194,12 @@
     #down {
       grid-area: down;
     }
-    #rotate-btn {
-      width: 80px;
+    #action-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    .action-btn {
+      width: 100px;
       height: 50px;
       background: #333;
       border-radius: 25px;
@@ -180,16 +210,21 @@
       color: #ffe799;
       user-select: none;
       cursor: pointer;
-      margin-top: 10px;
+      border: none;
+      outline: none;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      transition: all 0.1s;
     }
-    #rotate-btn:active {
+    .action-btn:active {
       background: #555;
+      transform: scale(0.95);
     }
     footer {
       font-size: 0.8rem;
       color: #ffe799;
       text-align: center;
       padding: 5px;
+      margin-top: auto;
     }
     footer a {
       color: #ffe799;
@@ -199,7 +234,9 @@
 </head>
 <body>
 
-<h1>BlockCraft Puzzle</h1>
+<div id="game-header">
+  <h1>BlockCraft Puzzle</h1>
+</div>
 <div id="scoreContainer">
   <div class="score-box">
     <div class="score-label">Score</div>
@@ -218,48 +255,28 @@
   <div id="board"></div>
   <div id="pieces"></div>
   <div id="controls">
-    <div id="dpad">
-      <div id="up" class="dpad-btn">↑</div>
-      <div id="left" class="dpad-btn">←</div>
-      <div id="right" class="dpad-btn">→</div>
-      <div id="down" class="dpad-btn">↓</div>
+    <div id="dpad-container">
+      <div id="dpad">
+        <button id="up" class="control-btn">↑</button>
+        <button id="left" class="control-btn">←</button>
+        <button id="right" class="control-btn">→</button>
+        <button id="down" class="control-btn">↓</button>
+      </div>
     </div>
-    <div id="rotate-btn">ROTATE</div>
+    <div id="action-buttons">
+      <button id="rotate-btn" class="action-btn">ROTATE</button>
+      <button id="drop-btn" class="action-btn">DROP</button>
+    </div>
   </div>
 </div>
 <footer>&copy; 2025 Blitzd Media. Contact: <a href="https://m.me/BlitzdMedia" target="_blank">m.me/BlitzdMedia</a></footer>
 
 <script>
-const board = document.getElementById('board');
-const piecesContainer = document.getElementById('pieces');
-const scoreDisplay = document.getElementById('score');
-const blocksPlacedDisplay = document.getElementById('blocksPlaced');
-const linesClearedDisplay = document.getElementById('linesCleared');
-
-// Control buttons
-const upBtn = document.getElementById('up');
-const leftBtn = document.getElementById('left');
-const rightBtn = document.getElementById('right');
-const downBtn = document.getElementById('down');
-const rotateBtn = document.getElementById('rotate-btn');
-
-let score = 0;
-let blocksPlaced = 0;
-let linesCleared = 0;
-const cols = 10;
-const rows = 15;
-const totalCells = cols * rows;
-
-// Initialize board cells
-for (let i = 0; i < totalCells; i++) {
-  const cell = document.createElement('div');
-  cell.className = 'cell';
-  cell.dataset.index = i;
-  board.appendChild(cell);
-}
-const cells = Array.from(document.querySelectorAll('.cell'));
-
-const shapes = [
+// Game Constants
+const COLS = 10;
+const ROWS = 15;
+const CELL_COUNT = COLS * ROWS;
+const SHAPES = [
   [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
   [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]], // O
   [[0,1,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // T
@@ -268,333 +285,271 @@ const shapes = [
   [[0,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]], // S
   [[1,1,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]  // Z
 ];
-const colors = ['#f5a623','#50e3c2','#f8e71c','#bd10e0','#7ed321','#ff3366','#4a90e2'];
+const COLORS = ['#f5a623','#50e3c2','#f8e71c','#bd10e0','#7ed321','#ff3366','#4a90e2'];
 
-let activePiece = {
-  element: null,
-  shape: null,
-  positions: [],
-  color: '',
-  rotation: 0,
-  offsetX: 0,
-  offsetY: 0,
-  ghost: null,
-  validPosition: null
-};
+// Game Elements
+const board = document.getElementById('board');
+const piecesContainer = document.getElementById('pieces');
+const scoreDisplay = document.getElementById('score');
+const blocksPlacedDisplay = document.getElementById('blocksPlaced');
+const linesClearedDisplay = document.getElementById('linesCleared');
+const upBtn = document.getElementById('up');
+const leftBtn = document.getElementById('left');
+const rightBtn = document.getElementById('right');
+const downBtn = document.getElementById('down');
+const rotateBtn = document.getElementById('rotate-btn');
+const dropBtn = document.getElementById('drop-btn');
 
-function randomColor() {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+// Game State
+let score = 0;
+let blocksPlaced = 0;
+let linesCleared = 0;
+let cells = [];
+let activePiece = null;
 
-function rotateMatrix(matrix) {
-  const N = matrix.length;
-  const rotated = Array(N).fill().map(() => Array(N).fill(0));
+// Initialize the game board
+function initBoard() {
+  board.innerHTML = '';
+  cells = [];
   
-  for (let y = 0; y < N; y++) {
-    for (let x = 0; x < N; x++) {
-      rotated[x][N-1-y] = matrix[y][x];
-    }
+  for (let i = 0; i < CELL_COUNT; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.index = i;
+    cells.push(cell);
+    board.appendChild(cell);
   }
-  
-  return rotated;
 }
 
-function createPiece(shape) {
-  const piece = document.createElement('div');
-  piece.className = 'piece';
-  const color = randomColor();
+// Create a new piece
+function createPiece(shapeIndex) {
+  const shape = JSON.parse(JSON.stringify(SHAPES[shapeIndex]));
+  const color = COLORS[shapeIndex];
+  const pieceElement = document.createElement('div');
+  pieceElement.className = 'piece';
+  
   const positions = [];
-
   shape.forEach((row, y) => {
     row.forEach((val, x) => {
       const block = document.createElement('div');
       if (val) {
         block.className = 'block';
         block.style.background = color;
-        positions.push({ x, y });
+        positions.push({x, y});
       }
-      piece.appendChild(block);
+      pieceElement.appendChild(block);
     });
   });
 
-  piecesContainer.appendChild(piece);
-
-  // Set active piece
+  piecesContainer.appendChild(pieceElement);
+  
   activePiece = {
-    element: piece,
-    shape: JSON.parse(JSON.stringify(shape)),
-    positions: [...positions],
+    element: pieceElement,
+    shape,
     color,
+    positions,
     rotation: 0,
-    offsetX: 0,
-    offsetY: 0,
-    ghost: null,
-    validPosition: null
+    x: 3,  // Default starting position
+    y: 0,
+    ghostElement: null
   };
 
-  // Initialize ghost piece
-  updateGhostPiece(piece.getBoundingClientRect().left + piece.offsetWidth/2, 
-                  piece.getBoundingClientRect().top + piece.offsetHeight/2);
-
-  // Add event listeners
-  piece.addEventListener('touchstart', handleTouchStart, { passive: false });
-  piece.addEventListener('touchmove', handleTouchMove, { passive: false });
-  piece.addEventListener('touchend', handleTouchEnd, { passive: false });
-
-  // Button events
-  upBtn.addEventListener('mousedown', moveUp);
-  leftBtn.addEventListener('mousedown', moveLeft);
-  rightBtn.addEventListener('mousedown', moveRight);
-  downBtn.addEventListener('mousedown', moveDown);
-  rotateBtn.addEventListener('mousedown', rotateActivePiece);
-
-  // Touch events for buttons
-  upBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveUp(); }, { passive: false });
-  leftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveLeft(); }, { passive: false });
-  rightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveRight(); }, { passive: false });
-  downBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveDown(); }, { passive: false });
-  rotateBtn.addEventListener('touchstart', (e) => { e.preventDefault(); rotateActivePiece(); }, { passive: false });
+  updateGhostPiece();
+  setupPieceEventListeners();
 }
 
-function moveUp() {
-  if (activePiece.element) {
-    const rect = activePiece.element.getBoundingClientRect();
-    updateGhostPiece(rect.left + rect.width/2, rect.top - 20);
-    updateActivePiecePosition();
+// Update the ghost piece that shows where the active piece will land
+function updateGhostPiece() {
+  // Remove old ghost piece
+  if (activePiece.ghostElement) {
+    activePiece.ghostElement.remove();
   }
-}
 
-function moveLeft() {
-  if (activePiece.element) {
-    const rect = activePiece.element.getBoundingClientRect();
-    updateGhostPiece(rect.left - 20, rect.top + rect.height/2);
-    updateActivePiecePosition();
+  // Calculate drop position
+  let dropY = activePiece.y;
+  while (isValidPosition(activePiece.x, dropY + 1, activePiece.shape)) {
+    dropY++;
   }
-}
 
-function moveRight() {
-  if (activePiece.element) {
-    const rect = activePiece.element.getBoundingClientRect();
-    updateGhostPiece(rect.left + rect.width + 20, rect.top + rect.height/2);
-    updateActivePiecePosition();
-  }
-}
+  // Don't show ghost if piece is at bottom
+  if (dropY === activePiece.y) return;
 
-function moveDown() {
-  if (activePiece.element) {
-    const rect = activePiece.element.getBoundingClientRect();
-    updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height + 20);
-    updateActivePiecePosition();
-  }
-}
-
-function rotateActivePiece() {
-  if (!activePiece.element) return;
-
-  // Rotate the shape
-  const newShape = rotateMatrix(activePiece.shape);
-  const newPositions = [];
+  // Create ghost piece
+  const ghostElement = document.createElement('div');
+  ghostElement.className = 'ghost';
   
-  newShape.forEach((row, y) => {
+  activePiece.shape.forEach((row, y) => {
     row.forEach((val, x) => {
-      if (val) newPositions.push({ x, y });
+      if (val) {
+        const ghostBlock = document.createElement('div');
+        ghostBlock.className = 'block';
+        ghostBlock.style.background = activePiece.color;
+        ghostBlock.style.opacity = '0.3';
+        ghostBlock.style.position = 'absolute';
+        ghostBlock.style.width = '100%';
+        ghostBlock.style.height = '100%';
+        ghostBlock.style.left = `${x * 100}%`;
+        ghostBlock.style.top = `${y * 100}%`;
+        ghostElement.appendChild(ghostBlock);
+      }
     });
   });
+
+  // Position ghost
+  const cellIndex = dropY * COLS + activePiece.x;
+  const cell = cells[cellIndex];
+  const cellRect = cell.getBoundingClientRect();
+  const boardRect = board.getBoundingClientRect();
+  
+  ghostElement.style.width = `${activePiece.element.offsetWidth}px`;
+  ghostElement.style.height = `${activePiece.element.offsetHeight}px`;
+  ghostElement.style.left = `${cellRect.left - boardRect.left}px`;
+  ghostElement.style.top = `${cellRect.top - boardRect.top}px`;
+  
+  board.appendChild(ghostElement);
+  activePiece.ghostElement = ghostElement;
+}
+
+// Check if a position is valid for the current piece
+function isValidPosition(x, y, shape) {
+  for (let row = 0; row < shape.length; row++) {
+    for (let col = 0; col < shape[row].length; col++) {
+      if (shape[row][col]) {
+        const boardX = x + col;
+        const boardY = y + row;
+        
+        if (boardX < 0 || boardX >= COLS || boardY >= ROWS) {
+          return false;
+        }
+        
+        if (boardY >= 0) {
+          const cellIndex = boardY * COLS + boardX;
+          if (cells[cellIndex].classList.contains('filled')) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+  return true;
+}
+
+// Rotate the active piece
+function rotatePiece() {
+  if (!activePiece) return;
+
+  // Create rotated shape
+  const rotated = [];
+  for (let col = 0; col < activePiece.shape[0].length; col++) {
+    const newRow = [];
+    for (let row = activePiece.shape.length - 1; row >= 0; row--) {
+      newRow.push(activePiece.shape[row][col]);
+    }
+    rotated.push(newRow);
+  }
 
   // Check if rotation is valid
-  if (activePiece.validPosition) {
-    const { startX, startY } = activePiece.validPosition;
-    let canRotate = true;
+  if (isValidPosition(activePiece.x, activePiece.y, rotated)) {
+    activePiece.shape = rotated;
+    activePiece.rotation = (activePiece.rotation + 1) % 4;
     
-    newPositions.forEach(pos => {
-      const x = startX + pos.x;
-      const y = startY + pos.y;
-      if (x >= cols || y >= rows) canRotate = false;
-      const idx = y * cols + x;
-      if (cells[idx] && cells[idx].classList.contains('filled')) canRotate = false;
+    // Update positions
+    activePiece.positions = [];
+    activePiece.shape.forEach((row, y) => {
+      row.forEach((val, x) => {
+        if (val) activePiece.positions.push({x, y});
+      });
     });
 
-    if (canRotate) {
-      // Update active piece
-      activePiece.shape = newShape;
-      activePiece.positions = newPositions;
-      activePiece.rotation = (activePiece.rotation + 1) % 4;
-
-      // Update the visual piece
-      const piece = activePiece.element;
-      piece.innerHTML = '';
-      
-      newShape.forEach((row, y) => {
-        row.forEach((val, x) => {
-          const block = document.createElement('div');
-          if (val) {
-            block.className = 'block';
-            block.style.background = activePiece.color;
-          }
-          piece.appendChild(block);
-        });
+    // Update visual representation
+    activePiece.element.innerHTML = '';
+    activePiece.shape.forEach((row, y) => {
+      row.forEach((val, x) => {
+        const block = document.createElement('div');
+        if (val) {
+          block.className = 'block';
+          block.style.background = activePiece.color;
+        }
+        activePiece.element.appendChild(block);
       });
+    });
 
-      // Update ghost piece
-      const rect = piece.getBoundingClientRect();
-      updateGhostPiece(rect.left + rect.width/2, rect.top + rect.height/2);
-    }
+    updateGhostPiece();
   }
 }
 
-function updateActivePiecePosition() {
-  if (activePiece.validPosition && activePiece.element) {
-    const { startX, startY } = activePiece.validPosition;
-    const cell = cells[startY * cols + startX];
-    const boardRect = board.getBoundingClientRect();
+// Move the active piece
+function movePiece(dx, dy) {
+  if (!activePiece) return;
+
+  const newX = activePiece.x + dx;
+  const newY = activePiece.y + dy;
+  
+  if (isValidPosition(newX, newY, activePiece.shape)) {
+    activePiece.x = newX;
+    activePiece.y = newY;
+    
+    // Update visual position
+    const cellIndex = newY * COLS + newX;
+    const cell = cells[cellIndex];
     const cellRect = cell.getBoundingClientRect();
+    const boardRect = board.getBoundingClientRect();
     
     activePiece.element.style.position = 'fixed';
-    activePiece.element.style.left = (cellRect.left - boardRect.left + board.offsetLeft) + 'px';
-    activePiece.element.style.top = (cellRect.top - boardRect.top + board.offsetTop) + 'px';
-    activePiece.element.style.transform = 'translate(0, 0)';
+    activePiece.element.style.left = `${cellRect.left - boardRect.left}px`;
+    activePiece.element.style.top = `${cellRect.top - boardRect.top}px`;
+    
+    updateGhostPiece();
   }
 }
 
-function handleTouchStart(e) {
-  e.preventDefault();
-  if (!activePiece.element) return;
-  
-  const rect = activePiece.element.getBoundingClientRect();
-  activePiece.offsetX = e.touches[0].clientX - rect.left;
-  activePiece.offsetY = e.touches[0].clientY - rect.top;
-  activePiece.element.style.position = 'fixed';
-  activePiece.element.style.zIndex = 1000;
-  updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
-}
+// Drop the active piece to the lowest possible position
+function dropPiece() {
+  if (!activePiece) return;
 
-function handleTouchMove(e) {
-  e.preventDefault();
-  if (!activePiece.element) return;
-  
-  activePiece.element.style.left = (e.touches[0].clientX - activePiece.offsetX) + 'px';
-  activePiece.element.style.top = (e.touches[0].clientY - activePiece.offsetY) + 'px';
-  updateGhostPiece(e.touches[0].clientX, e.touches[0].clientY);
-}
-
-function handleTouchEnd(e) {
-  e.preventDefault();
-  placeActivePiece();
-}
-
-function updateGhostPiece(clientX, clientY) {
-  // Remove previous ghost piece if exists
-  if (activePiece.ghost) {
-    activePiece.ghost.remove();
-    activePiece.ghost = null;
+  let newY = activePiece.y;
+  while (isValidPosition(activePiece.x, newY + 1, activePiece.shape)) {
+    newY++;
   }
 
-  const targetCell = cells.find(cell => {
-    const rect = cell.getBoundingClientRect();
-    return clientX > rect.left && clientX < rect.right && 
-           clientY > rect.top && clientY < rect.bottom;
+  if (newY !== activePiece.y) {
+    activePiece.y = newY;
+    movePiece(0, 0); // Update visual position
+    placePiece();
+  }
+}
+
+// Place the active piece on the board
+function placePiece() {
+  if (!activePiece) return;
+
+  // Place blocks on board
+  activePiece.positions.forEach(pos => {
+    const x = activePiece.x + pos.x;
+    const y = activePiece.y + pos.y;
+    
+    if (y >= 0) { // Only place if on the board
+      const index = y * COLS + x;
+      cells[index].classList.add('filled');
+      cells[index].style.background = activePiece.color;
+      cells[index].classList.add('animate-drop');
+      setTimeout(() => cells[index].classList.remove('animate-drop'), 300);
+    }
   });
 
-  if (targetCell) {
-    const startIndex = parseInt(targetCell.dataset.index);
-    const startX = startIndex % cols;
-    const startY = Math.floor(startIndex / cols);
-    let canPlace = true;
-    
-    // Check if piece can be placed here
-    activePiece.positions.forEach(pos => {
-      const x = startX + pos.x;
-      const y = startY + pos.y;
-      if (x >= cols || y >= rows) canPlace = false;
-      const idx = y * cols + x;
-      if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
-    });
+  blocksPlaced += activePiece.positions.length;
+  score += activePiece.positions.length * 10;
+  updateScore();
 
-    if (canPlace) {
-      activePiece.validPosition = { startX, startY };
-      activePiece.ghost = document.createElement('div');
-      activePiece.ghost.className = 'ghost';
-      activePiece.ghost.style.width = `${activePiece.element.offsetWidth}px`;
-      activePiece.ghost.style.height = `${activePiece.element.offsetHeight}px`;
-      activePiece.ghost.style.left = `${targetCell.getBoundingClientRect().left - board.getBoundingClientRect().left}px`;
-      activePiece.ghost.style.top = `${targetCell.getBoundingClientRect().top - board.getBoundingClientRect().top}px`;
-      
-      // Create ghost blocks
-      activePiece.shape.forEach((row, y) => {
-        row.forEach((val, x) => {
-          if (val) {
-            const ghostBlock = document.createElement('div');
-            ghostBlock.className = 'block';
-            ghostBlock.style.background = activePiece.color;
-            ghostBlock.style.opacity = '0.3';
-            ghostBlock.style.position = 'absolute';
-            ghostBlock.style.width = `${activePiece.element.children[0].offsetWidth}px`;
-            ghostBlock.style.height = `${activePiece.element.children[0].offsetHeight}px`;
-            ghostBlock.style.left = `${x * (activePiece.element.children[0].offsetWidth + 2)}px`;
-            ghostBlock.style.top = `${y * (activePiece.element.children[0].offsetHeight + 2)}px`;
-            activePiece.ghost.appendChild(ghostBlock);
-          }
-        });
-      });
-      
-      board.appendChild(activePiece.ghost);
-    }
+  // Remove active piece
+  activePiece.element.remove();
+  if (activePiece.ghostElement) {
+    activePiece.ghostElement.remove();
   }
-}
+  activePiece = null;
 
-function placeActivePiece() {
-  // Remove ghost piece
-  if (activePiece.ghost) {
-    activePiece.ghost.remove();
-    activePiece.ghost = null;
-  }
-
-  if (activePiece.validPosition && activePiece.element) {
-    const { startX, startY } = activePiece.validPosition;
-    let canPlace = true;
-    
-    // Final check
-    activePiece.positions.forEach(pos => {
-      const x = startX + pos.x;
-      const y = startY + pos.y;
-      if (x >= cols || y >= rows) canPlace = false;
-      const idx = y * cols + x;
-      if (cells[idx] && cells[idx].classList.contains('filled')) canPlace = false;
-    });
-
-    if (canPlace) {
-      // Place the piece with animation
-      activePiece.positions.forEach(pos => {
-        const x = startX + pos.x;
-        const y = startY + pos.y;
-        const idx = y * cols + x;
-        cells[idx].classList.add('filled');
-        cells[idx].style.background = activePiece.color;
-        cells[idx].classList.add('animate-drop');
-        setTimeout(() => {
-          cells[idx].classList.remove('animate-drop');
-        }, 300);
-      });
-      
-      blocksPlaced += activePiece.positions.length;
-      score += activePiece.positions.length * 10;
-      updateScore();
-      checkLines();
-    }
-  }
-  
-  // Clean up current piece
-  if (activePiece.element) {
-    activePiece.element.remove();
-    activePiece.element = null;
-  }
-  
-  // Remove button event listeners
-  upBtn.removeEventListener('mousedown', moveUp);
-  leftBtn.removeEventListener('mousedown', moveLeft);
-  rightBtn.removeEventListener('mousedown', moveRight);
-  downBtn.removeEventListener('mousedown', moveDown);
-  rotateBtn.removeEventListener('mousedown', rotateActivePiece);
+  // Check for completed lines
+  checkLines();
   
   // Generate new pieces if needed
   if (piecesContainer.children.length === 0) {
@@ -602,21 +557,19 @@ function placeActivePiece() {
   }
 }
 
-function generatePieces() {
-  piecesContainer.innerHTML = '';
-  for (let i = 0; i < 3; i++) {
-    const shape = shapes[Math.floor(Math.random() * shapes.length)];
-    createPiece(shape);
-  }
-}
-
+// Check for completed lines and clear them
 function checkLines() {
-  let linesClearedThisTime = 0;
+  let linesClearedThisTurn = 0;
   
-  for (let y = 0; y < rows; y++) {
-    const row = cells.slice(y * cols, y * cols + cols);
+  for (let y = ROWS - 1; y >= 0; y--) {
+    const rowStart = y * COLS;
+    const rowEnd = rowStart + COLS;
+    const row = cells.slice(rowStart, rowEnd);
+    
     if (row.every(cell => cell.classList.contains('filled'))) {
-      linesClearedThisTime++;
+      linesClearedThisTurn++;
+      
+      // Animate line clear
       row.forEach(cell => {
         cell.classList.add('animate-line');
         setTimeout(() => {
@@ -629,52 +582,137 @@ function checkLines() {
       });
     }
   }
-  
-  if (linesClearedThisTime > 0) {
-    linesCleared += linesClearedThisTime;
-    const lineBonus = [0, 100, 300, 500, 800][Math.min(linesClearedThisTime, 4)];
+
+  if (linesClearedThisTurn > 0) {
+    linesCleared += linesClearedThisTurn;
+    const lineBonus = [0, 100, 300, 500, 800][Math.min(linesClearedThisTurn, 4)];
     score += lineBonus;
     updateScore();
-    
-    // After clearing lines, shift blocks down
+
+    // After animation, move blocks down
     setTimeout(() => {
-      for (let y = rows - 1; y >= 0; y--) {
-        for (let x = 0; x < cols; x++) {
-          const idx = y * cols + x;
-          if (!cells[idx].classList.contains('filled')) {
-            // Find the first filled cell above this one
+      for (let y = ROWS - 1; y >= 0; y--) {
+        for (let x = 0; x < COLS; x++) {
+          const index = y * COLS + x;
+          if (!cells[index].classList.contains('filled')) {
+            // Find first filled block above
             for (let y2 = y - 1; y2 >= 0; y2--) {
-              const idx2 = y2 * cols + x;
-              if (cells[idx2].classList.contains('filled')) {
-                // Move the block down
-                cells[idx].classList.add('filled');
-                cells[idx].style.background = cells[idx2].style.background;
-                cells[idx].classList.add('animate-drop');
-                setTimeout(() => {
-                  cells[idx].classList.remove('animate-drop');
-                }, 300);
+              const indexAbove = y2 * COLS + x;
+              if (cells[indexAbove].classList.contains('filled')) {
+                // Move block down
+                cells[index].classList.add('filled');
+                cells[index].style.background = cells[indexAbove].style.background;
+                cells[index].classList.add('animate-drop');
+                setTimeout(() => cells[index].classList.remove('animate-drop'), 300);
                 
-                // Clear the original position
-                cells[idx2].classList.remove('filled');
-                cells[idx2].style.background = '';
+                // Clear original position
+                cells[indexAbove].classList.remove('filled');
+                cells[indexAbove].style.background = '';
                 break;
               }
             }
           }
         }
       }
-    }, 500);
+    }, 600);
   }
 }
 
+// Generate new pieces
+function generatePieces() {
+  piecesContainer.innerHTML = '';
+  
+  // Create 3 random pieces
+  for (let i = 0; i < 3; i++) {
+    const shapeIndex = Math.floor(Math.random() * SHAPES.length);
+    createPiece(shapeIndex);
+  }
+}
+
+// Update score display
 function updateScore() {
   scoreDisplay.textContent = score;
   blocksPlacedDisplay.textContent = blocksPlaced;
   linesClearedDisplay.textContent = linesCleared;
 }
 
-document.addEventListener('touchstart', () => { }, { passive: false });
-generatePieces();
+// Set up event listeners for the active piece
+function setupPieceEventListeners() {
+  if (!activePiece) return;
+
+  let isDragging = false;
+  let startX, startY;
+  let startPieceX, startPieceY;
+
+  // Touch events
+  activePiece.element.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    const touch = e.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    startPieceX = activePiece.x;
+    startPieceY = activePiece.y;
+  }, { passive: false });
+
+  activePiece.element.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!isDragging) return;
+    
+    const touch = e.touches[0];
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+    
+    // Convert pixel movement to grid movement
+    const cellSize = board.offsetWidth / COLS;
+    const gridDx = Math.round(dx / cellSize);
+    const gridDy = Math.round(dy / cellSize);
+    
+    if (gridDx !== 0 || gridDy !== 0) {
+      const newX = startPieceX + gridDx;
+      const newY = startPieceY + gridDy;
+      
+      if (isValidPosition(newX, newY, activePiece.shape)) {
+        activePiece.x = newX;
+        activePiece.y = newY;
+        movePiece(0, 0); // Update visual position
+      }
+    }
+  }, { passive: false });
+
+  activePiece.element.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (isDragging) {
+      isDragging = false;
+      placePiece();
+    }
+  }, { passive: false });
+
+  // Button events
+  upBtn.addEventListener('mousedown', () => movePiece(0, -1));
+  leftBtn.addEventListener('mousedown', () => movePiece(-1, 0));
+  rightBtn.addEventListener('mousedown', () => movePiece(1, 0));
+  downBtn.addEventListener('mousedown', () => movePiece(0, 1));
+  rotateBtn.addEventListener('mousedown', rotatePiece);
+  dropBtn.addEventListener('mousedown', dropPiece);
+
+  // Touch events for buttons
+  upBtn.addEventListener('touchstart', (e) => { e.preventDefault(); movePiece(0, -1); }, { passive: false });
+  leftBtn.addEventListener('touchstart', (e) => { e.preventDefault(); movePiece(-1, 0); }, { passive: false });
+  rightBtn.addEventListener('touchstart', (e) => { e.preventDefault(); movePiece(1, 0); }, { passive: false });
+  downBtn.addEventListener('touchstart', (e) => { e.preventDefault(); movePiece(0, 1); }, { passive: false });
+  rotateBtn.addEventListener('touchstart', (e) => { e.preventDefault(); rotatePiece(); }, { passive: false });
+  dropBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dropPiece(); }, { passive: false });
+}
+
+// Initialize the game
+function initGame() {
+  initBoard();
+  generatePieces();
+}
+
+// Start the game
+initGame();
 </script>
 
 </body>
