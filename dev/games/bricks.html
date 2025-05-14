@@ -2,19 +2,302 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Brick Puzzle Game</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-dark text-light">
+  <title>Tetris Game 🎮</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center; 
+    }
 
-<div class="container mt-4 text-center">
-  <h1>Brick Puzzle Game</h1>
-  <div id="gameBoard" class="mx-auto mt-4"></div>
-  <button id="resetBtn" class="btn btn-danger mt-3">Reset Game</button>
+    #header, #controls, #footer {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      align-items: center;
+    }
+
+    #header {
+      background: #121212;
+      padding: 10px;
+    }
+
+    #game {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 1px;
+      background: #222;
+      width: 95vw;
+      max-width: 400px;
+      aspect-ratio: 10/20;
+    }
+
+    .cell {
+      background: #333;
+      aspect-ratio: 1;
+    }
+
+    .I { background: #00f0f0; }
+    .O { background: #f0f000; }
+    .T { background: #a000f0; }
+    .S { background: #00f000; }
+    .Z { background: #f00000; }
+    .L { background: #ff8000; }
+    .J { background: #0040ff; }
+
+    .ghost { background: rgba(255,255,255,0.2) !important; }
+
+    button {
+      padding: 12px;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 8px;
+      background: #333;
+      color: #fff;
+    }
+
+    #leaderboard {
+      width: 100%;
+      overflow-x: auto;
+      padding: 10px;
+      background: #121212;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 6px;
+      border: 1px solid #444;
+    }
+
+    #gameover {
+      position: absolute;
+      top: 30%;
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      text-align: center;
+    }
+
+    input {
+      padding: 8px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #footer {
+      background: #121212;
+      padding: 10px;
+      margin-top: 10px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div>🎮 Tetris Game</div>
+  <div>Score: <span id="score">0</span></div>
+  <div>Speed: <span id="speed">1</span></div>
+  <button onclick="togglePause()">⏸️ Pause</button>
 </div>
 
-<script src="game.js"></script>
+<div id="game"></div>
+
+<div id="controls">
+  <button onclick="move(-1)">⬅️</button>
+  <button onclick="rotate()">🔄</button>
+  <button onclick="move(1)">➡️</button>
+  <button onclick="drop()">⬇️</button>
+</div>
+
+<div id="gameover">
+  <h2>Game Over! 💥</h2>
+  <p>Score: <span id="finalScore"></span></p>
+  <input id="playerName" placeholder="Your name 📝"><br>
+  <button onclick="submitScore()">💾 Submit Score</button>
+</div>
+
+<div id="leaderboard">
+  <h3>Leaderboard 🏆</h3>
+  <table>
+    <thead><tr><th>Name</th><th>Score</th><th>Date</th></tr></thead>
+    <tbody id="leaderboardBody"></tbody>
+  </table>
+</div>
+
+<div id="footer">
+  <p>Created with ❤️ by [Your Name]</p>
+</div>
+
+<script>
+  const game = document.getElementById('game');
+  const width = 10, height = 20;
+  const cells = [];
+  for (let i=0; i<width*height; i++) {
+    const div = document.createElement('div');
+    div.className = 'cell';
+    game.appendChild(div);
+    cells.push(div);
+  }
+
+  const pieces = {
+    I: [[1,width+1,width*2+1,width*3+1]],
+    O: [[0,1,width,width+1]],
+    T: [[1,width,width+1,width+2]],
+    S: [[1,2,width,width+1]],
+    Z: [[0,1,width+1,width+2]],
+    L: [[0,width,width*2,width*2+1]],
+    J: [[1,width+1,width*2+1,width*2]]
+  };
+
+  let current, position, score=0, speed=1, timer, paused=false;
+
+  function randomPiece() {
+    const keys = Object.keys(pieces);
+    const key = keys[Math.floor(Math.random()*keys.length)];
+    return {type:key, shape:pieces[key][0]};
+  }
+
+  function draw(ghost=false) {
+    current.shape.forEach(i=>{
+      const idx = position+i;
+      if(idx >= 0 && idx < width*height)
+        cells[idx].className = ghost?'cell ghost':'cell '+current.type;
+    });
+  }
+
+  function undraw() {
+    current.shape.forEach(i=>{
+      const idx = position+i;
+      if(idx >=0 && idx < width*height)
+        cells[idx].className = 'cell';
+    });
+  }
+
+  function move(dir) {
+    undraw();
+    position += dir;
+    if(collides()) position -= dir;
+    draw();
+  }
+
+  function rotate() {
+    undraw();
+    current.shape = current.shape.map(i=> (i%width)*width + Math.floor(i/width));
+    if(collides()) current.shape = current.shape.map(i=> (i%width)*width + Math.floor(i/width));
+    draw();
+  }
+
+  function drop() {
+    undraw();
+    position += width;
+    if(collides()) {
+      position -= width;
+      draw();
+      freeze();
+      return;
+    }
+    draw();
+  }
+
+  function collides() {
+    return current.shape.some(i=>{
+      const idx = position+i;
+      return idx>=width*height || (idx>=0 && cells[idx].className!=='cell');
+    });
+  }
+
+  function freeze() {
+    draw();
+    score+=10;
+    document.getElementById('score').textContent = score;
+    if(score % 100 === 0) {
+      speed++;
+      document.getElementById('speed').textContent = speed;
+    }
+    clearInterval(timer);
+    timer = setInterval(drop, 600/speed);
+    if(gameOver()) endGame();
+    current = randomPiece();
+    position = 3;
+    if(collides()) endGame();
+  }
+
+  function gameOver() {
+    return current.shape.some(i=> position+i < width && cells[position+i].className !=='cell');
+  }
+
+  function endGame() {
+    clearInterval(timer);
+    document.getElementById('finalScore').textContent = score;
+    document.getElementById('gameover').style.display='block';
+  }
+
+  function togglePause() {
+    paused = !paused;
+    if(paused) clearInterval(timer);
+    else timer = setInterval(drop, 600/speed);
+  }
+
+  function startGame() {
+    current = randomPiece();
+    position = 3;
+    draw();
+    timer = setInterval(drop, 600/speed);
+  }
+
+  function submitScore() {
+    const name = document.getElementById('playerName').value;
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdhBA2T2tYpCMoqgHx2X4a_PzYaGQ0N-5GchWvUKpsPexAkXA/formResponse?entry.192538740='
+      + encodeURIComponent(name) + '&entry.1141984148=' + score;
+    fetch(url, {method:'POST', mode:'no-cors'});
+    location.reload();
+  }
+
+  function loadLeaderboard() {
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSMh5JCm84lOKqKLkves8nLctju2bAealHF-NVgMiEVqXq1XpGQZUrDwOshKEx5BZF2A_eU4r_6U9di/pub?output=csv')
+    .then(r=>r.text())
+    .then(csv=>{
+      const rows = csv.trim().split('\n').slice(1).map(r=>r.split(','));
+      rows.sort((a,b)=>b[2]-a[2]);
+      const body = document.getElementById('leaderboardBody');
+      rows.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${r[1]}</td><td>${r[2]}</td><td>${r[0]}</td>`;
+        body.appendChild(tr);
+      });
+    });
+  }
+
+  loadLeaderboard();
+  startGame();
+
+  // Keyboard event listeners for desktop controls
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') move(-1);
+    if (e.key === 'ArrowRight') move(1);
+    if (e.key === 'ArrowDown') drop();
+    if (e.key === 'ArrowUp') rotate();
+  });
+</script>
+
 </body>
 </html>
