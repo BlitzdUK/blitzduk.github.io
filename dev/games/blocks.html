@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>QBlock Puzzle</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
             --bs-body-bg: #121212;
@@ -384,8 +383,8 @@
             }
         }
     </style>
-  </head>
-  <body class="bg-dark text-light">
+</head>
+<body class="bg-dark text-light">
     <div class="game-container">
       <div class="header text-center">
         <h1 class="m-0">QBlock Puzzle</h1>
@@ -529,7 +528,6 @@
                 const shape = SHAPES[shapeIndex];
                 const color = COLORS[shapeIndex];
                 
-                // Center the piece in the 4x4 grid
                 const centeredShape = centerShape(shape);
                 
                 for (let row = 0; row < 4; row++) {
@@ -551,7 +549,6 @@
         }
         
         function centerShape(shape) {
-            // Find the bounds of the shape
             let minRow = 4, maxRow = -1, minCol = 4, maxCol = -1;
             
             for (let row = 0; row < shape.length; row++) {
@@ -565,11 +562,9 @@
                 }
             }
             
-            // Calculate center offset
             const rowOffset = Math.floor((4 - (maxRow - minRow + 1)) / 2);
-            const colOffset = Math.floor((4 - (maxCol - minCol + 1)) / 2;
+            const colOffset = Math.floor((4 - (maxCol - minCol + 1)) / 2);
             
-            // Create centered shape
             const centeredShape = Array(4).fill().map(() => Array(4).fill(0));
             
             for (let row = minRow; row <= maxRow; row++) {
@@ -784,10 +779,8 @@
         function rotateCurrentPiece() {
             if (!draggingPiece || !currentShape || gameOver) return;
             
-            // Create a new rotated shape
             const rotatedShape = rotateMatrix(currentShape);
             
-            // Check if the rotated shape can be placed in the current position
             const boardRect = board.getBoundingClientRect();
             const ghostRect = ghostPiece.getBoundingClientRect();
             
@@ -809,22 +802,26 @@
             const adjustedLeft = left - minCol;
             const adjustedTop = top - minRow;
             
-            if (canPlacePiece(rotatedShape, adjustedLeft, adjustedTop)) {
-                // Update the current shape and rotation count
+            const shapeWidth = maxCol - minCol + 1;
+            const shapeHeight = maxRow - minRow + 1;
+            
+            const boundedLeft = Math.max(FIRST_PLAYABLE_COL, 
+                Math.min(adjustedLeft, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
+            const boundedTop = Math.max(0, Math.min(adjustedTop, ROWS - shapeHeight));
+            
+            if (canPlacePiece(rotatedShape, boundedLeft, boundedTop)) {
                 currentShape = rotatedShape;
                 rotationCount = (rotationCount + 1) % 4;
                 
-                // Update the dragging piece
                 draggingPiece.remove();
                 createDraggingPiece(rotatedShape, currentColor);
                 
-                // Update the ghost piece
                 if (ghostPiece) {
                     ghostPiece.remove();
                     createGhostPiece(rotatedShape, currentColor);
                     
-                    // Update ghost position based on current mouse position
-                    updateGhostPosition(lastMouseX, lastMouseY);
+                    ghostPiece.style.left = `${boardRect.left + boundedLeft * cellSize}px`;
+                    ghostPiece.style.top = `${boardRect.top + boundedTop * cellSize}px`;
                 }
             }
         }
@@ -853,17 +850,68 @@
             const adjustedLeft = left - minCol;
             const adjustedTop = top - minRow;
             
-            if (canPlacePiece(currentShape, adjustedLeft, adjustedTop)) {
-                lockPiece(currentShape, currentColor, adjustedLeft, adjustedTop);
+            const shapeWidth = maxCol - minCol + 1;
+            const shapeHeight = maxRow - minRow + 1;
+            
+            const boundedLeft = Math.max(FIRST_PLAYABLE_COL, 
+                Math.min(adjustedLeft, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
+            const boundedTop = Math.max(0, Math.min(adjustedTop, ROWS - shapeHeight));
+            
+            if (canPlacePiece(currentShape, boundedLeft, boundedTop)) {
+                lockPiece(currentShape, currentColor, boundedLeft, boundedTop);
                 
                 const index = nextPieces.indexOf(currentPieceIndex);
                 if (index !== -1) {
                     nextPieces.splice(index, 1);
-                    nextPieces.push([...Array(SHAPES.length).keys()][Math.floor(Math.random() * SHAPES.length)]);
+                    
+                    let newPiece;
+                    let attempts = 0;
+                    do {
+                        newPiece = Math.floor(Math.random() * SHAPES.length);
+                        attempts++;
+                        if (attempts > 50) break;
+                    } while (!hasPossiblePlacement(newPiece) && attempts <= 50);
+                    
+                    nextPieces.push(newPiece);
                     generateNextPieces();
                     checkGameOver();
                 }
             }
+        }
+        
+        function hasPossiblePlacement(pieceIndex) {
+            const shape = SHAPES[pieceIndex];
+            
+            for (let rotation = 0; rotation < 4; rotation++) {
+                let rotatedShape = shape;
+                for (let r = 0; r < rotation; r++) {
+                    rotatedShape = rotateMatrix(rotatedShape);
+                }
+                
+                let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
+                rotatedShape.forEach((row, rowIndex) => {
+                    row.forEach((cell, colIndex) => {
+                        if (cell) {
+                            minCol = Math.min(minCol, colIndex);
+                            maxCol = Math.max(maxCol, colIndex);
+                            minRow = Math.min(minRow, rowIndex);
+                            maxRow = Math.max(maxRow, rowIndex);
+                        }
+                    });
+                });
+                
+                const shapeWidth = maxCol - minCol + 1;
+                const shapeHeight = maxRow - minRow + 1;
+                
+                for (let col = FIRST_PLAYABLE_COL; col <= FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth; col++) {
+                    for (let row = 0; row <= ROWS - shapeHeight; row++) {
+                        if (canPlacePiece(rotatedShape, col - minCol, row - minRow)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
         
         function canPlacePiece(shape, left, top) {
@@ -1005,45 +1053,7 @@
                 updateScore();
                 
                 setTimeout(() => {
-                    const hasPossibleMoves = nextPieces.some(pieceIndex => {
-                        const shape = SHAPES[pieceIndex];
-                        
-                        for (let rotation = 0; rotation < 4; rotation++) {
-                            let rotatedShape = shape;
-                            for (let r = 0; r < rotation; r++) {
-                                rotatedShape = rotateMatrix(rotatedShape);
-                            }
-                            
-                            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-                            rotatedShape.forEach((row, rowIndex) => {
-                                row.forEach((cell, colIndex) => {
-                                    if (cell) {
-                                        minCol = Math.min(minCol, colIndex);
-                                        maxCol = Math.max(maxCol, colIndex);
-                                        minRow = Math.min(minRow, rowIndex);
-                                        maxRow = Math.max(maxRow, rowIndex);
-                                    }
-                                });
-                            });
-                            
-                            const shapeWidth = maxCol - minCol + 1;
-                            const shapeHeight = maxRow - minRow + 1;
-                            
-                            for (let col = FIRST_PLAYABLE_COL; col <= FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth; col++) {
-                                for (let row = 0; row <= ROWS - shapeHeight; row++) {
-                                    if (canPlacePiece(rotatedShape, col - minCol, row - minRow)) {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        return false;
-                    });
-                    
-                    if (!hasPossibleMoves) {
-                        gameOver = true;
-                        showGameOver();
-                    }
+                    checkGameOver();
                 }, 500);
             }
         }
@@ -1061,38 +1071,7 @@
         
         function checkGameOver() {
             const hasPossibleMoves = nextPieces.some(pieceIndex => {
-                const shape = SHAPES[pieceIndex];
-                
-                for (let rotation = 0; rotation < 4; rotation++) {
-                    let rotatedShape = shape;
-                    for (let r = 0; r < rotation; r++) {
-                        rotatedShape = rotateMatrix(rotatedShape);
-                    }
-                    
-                    let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-                    rotatedShape.forEach((row, rowIndex) => {
-                        row.forEach((cell, colIndex) => {
-                            if (cell) {
-                                minCol = Math.min(minCol, colIndex);
-                                maxCol = Math.max(maxCol, colIndex);
-                                minRow = Math.min(minRow, rowIndex);
-                                maxRow = Math.max(maxRow, rowIndex);
-                            }
-                        });
-                    });
-                    
-                    const shapeWidth = maxCol - minCol + 1;
-                    const shapeHeight = maxRow - minRow + 1;
-                    
-                    for (let col = FIRST_PLAYABLE_COL; col <= FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth; col++) {
-                        for (let row = 0; row <= ROWS - shapeHeight; row++) {
-                            if (canPlacePiece(rotatedShape, col - minCol, row - minRow)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-                return false;
+                return hasPossiblePlacement(pieceIndex);
             });
             
             if (!hasPossibleMoves) {
@@ -1128,6 +1107,6 @@
         
         window.addEventListener("load", initGame);
     })();
-</script>
-  </body>
+    </script>
+</body>
 </html>
