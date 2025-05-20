@@ -1,10 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>QBlock Puzzle</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+
+      rel="stylesheet">
     <style>
         :root {
             --bs-body-bg: #121212;
@@ -383,8 +386,8 @@
             }
         }
     </style>
-</head>
-<body class="bg-dark text-light">
+  </head>
+  <body class="bg-dark text-light"> 
     <div class="game-container">
       <div class="header text-center">
         <h1 class="m-0">QBlock Puzzle</h1>
@@ -426,22 +429,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     (function () {
+        // Game constants
         const COLS = 14;
         const PLAYABLE_COLS = 10;
         const FIRST_PLAYABLE_COL = 2;
         const ROWS = 12;
         const SHAPES = [
-            [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], // I
-            [[0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // O
-            [[0, 1, 0, 0], [1, 1, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // T
-            [[0, 0, 1, 0], [1, 1, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // L
-            [[1, 0, 0, 0], [1, 1, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // J
-            [[0, 1, 1, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], // S
-            [[1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 0], [0, 0, 0, 0]]  // Z
+            [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
+            [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]], // O
+            [[0,1,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // T
+            [[0,0,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // L
+            [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // J
+            [[0,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]], // S
+            [[1,1,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]  // Z
         ];
-        const COLORS = ["#f44336", "#e91e63", "#9c27b0", "#2196f3", "#4caf50", "#ff9800", "#00bcd4"];
+        const COLORS = ["#f44336","#e91e63","#9c27b0","#2196f3","#4caf50","#ff9800","#00bcd4"];
         const NEXT_PIECES_COUNT = 4;
         
+        // DOM elements
         const board = document.getElementById("board");
         const nextPiecesContainer = document.getElementById("nextPiecesContainer");
         const scoreElement = document.getElementById("score");
@@ -451,8 +456,10 @@
         const restartBtn = document.getElementById("restartBtn");
         const rotateBtn = document.getElementById("rotateBtn");
         
+        // Game state
         let cells = [];
         let nextPieces = [];
+        let nextPieceRotations = [];
         let score = 0;
         let lines = 0;
         let blocksPlaced = 0;
@@ -462,12 +469,12 @@
         let currentShape = null;
         let currentColor = null;
         let currentPieceIndex = null;
-        let rotationCount = 0;
         let ghostPiece = null;
         let currentPieceElement = null;
         let lastMouseX = 0;
         let lastMouseY = 0;
-        
+
+        // Initialize the game board
         function initBoard() {
             board.innerHTML = "";
             cells = [];
@@ -476,9 +483,7 @@
             const containerWidth = container.clientWidth;
             const containerHeight = container.clientHeight;
             
-            const cellWidth = containerWidth / COLS;
-            const cellHeight = containerHeight / ROWS;
-            cellSize = Math.min(cellWidth, cellHeight);
+            cellSize = Math.min(containerWidth / COLS, containerHeight / ROWS);
             
             board.style.width = `${cellSize * COLS}px`;
             board.style.height = `${cellSize * ROWS}px`;
@@ -494,18 +499,21 @@
                 }
             }
         }
-        
+
+        // Generate the next pieces to play
         function generateNextPieces() {
             nextPieces = [];
+            nextPieceRotations = [];
             nextPiecesContainer.innerHTML = "";
             
+            // Create a shuffled list of all possible pieces
             let availableShapes = [...Array(SHAPES.length).keys()];
-            
             for (let i = availableShapes.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [availableShapes[i], availableShapes[j]] = [availableShapes[j], availableShapes[i]];
             }
             
+            // Fill the next pieces queue
             while (nextPieces.length < NEXT_PIECES_COUNT) {
                 if (availableShapes.length === 0) {
                     availableShapes = [...Array(SHAPES.length).keys()];
@@ -515,7 +523,15 @@
                     }
                 }
                 nextPieces.push(availableShapes.pop());
+                nextPieceRotations.push(0);
             }
+            
+            renderNextPieces();
+        }
+
+        // Render the next pieces in the preview area
+        function renderNextPieces() {
+            nextPiecesContainer.innerHTML = "";
             
             nextPieces.forEach((shapeIndex, pieceIndex) => {
                 const container = document.createElement("div");
@@ -525,16 +541,21 @@
                 pieceElement.className = "piece-preview";
                 pieceElement.dataset.index = pieceIndex;
                 
-                const shape = SHAPES[shapeIndex];
-                const color = COLORS[shapeIndex];
+                // Apply current rotation
+                let shape = SHAPES[shapeIndex];
+                for (let i = 0; i < nextPieceRotations[pieceIndex]; i++) {
+                    shape = rotateMatrix(shape);
+                }
                 
+                const color = COLORS[shapeIndex];
                 const centeredShape = centerShape(shape);
                 
+                // Create the preview blocks
                 for (let row = 0; row < 4; row++) {
                     for (let col = 0; col < 4; col++) {
                         const block = document.createElement("div");
                         block.className = "preview-block";
-                        if (row < centeredShape.length && col < centeredShape[row].length && centeredShape[row][col]) {
+                        if (centeredShape[row] && centeredShape[row][col]) {
                             block.classList.add("filled");
                             block.style.setProperty("--block-color", color);
                         }
@@ -547,10 +568,12 @@
                 nextPiecesContainer.appendChild(container);
             });
         }
-        
+
+        // Center the shape in its 4x4 grid
         function centerShape(shape) {
             let minRow = 4, maxRow = -1, minCol = 4, maxCol = -1;
             
+            // Find the bounds of the shape
             for (let row = 0; row < shape.length; row++) {
                 for (let col = 0; col < shape[row].length; col++) {
                     if (shape[row][col]) {
@@ -562,11 +585,12 @@
                 }
             }
             
+            // Calculate centering offsets
             const rowOffset = Math.floor((4 - (maxRow - minRow + 1)) / 2);
             const colOffset = Math.floor((4 - (maxCol - minCol + 1)) / 2);
             
+            // Create centered shape
             const centeredShape = Array(4).fill().map(() => Array(4).fill(0));
-            
             for (let row = minRow; row <= maxRow; row++) {
                 for (let col = minCol; col <= maxCol; col++) {
                     if (shape[row][col]) {
@@ -577,7 +601,8 @@
             
             return centeredShape;
         }
-        
+
+        // Rotate a matrix 90 degrees clockwise
         function rotateMatrix(matrix) {
             const rotated = [];
             for (let col = 0; col < matrix[0].length; col++) {
@@ -589,32 +614,53 @@
             }
             return rotated;
         }
-        
+
+        // Rotate all next pieces
+        function rotateNextPieces() {
+            for (let i = 0; i < nextPieceRotations.length; i++) {
+                nextPieceRotations[i] = (nextPieceRotations[i] + 1) % 4;
+            }
+            renderNextPieces();
+        }
+
+        // Set up drag events for a piece
         function setupPieceDrag(element, shape, color, shapeIndex) {
             function handleStart(e) {
                 if (gameOver) return;
                 
                 e.preventDefault();
-                currentShape = shape;
+                
+                const pieceIndex = parseInt(element.dataset.index);
+                const rotationCount = nextPieceRotations[pieceIndex];
+                
+                // Get the current rotation state
+                currentShape = SHAPES[shapeIndex];
+                for (let i = 0; i < rotationCount; i++) {
+                    currentShape = rotateMatrix(currentShape);
+                }
+                
                 currentColor = color;
                 currentPieceIndex = shapeIndex;
-                rotationCount = 0;
                 currentPieceElement = element;
                 
+                // Get mouse/touch position
                 const clientX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
                 const clientY = e.type === "mousedown" ? e.clientY : e.touches[0].clientY;
                 
                 lastMouseX = clientX;
                 lastMouseY = clientY;
                 
-                createDraggingPiece(shape, color);
-                createGhostPiece(shape, color);
+                // Create visual elements
+                createDraggingPiece(currentShape, color);
+                createGhostPiece(currentShape, color);
                 
+                // Position the dragging piece
                 draggingPiece.style.left = `${clientX}px`;
                 draggingPiece.style.top = `${clientY}px`;
                 
                 updateGhostPosition(clientX, clientY);
                 
+                // Set up move and end events
                 document.addEventListener("mousemove", handleMove);
                 document.addEventListener("touchmove", handleMove, {passive: false});
                 document.addEventListener("mouseup", handleEnd);
@@ -626,6 +672,7 @@
                 
                 e.preventDefault();
                 
+                // Update position
                 const clientX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
                 const clientY = e.type === "mousemove" ? e.clientY : e.touches[0].clientY;
                 
@@ -643,6 +690,7 @@
                 
                 e.preventDefault();
                 
+                // Clean up events
                 document.removeEventListener("mousemove", handleMove);
                 document.removeEventListener("touchmove", handleMove);
                 document.removeEventListener("mouseup", handleEnd);
@@ -650,6 +698,7 @@
                 
                 placePiece();
                 
+                // Remove visual elements
                 if (draggingPiece) {
                     draggingPiece.remove();
                     draggingPiece = null;
@@ -660,16 +709,20 @@
                 }
             }
             
+            // Remove old listeners and add new ones
+            element.removeEventListener("mousedown", handleStart);
+            element.removeEventListener("touchstart", handleStart);
             element.addEventListener("mousedown", handleStart);
             element.addEventListener("touchstart", handleStart, {passive: false});
         }
-        
+
+        // Create the ghost piece that shows placement
         function createGhostPiece(shape, color) {
             ghostPiece = document.createElement("div");
             ghostPiece.className = "ghost-piece";
             
+            // Find shape bounds
             let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            
             shape.forEach((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell) {
@@ -681,12 +734,13 @@
                 });
             });
             
+            // Set ghost piece size
             const width = (maxCol - minCol + 1) * cellSize;
             const height = (maxRow - minRow + 1) * cellSize;
-            
             ghostPiece.style.width = `${width}px`;
             ghostPiece.style.height = `${height}px`;
             
+            // Create ghost blocks
             shape.forEach((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell) {
@@ -701,12 +755,14 @@
             
             document.body.appendChild(ghostPiece);
         }
-        
+
+        // Update ghost piece position based on mouse
         function updateGhostPosition(x, y) {
             if (!ghostPiece || !currentShape) return;
             
             const boardRect = board.getBoundingClientRect();
             
+            // Find shape bounds
             let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
             currentShape.forEach((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
@@ -719,30 +775,40 @@
                 });
             });
             
-            const shapeWidth = maxCol - minCol + 1;
-            const shapeHeight = maxRow - minRow + 1;
-            
+            // Calculate center of shape
             const centerX = (minCol + maxCol) / 2;
             const centerY = (minRow + maxRow) / 2;
             
+            // Convert to board coordinates
             const boardX = x - boardRect.left - (centerX * cellSize);
             const boardY = y - boardRect.top - (centerY * cellSize);
             
-            const left = Math.max(FIRST_PLAYABLE_COL, Math.min(Math.round(boardX / cellSize), FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
-            const top = Math.max(0, Math.min(Math.round(boardY / cellSize), ROWS - shapeHeight));
+            // Calculate grid position
+            let left = Math.round(boardX / cellSize);
+            let top = Math.round(boardY / cellSize);
             
+            // Constrain to playable area
+            const shapeWidth = maxCol - minCol + 1;
+            const shapeHeight = maxRow - minRow + 1;
+            left = Math.max(FIRST_PLAYABLE_COL, 
+                          Math.min(left, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
+            top = Math.max(0, Math.min(top, ROWS - shapeHeight));
+            
+            // Position the ghost
             ghostPiece.style.left = `${boardRect.left + left * cellSize}px`;
             ghostPiece.style.top = `${boardRect.top + top * cellSize}px`;
             
-            ghostPiece.style.opacity = canPlacePiece(currentShape, left - minCol, top - minRow) ? 0.5 : 0.3;
+            // Show opacity based on placement validity
+            ghostPiece.style.opacity = canPlacePiece(currentShape, left, top) ? 0.5 : 0.3;
         }
-        
+
+        // Create the visual piece being dragged
         function createDraggingPiece(shape, color) {
             draggingPiece = document.createElement("div");
             draggingPiece.className = "dragging-piece";
             
+            // Find shape bounds
             let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            
             shape.forEach((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell) {
@@ -754,12 +820,13 @@
                 });
             });
             
+            // Set dragging piece size
             const width = (maxCol - minCol + 1) * cellSize;
             const height = (maxRow - minRow + 1) * cellSize;
-            
             draggingPiece.style.width = `${width}px`;
             draggingPiece.style.height = `${height}px`;
             
+            // Create dragging blocks
             shape.forEach((row, rowIndex) => {
                 row.forEach((cell, colIndex) => {
                     if (cell) {
@@ -775,208 +842,100 @@
             
             document.body.appendChild(draggingPiece);
         }
-        
-        function rotateCurrentPiece() {
-            if (!draggingPiece || !currentShape || gameOver) return;
-            
-            const rotatedShape = rotateMatrix(currentShape);
-            
-            const boardRect = board.getBoundingClientRect();
-            const ghostRect = ghostPiece.getBoundingClientRect();
-            
-            const left = Math.round((ghostRect.left - boardRect.left) / cellSize);
-            const top = Math.round((ghostRect.top - boardRect.top) / cellSize);
-            
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            rotatedShape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            const adjustedLeft = left - minCol;
-            const adjustedTop = top - minRow;
-            
-            const shapeWidth = maxCol - minCol + 1;
-            const shapeHeight = maxRow - minRow + 1;
-            
-            const boundedLeft = Math.max(FIRST_PLAYABLE_COL, 
-                Math.min(adjustedLeft, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
-            const boundedTop = Math.max(0, Math.min(adjustedTop, ROWS - shapeHeight));
-            
-            if (canPlacePiece(rotatedShape, boundedLeft, boundedTop)) {
-                currentShape = rotatedShape;
-                rotationCount = (rotationCount + 1) % 4;
-                
-                draggingPiece.remove();
-                createDraggingPiece(rotatedShape, currentColor);
-                
-                if (ghostPiece) {
-                    ghostPiece.remove();
-                    createGhostPiece(rotatedShape, currentColor);
-                    
-                    ghostPiece.style.left = `${boardRect.left + boundedLeft * cellSize}px`;
-                    ghostPiece.style.top = `${boardRect.top + boundedTop * cellSize}px`;
-                }
-            }
-        }
-        
+
+        // Place the current piece on the board
         function placePiece() {
-            if (!draggingPiece || !currentShape || gameOver) return;
+            if (!draggingPiece || !currentShape || !ghostPiece || gameOver) return;
             
             const boardRect = board.getBoundingClientRect();
             const ghostRect = ghostPiece.getBoundingClientRect();
             
+            // Calculate grid position
             const left = Math.round((ghostRect.left - boardRect.left) / cellSize);
             const top = Math.round((ghostRect.top - boardRect.top) / cellSize);
             
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            currentShape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            const adjustedLeft = left - minCol;
-            const adjustedTop = top - minRow;
-            
-            const shapeWidth = maxCol - minCol + 1;
-            const shapeHeight = maxRow - minRow + 1;
-            
-            const boundedLeft = Math.max(FIRST_PLAYABLE_COL, 
-                Math.min(adjustedLeft, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
-            const boundedTop = Math.max(0, Math.min(adjustedTop, ROWS - shapeHeight));
-            
-            if (canPlacePiece(currentShape, boundedLeft, boundedTop)) {
-                lockPiece(currentShape, currentColor, boundedLeft, boundedTop);
+            // Check if placement is valid
+            if (canPlacePiece(currentShape, left, top)) {
+                lockPiece(currentShape, currentColor, left, top);
                 
+                // Remove the placed piece from queue
                 const index = nextPieces.indexOf(currentPieceIndex);
                 if (index !== -1) {
                     nextPieces.splice(index, 1);
+                    nextPieceRotations.splice(index, 1);
                     
+                    // Add new random piece
                     let newPiece;
                     let attempts = 0;
                     do {
                         newPiece = Math.floor(Math.random() * SHAPES.length);
                         attempts++;
-                        if (attempts > 50) break;
-                    } while (!hasPossiblePlacement(newPiece) && attempts <= 50);
+                        if (attempts > 100) break; // Prevent infinite loops
+                    } while (!hasPossiblePlacement(newPiece));
                     
                     nextPieces.push(newPiece);
-                    generateNextPieces();
+                    nextPieceRotations.push(0);
+                    renderNextPieces();
                     checkGameOver();
                 }
+            } else {
+                // If placement failed, regenerate pieces
+                generateNextPieces();
             }
-        }
-        
-        function hasPossiblePlacement(pieceIndex) {
-            const shape = SHAPES[pieceIndex];
             
-            for (let rotation = 0; rotation < 4; rotation++) {
-                let rotatedShape = shape;
-                for (let r = 0; r < rotation; r++) {
-                    rotatedShape = rotateMatrix(rotatedShape);
-                }
-                
-                let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-                rotatedShape.forEach((row, rowIndex) => {
-                    row.forEach((cell, colIndex) => {
-                        if (cell) {
-                            minCol = Math.min(minCol, colIndex);
-                            maxCol = Math.max(maxCol, colIndex);
-                            minRow = Math.min(minRow, rowIndex);
-                            maxRow = Math.max(maxRow, rowIndex);
-                        }
-                    });
-                });
-                
-                const shapeWidth = maxCol - minCol + 1;
-                const shapeHeight = maxRow - minRow + 1;
-                
-                for (let col = FIRST_PLAYABLE_COL; col <= FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth; col++) {
-                    for (let row = 0; row <= ROWS - shapeHeight; row++) {
-                        if (canPlacePiece(rotatedShape, col - minCol, row - minRow)) {
-                            return true;
-                        }
-                    }
-                }
+            // Clean up
+            if (draggingPiece) {
+                draggingPiece.remove();
+                draggingPiece = null;
             }
-            return false;
+            if (ghostPiece) {
+                ghostPiece.remove();
+                ghostPiece = null;
+            }
         }
-        
+
+        // Check if a piece can be placed at a position
         function canPlacePiece(shape, left, top) {
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            let hasBlocks = false;
-            
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        hasBlocks = true;
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            if (!hasBlocks) return false;
-            
-            if (left < FIRST_PLAYABLE_COL || left + (maxCol - minCol) >= FIRST_PLAYABLE_COL + PLAYABLE_COLS || 
-                top < 0 || top + (maxRow - minRow) >= ROWS) {
-                return false;
-            }
-            
-            for (let row = minRow; row <= maxRow; row++) {
-                for (let col = minCol; col <= maxCol; col++) {
+            for (let row = 0; row < shape.length; row++) {
+                for (let col = 0; col < shape[row].length; col++) {
                     if (shape[row][col]) {
-                        const boardCol = left + col - minCol;
-                        const boardRow = top + row - minRow;
-                        const cellIndex = boardRow * COLS + boardCol;
+                        const boardCol = left + col;
+                        const boardRow = top + row;
                         
+                        // Check bounds
+                        if (boardCol < FIRST_PLAYABLE_COL || 
+                            boardCol >= FIRST_PLAYABLE_COL + PLAYABLE_COLS ||
+                            boardRow < 0 || 
+                            boardRow >= ROWS) {
+                            return false;
+                        }
+                        
+                        // Check for existing blocks
+                        const cellIndex = boardRow * COLS + boardCol;
                         if (cells[cellIndex].classList.contains("filled")) {
                             return false;
                         }
                     }
                 }
             }
-            
             return true;
         }
 
+        // Lock a piece in place on the board
         function lockPiece(shape, color, left, top) {
             let blocksPlacedCount = 0;
             
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        const boardCol = left + colIndex;
-                        const boardRow = top + rowIndex;
+            for (let row = 0; row < shape.length; row++) {
+                for (let col = 0; col < shape[row].length; col++) {
+                    if (shape[row][col]) {
+                        const boardCol = left + col;
+                        const boardRow = top + row;
                         
-                        if (boardCol >= FIRST_PLAYABLE_COL && boardCol < FIRST_PLAYABLE_COL + PLAYABLE_COLS && 
-                            boardRow >= 0 && boardRow < ROWS) {
+                        if (boardCol >= FIRST_PLAYABLE_COL && 
+                            boardCol < FIRST_PLAYABLE_COL + PLAYABLE_COLS && 
+                            boardRow >= 0 && 
+                            boardRow < ROWS) {
+                            
                             const cellIndex = boardRow * COLS + boardCol;
                             cells[cellIndex].classList.add("filled");
                             cells[cellIndex].style.backgroundColor = color;
@@ -987,19 +946,23 @@
                             blocksPlacedCount++;
                         }
                     }
-                });
-            });
+                }
+            }
             
+            // Update score
             blocksPlaced += blocksPlacedCount;
             score += 10 * blocksPlacedCount;
             updateScore();
             
+            // Check for completed lines
             checkLines();
         }
-        
+
+        // Check for completed lines
         function checkLines() {
             let linesCleared = 0;
             
+            // Check rows
             for (let row = 0; row < ROWS; row++) {
                 let rowComplete = true;
                 for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
@@ -1011,6 +974,7 @@
                 }
                 
                 if (rowComplete) {
+                    // Animate line clear
                     for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
                         const cellIndex = row * COLS + col;
                         cells[cellIndex].classList.add("animate-line");
@@ -1023,6 +987,7 @@
                 }
             }
             
+            // Check columns
             for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
                 let isColumnEmpty = true;
                 
@@ -1035,6 +1000,7 @@
                 }
                 
                 if (isColumnEmpty) {
+                    // Animate column clear
                     for (let row = 0; row < ROWS; row++) {
                         const cellIndex = row * COLS + col;
                         cells[cellIndex].classList.add("animate-line");
@@ -1047,66 +1013,112 @@
                 }
             }
             
+            // Update score if lines were cleared
             if (linesCleared > 0) {
                 lines += linesCleared;
                 score += 100 * linesCleared;
                 updateScore();
                 
+                // Check for game over after animation
                 setTimeout(() => {
                     checkGameOver();
                 }, 500);
             }
         }
-        
+
+        // Check if there are any possible placements left
+        function hasPossiblePlacement(pieceIndex) {
+            const shape = SHAPES[pieceIndex];
+            
+            // Check all possible rotations
+            for (let rotation = 0; rotation < 4; rotation++) {
+                let rotatedShape = shape;
+                for (let r = 0; r < rotation; r++) {
+                    rotatedShape = rotateMatrix(rotatedShape);
+                }
+                
+                // Check all possible positions
+                for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
+                    for (let row = 0; row < ROWS; row++) {
+                        if (canPlacePiece(rotatedShape, col, row)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Update score display
         function updateScore() {
             scoreElement.textContent = score;
             linesElement.textContent = lines;
             blocksElement.textContent = blocksPlaced;
         }
-        
+
+        // Show game over screen
         function showGameOver() {
             gameOver = true;
             gameOverElement.classList.add("show");
         }
-        
+
+        // Check if game should end
         function checkGameOver() {
             const hasPossibleMoves = nextPieces.some(pieceIndex => {
                 return hasPossiblePlacement(pieceIndex);
             });
             
             if (!hasPossibleMoves) {
-                gameOver = true;
                 showGameOver();
             }
         }
-        
+
+        // Reset the game
         function resetGame() {
             score = 0;
             lines = 0;
             blocksPlaced = 0;
             gameOver = false;
+            
+            // Clear the board
             cells.forEach(cell => {
                 cell.classList.remove("filled", "animate-drop", "animate-line");
                 cell.style.backgroundColor = "";
             });
+            
+            // Generate new pieces
             generateNextPieces();
             gameOverElement.classList.remove("show");
         }
-        
+
+        // Handle window resize
         function handleResize() {
             initBoard();
         }
-        
+
+        // Initialize the game
         function initGame() {
             initBoard();
             generateNextPieces();
+            
+            // Event listeners
             window.addEventListener("resize", handleResize);
             restartBtn.addEventListener("click", resetGame);
-            rotateBtn.addEventListener("click", rotateCurrentPiece);
+            
+            rotateBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                rotateNextPieces();
+            });
+            
+            rotateBtn.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+                rotateNextPieces();
+            }, {passive: false});
         }
         
+        // Start the game when loaded
         window.addEventListener("load", initGame);
     })();
     </script>
-</body>
+  </body>
 </html>
