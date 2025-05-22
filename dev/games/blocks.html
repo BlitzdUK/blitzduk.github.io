@@ -1,1124 +1,353 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>QBlock Puzzle</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>QBlock Puzzle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap @5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bs-body-bg: #121212;
+      --bs-body-color: #e0e0e0;
+      --board-bg: #1e1e1e;
+      --cell-bg: #2d2d2d;
+      --piece-shadow: rgba(0, 0, 0, 0.5);
+      --accent-color: #ff9800;
+    }
 
-      rel="stylesheet">
-    <style>
-        :root {
-            --bs-body-bg: #121212;
-            --bs-body-color: #e0e0e0;
-            --board-bg: #1e1e1e;
-            --cell-bg: #2d2d2d;
-            --piece-shadow: rgba(0, 0, 0, 0.5);
-            --accent-color: #ff9800
-        }
+    body {
+      background-color: var(--bs-body-bg);
+      color: var(--bs-body-color);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      touch-action: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
 
-        body {
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            touch-action: none;
-        }
+    .game-container {
+      display: flex;
+      gap: 2rem;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
 
-        .game-container {
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            overflow: hidden;
-        }
+    .header {
+      background-color: #121212;
+      padding: 0.5rem;
+      border-bottom: 1px solid #333;
+      text-align: center;
+    }
 
-        .header {
-            background-color: #121212;
-            padding: 0.5rem;
-            border-bottom: 1px solid #333;
-            flex-shrink: 0;
-        }
+    .header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
 
-        .header h1 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
+    .game-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: 90%;
+    }
 
-        .game-area {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-            padding: 0.5rem;
-            gap: 0.5rem;
-            height: calc(100% - 50px);
-        }
+    .board-container {
+      position: relative;
+      aspect-ratio: 14 / 12;
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .board-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 0;
-            min-height: 0;
-            height: 100%;
-            position: relative;
-        }
+    #board {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      grid-template-rows: repeat(12, 1fr);
+      gap: 1px;
+      background-color: var(--board-bg);
+      padding: 2px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      touch-action: none;
+      aspect-ratio: 14 / 12;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      box-sizing: border-box;
+      margin: auto;
+    }
 
-        #board {
-            display: grid;
-            grid-template-columns: repeat(14, 1fr);
-            grid-template-rows: repeat(12, 1fr);
-            gap: 1px;
-            background-color: var(--board-bg);
-            padding: 2px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-            touch-action: none;
-            aspect-ratio: 14/12;
-            width: 100%;
-            height: 100%;
-            max-width: 100%;
-            max-height: 100%;
-            box-sizing: border-box;
-            margin: auto;
-        }
+    .cell {
+      background-color: var(--cell-bg);
+      border-radius: 2px;
+      transition: all 0.1s ease;
+    }
 
-        .cell {
-            background-color: var(--cell-bg);
-            border-radius: 2px;
-            transition: all 0.1s ease;
-        }
+    .cell[data-col="0"], .cell[data-col="1"],
+    .cell[data-col="12"], .cell[data-col="13"] {
+      background-color: transparent;
+      box-shadow: none;
+      pointer-events: none;
+    }
 
-        .cell[data-col="0"], .cell[data-col="1"], 
-        .cell[data-col="12"], .cell[data-col="13"] {
-            background-color: transparent;
-            box-shadow: none;
-            pointer-events: none;
-        }
+    .cell.filled {
+      position: relative;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
 
-        .cell.filled {
-            position: relative;
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        }
+    .cell.filled::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.2) 100%);
+      border-radius: 2px;
+    }
 
-        .cell.filled::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0) 30%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.2) 100%);
-            border-radius: 2px;
-        }
+    .pieces-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      width: 25%;
+      min-width: 250px;
+      max-width: 300px;
+      height: 100%;
+      padding: 1rem;
+      background-color: #000;
+      border: 1px solid var(--text-color);
+      border-radius: 6px;
+    }
 
-        .pieces-panel {
-            width: 25%;
-            max-width: 150px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            min-width: 0;
-            height: 100%;
-        }
+    .next-piece {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        .next-piece {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: #1e1e1e;
-            border-radius: 6px;
-            padding: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            min-height: 0;
-            overflow: hidden;
-        }
+    .next-piece h5 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+      font-weight: bold;
+    }
 
-        .next-piece h5 {
-            font-size: 0.9rem;
-            margin: 0 0 0.5rem 0;
-            text-align: center;
-        }
+    .next-piece-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
 
-        .next-piece-container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            align-items: center;
-            gap: 0.5rem;
-            min-height: 0;
-            overflow-y: hidden;
-        }
+    .piece-preview-container {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .piece-preview-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            aspect-ratio: 1/1;
-            padding: 5px;
-        }
+    .piece-preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 1px;
+      background-color: #000;
+      border: 1px solid var(--text-color);
+      cursor: grab;
+      width: 100%;
+      height: 100%;
+    }
 
-        .piece-preview {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            gap: 1px;
-            width: 100%;
-            height: 100%;
-            max-width: 80px;
-            max-height: 80px;
-            background-color: #2d2d2d;
-            padding: 2px;
-            border-radius: 4px;
-            cursor: grab;
-            touch-action: none;
-            aspect-ratio: 1/1;
-        }
+    .preview-block {
+      border: 1px solid var(--text-color);
+    }
 
-        .piece-preview:active {
-            cursor: grabbing;
-        }
+    .preview-block.filled {
+      background-color: var(--block-color);
+    }
 
-        .preview-block {
-            border-radius: 1px;
-            background-color: transparent;
-            aspect-ratio: 1/1;
-        }
+    .score-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background-color: #000;
+      border: 1px solid var(--text-color);
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+    }
 
-        .preview-block.filled {
-            background-color: var(--block-color);
-        }
+    .score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
 
-        .score-panel {
-            background-color: #1e1e1e;
-            border-radius: 6px;
-            padding: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-        }
+    .score-label {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
 
-        .score-panel .row > div {
-            font-size: 0.8rem;
-            margin-bottom: 0.3rem;
-        }
+    .score-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-color);
+      text-shadow: 0 0 5px var(--text-color);
+    }
 
-        .score-value {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1rem;
-        }
+    .controls-panel {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
 
-        .controls-panel {
-            background-color: #1e1e1e;
-            border-radius: 6px;
-            padding: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-        }
+    .control-btn {
+      font-size: 1.2rem;
+      padding: 0.6rem 1.2rem;
+      background-color: var(--text-color);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: 0 0 6px var(--text-color);
+    }
 
-        .control-btn {
-            width: 100%;
-            padding: 0.5rem;
-            background-color: var(--accent-color);
-            color: #121212;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
+    .control-btn:hover,
+    .control-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 10px var(--text-color);
+    }
 
-        .control-btn:active {
-            transform: scale(0.95);
-            opacity: 0.9;
-        }
+    #gameOver {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
 
-        @keyframes dropScale {
-            0% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+    #gameOver.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-        @keyframes lineClear {
-            0% {
-                background-color: #fff;
-            }
-            50% {
-                background-color: var(--accent-color);
-            }
-            100% {
-                background-color: #fff;
-            }
-        }
+    #gameOver h2 {
+      font-size: 2.5rem;
+      color: var(--text-color);
+      text-shadow: 0 0 5px var(--text-color);
+      margin-bottom: 1.5rem;
+    }
 
-        .animate-drop {
-            animation: dropScale 0.2s ease-out;
-        }
+    @keyframes lineClear {
+      0%, 100% { background-color: var(--text-color); }
+      50% { background-color: #fff; }
+    }
 
-        .animate-line {
-            animation: lineClear 0.5s;
-        }
+    .animate-line {
+      animation: lineClear 0.5s ease-in-out;
+    }
 
-        #gameOver {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
+    @media (max-width: 960px) {
+      .game-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
 
-        #gameOver.show {
-            opacity: 1;
-            pointer-events: all;
-        }
+      .board-container {
+        aspect-ratio: 1/1;
+        width: 60vmin;
+        height: auto;
+      }
 
-        #gameOver h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
+      .pieces-panel {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        padding: 1rem;
+        gap: 1.5rem;
+      }
 
-        .dragging-piece {
-            position: absolute;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            z-index: 20;
-            pointer-events: none;
-            touch-action: none;
-            transform: translate(-50%, -50%);
-        }
+      .score-panel {
+        flex-direction: row;
+        justify-content: space-around;
+      }
 
-        .dragging-block {
-            border-radius: 2px;
-            box-shadow: 0 2px 4px var(--piece-shadow), inset 0 -3px 5px rgba(0, 0, 0, 0.3), inset 0 3px 5px rgba(255, 255, 255, 0.1);
-            aspect-ratio: 1/1;
-        }
+      .score-item {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
 
-        .ghost-piece {
-            position: absolute;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2px;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        .ghost-block {
-            border-radius: 2px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border: 1px dashed rgba(255, 255, 255, 0.5);
-            aspect-ratio: 1/1;
-        }
-
-        @media (max-width: 576px) {
-            .header h1 {
-                font-size: 1.2rem;
-            }
-            
-            .game-area {
-                flex-direction: column;
-                padding: 0.3rem;
-            }
-            
-            .board-container {
-                width: 100%;
-                height: 60%;
-            }
-            
-            #board {
-                width: 100%;
-                height: 100%;
-            }
-            
-            .pieces-panel {
-                width: 100%;
-                max-width: none;
-                height: 40%;
-                flex-direction: row;
-            }
-            
-            .next-piece {
-                flex: 2;
-            }
-            
-            .next-piece-container {
-                flex-direction: row;
-                justify-content: center;
-                gap: 0.3rem;
-            }
-            
-            .piece-preview-container {
-                width: auto;
-                height: 100%;
-                aspect-ratio: 1/1;
-            }
-            
-            .piece-preview {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .score-panel, .controls-panel {
-                flex: 1;
-            }
-        }
-    </style>
-  </head>
-  <body class="bg-dark text-light"> 
-    <div class="game-container">
-      <div class="header text-center">
-        <h1 class="m-0">QBlock Puzzle</h1>
-      </div>
-      <div class="game-area">
-        <div class="board-container">
-          <div id="board"></div>
-          <div id="gameOver">
-            <h2 class="text-warning mb-4">GAME OVER</h2>
-            <button id="restartBtn" class="btn btn-warning btn-lg">Play Again</button>
-          </div>
-        </div>
-        <div class="pieces-panel">
-          <div class="next-piece">
-            <h5>Next Pieces</h5>
-            <div class="next-piece-container" id="nextPiecesContainer"></div>
-          </div>
-          <div class="score-panel">
-            <div class="row text-center">
-              <div class="col-6 mb-2">
-                <div>Score</div>
-                <div id="score" class="score-value">0</div>
-              </div>
-              <div class="col-6 mb-2">
-                <div>Lines</div>
-                <div id="lines" class="score-value">0</div>
-              </div>
-              <div class="col-6">
-                <div>Blocks</div>
-                <div id="blocks" class="score-value">0</div>
-              </div>
-            </div>
-          </div>
-          <div class="controls-panel"> <button id="rotateBtn" class="control-btn mb-2">ROTATE</button>
-          </div>
-        </div>
+<body class="bg-dark text-light">
+  <!-- Game Container -->
+  <div class="game-container">
+    <!-- Board -->
+    <div class="board-container">
+      <div id="board"></div>
+      <div id="gameOver">
+        <h2>GAME OVER</h2>
+        <button id="restartBtn">Play Again</button>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    (function () {
-        // Game constants
-        const COLS = 14;
-        const PLAYABLE_COLS = 10;
-        const FIRST_PLAYABLE_COL = 2;
-        const ROWS = 12;
-        const SHAPES = [
-            [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
-            [[0,1,1,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]], // O
-            [[0,1,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // T
-            [[0,0,1,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // L
-            [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], // J
-            [[0,1,1,0],[1,1,0,0],[0,0,0,0],[0,0,0,0]], // S
-            [[1,1,0,0],[0,1,1,0],[0,0,0,0],[0,0,0,0]]  // Z
-        ];
-        const COLORS = ["#f44336","#e91e63","#9c27b0","#2196f3","#4caf50","#ff9800","#00bcd4"];
-        const NEXT_PIECES_COUNT = 4;
-        
-        // DOM elements
-        const board = document.getElementById("board");
-        const nextPiecesContainer = document.getElementById("nextPiecesContainer");
-        const scoreElement = document.getElementById("score");
-        const linesElement = document.getElementById("lines");
-        const blocksElement = document.getElementById("blocks");
-        const gameOverElement = document.getElementById("gameOver");
-        const restartBtn = document.getElementById("restartBtn");
-        const rotateBtn = document.getElementById("rotateBtn");
-        
-        // Game state
-        let cells = [];
-        let nextPieces = [];
-        let nextPieceRotations = [];
-        let score = 0;
-        let lines = 0;
-        let blocksPlaced = 0;
-        let gameOver = false;
-        let cellSize = 0;
-        let draggingPiece = null;
-        let currentShape = null;
-        let currentColor = null;
-        let currentPieceIndex = null;
-        let ghostPiece = null;
-        let currentPieceElement = null;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
 
-        // Initialize the game board
-        function initBoard() {
-            board.innerHTML = "";
-            cells = [];
-            
-            const container = board.parentElement;
-            const containerWidth = container.clientWidth;
-            const containerHeight = container.clientHeight;
-            
-            cellSize = Math.min(containerWidth / COLS, containerHeight / ROWS);
-            
-            board.style.width = `${cellSize * COLS}px`;
-            board.style.height = `${cellSize * ROWS}px`;
-            
-            for (let row = 0; row < ROWS; row++) {
-                for (let col = 0; col < COLS; col++) {
-                    const cell = document.createElement("div");
-                    cell.className = "cell";
-                    cell.dataset.row = row;
-                    cell.dataset.col = col;
-                    cells.push(cell);
-                    board.appendChild(cell);
-                }
-            }
-        }
+    <!-- Sidebar Panel -->
+    <div class="pieces-panel">
+      <div class="next-piece">
+        <h5>Next Pieces</h5>
+        <div class="next-piece-container" id="nextPiecesContainer"></div>
+      </div>
 
-        // Generate the next pieces to play
-        function generateNextPieces() {
-            nextPieces = [];
-            nextPieceRotations = [];
-            nextPiecesContainer.innerHTML = "";
-            
-            // Create a shuffled list of all possible pieces
-            let availableShapes = [...Array(SHAPES.length).keys()];
-            for (let i = availableShapes.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [availableShapes[i], availableShapes[j]] = [availableShapes[j], availableShapes[i]];
-            }
-            
-            // Fill the next pieces queue
-            while (nextPieces.length < NEXT_PIECES_COUNT) {
-                if (availableShapes.length === 0) {
-                    availableShapes = [...Array(SHAPES.length).keys()];
-                    for (let i = availableShapes.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [availableShapes[i], availableShapes[j]] = [availableShapes[j], availableShapes[i]];
-                    }
-                }
-                nextPieces.push(availableShapes.pop());
-                nextPieceRotations.push(0);
-            }
-            
-            renderNextPieces();
-        }
+      <div class="score-panel">
+        <div class="score-item">
+          <span class="score-label">Score</span>
+          <span id="score" class="score-value">0</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">Lines</span>
+          <span id="lines" class="score-value">0</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">Blocks</span>
+          <span id="blocks" class="score-value">0</span>
+        </div>
+      </div>
 
-        // Render the next pieces in the preview area
-        function renderNextPieces() {
-            nextPiecesContainer.innerHTML = "";
-            
-            nextPieces.forEach((shapeIndex, pieceIndex) => {
-                const container = document.createElement("div");
-                container.className = "piece-preview-container";
-                
-                const pieceElement = document.createElement("div");
-                pieceElement.className = "piece-preview";
-                pieceElement.dataset.index = pieceIndex;
-                
-                // Apply current rotation
-                let shape = SHAPES[shapeIndex];
-                for (let i = 0; i < nextPieceRotations[pieceIndex]; i++) {
-                    shape = rotateMatrix(shape);
-                }
-                
-                const color = COLORS[shapeIndex];
-                const centeredShape = centerShape(shape);
-                
-                // Create the preview blocks
-                for (let row = 0; row < 4; row++) {
-                    for (let col = 0; col < 4; col++) {
-                        const block = document.createElement("div");
-                        block.className = "preview-block";
-                        if (centeredShape[row] && centeredShape[row][col]) {
-                            block.classList.add("filled");
-                            block.style.setProperty("--block-color", color);
-                        }
-                        pieceElement.appendChild(block);
-                    }
-                }
-                
-                setupPieceDrag(pieceElement, shape, color, shapeIndex);
-                container.appendChild(pieceElement);
-                nextPiecesContainer.appendChild(container);
-            });
-        }
+      <div class="controls-panel">
+        <button id="resetBtn" class="control-btn">Reset</button>
+        <button id="rotateBtn" class="control-btn">Rotate</button>
+      </div>
+    </div>
+  </div>
 
-        // Center the shape in its 4x4 grid
-        function centerShape(shape) {
-            let minRow = 4, maxRow = -1, minCol = 4, maxCol = -1;
-            
-            // Find the bounds of the shape
-            for (let row = 0; row < shape.length; row++) {
-                for (let col = 0; col < shape[row].length; col++) {
-                    if (shape[row][col]) {
-                        minRow = Math.min(minRow, row);
-                        maxRow = Math.max(maxRow, row);
-                        minCol = Math.min(minCol, col);
-                        maxCol = Math.max(maxCol, col);
-                    }
-                }
-            }
-            
-            // Calculate centering offsets
-            const rowOffset = Math.floor((4 - (maxRow - minRow + 1)) / 2);
-            const colOffset = Math.floor((4 - (maxCol - minCol + 1)) / 2);
-            
-            // Create centered shape
-            const centeredShape = Array(4).fill().map(() => Array(4).fill(0));
-            for (let row = minRow; row <= maxRow; row++) {
-                for (let col = minCol; col <= maxCol; col++) {
-                    if (shape[row][col]) {
-                        centeredShape[row - minRow + rowOffset][col - minCol + colOffset] = 1;
-                    }
-                }
-            }
-            
-            return centeredShape;
-        }
-
-        // Rotate a matrix 90 degrees clockwise
-        function rotateMatrix(matrix) {
-            const rotated = [];
-            for (let col = 0; col < matrix[0].length; col++) {
-                const newRow = [];
-                for (let row = matrix.length - 1; row >= 0; row--) {
-                    newRow.push(matrix[row][col]);
-                }
-                rotated.push(newRow);
-            }
-            return rotated;
-        }
-
-        // Rotate all next pieces
-        function rotateNextPieces() {
-            for (let i = 0; i < nextPieceRotations.length; i++) {
-                nextPieceRotations[i] = (nextPieceRotations[i] + 1) % 4;
-            }
-            renderNextPieces();
-        }
-
-        // Set up drag events for a piece
-        function setupPieceDrag(element, shape, color, shapeIndex) {
-            function handleStart(e) {
-                if (gameOver) return;
-                
-                e.preventDefault();
-                
-                const pieceIndex = parseInt(element.dataset.index);
-                const rotationCount = nextPieceRotations[pieceIndex];
-                
-                // Get the current rotation state
-                currentShape = SHAPES[shapeIndex];
-                for (let i = 0; i < rotationCount; i++) {
-                    currentShape = rotateMatrix(currentShape);
-                }
-                
-                currentColor = color;
-                currentPieceIndex = shapeIndex;
-                currentPieceElement = element;
-                
-                // Get mouse/touch position
-                const clientX = e.type === "mousedown" ? e.clientX : e.touches[0].clientX;
-                const clientY = e.type === "mousedown" ? e.clientY : e.touches[0].clientY;
-                
-                lastMouseX = clientX;
-                lastMouseY = clientY;
-                
-                // Create visual elements
-                createDraggingPiece(currentShape, color);
-                createGhostPiece(currentShape, color);
-                
-                // Position the dragging piece
-                draggingPiece.style.left = `${clientX}px`;
-                draggingPiece.style.top = `${clientY}px`;
-                
-                updateGhostPosition(clientX, clientY);
-                
-                // Set up move and end events
-                document.addEventListener("mousemove", handleMove);
-                document.addEventListener("touchmove", handleMove, {passive: false});
-                document.addEventListener("mouseup", handleEnd);
-                document.addEventListener("touchend", handleEnd);
-            }
-            
-            function handleMove(e) {
-                if (!draggingPiece) return;
-                
-                e.preventDefault();
-                
-                // Update position
-                const clientX = e.type === "mousemove" ? e.clientX : e.touches[0].clientX;
-                const clientY = e.type === "mousemove" ? e.clientY : e.touches[0].clientY;
-                
-                lastMouseX = clientX;
-                lastMouseY = clientY;
-                
-                draggingPiece.style.left = `${clientX}px`;
-                draggingPiece.style.top = `${clientY}px`;
-                
-                updateGhostPosition(clientX, clientY);
-            }
-            
-            function handleEnd(e) {
-                if (!draggingPiece) return;
-                
-                e.preventDefault();
-                
-                // Clean up events
-                document.removeEventListener("mousemove", handleMove);
-                document.removeEventListener("touchmove", handleMove);
-                document.removeEventListener("mouseup", handleEnd);
-                document.removeEventListener("touchend", handleEnd);
-                
-                placePiece();
-                
-                // Remove visual elements
-                if (draggingPiece) {
-                    draggingPiece.remove();
-                    draggingPiece = null;
-                }
-                if (ghostPiece) {
-                    ghostPiece.remove();
-                    ghostPiece = null;
-                }
-            }
-            
-            // Remove old listeners and add new ones
-            element.removeEventListener("mousedown", handleStart);
-            element.removeEventListener("touchstart", handleStart);
-            element.addEventListener("mousedown", handleStart);
-            element.addEventListener("touchstart", handleStart, {passive: false});
-        }
-
-        // Create the ghost piece that shows placement
-        function createGhostPiece(shape, color) {
-            ghostPiece = document.createElement("div");
-            ghostPiece.className = "ghost-piece";
-            
-            // Find shape bounds
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            // Set ghost piece size
-            const width = (maxCol - minCol + 1) * cellSize;
-            const height = (maxRow - minRow + 1) * cellSize;
-            ghostPiece.style.width = `${width}px`;
-            ghostPiece.style.height = `${height}px`;
-            
-            // Create ghost blocks
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        const block = document.createElement("div");
-                        block.className = "ghost-block";
-                        block.style.gridColumn = colIndex + 1;
-                        block.style.gridRow = rowIndex + 1;
-                        ghostPiece.appendChild(block);
-                    }
-                });
-            });
-            
-            document.body.appendChild(ghostPiece);
-        }
-
-        // Update ghost piece position based on mouse
-        function updateGhostPosition(x, y) {
-            if (!ghostPiece || !currentShape) return;
-            
-            const boardRect = board.getBoundingClientRect();
-            
-            // Find shape bounds
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            currentShape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            // Calculate center of shape
-            const centerX = (minCol + maxCol) / 2;
-            const centerY = (minRow + maxRow) / 2;
-            
-            // Convert to board coordinates
-            const boardX = x - boardRect.left - (centerX * cellSize);
-            const boardY = y - boardRect.top - (centerY * cellSize);
-            
-            // Calculate grid position
-            let left = Math.round(boardX / cellSize);
-            let top = Math.round(boardY / cellSize);
-            
-            // Constrain to playable area
-            const shapeWidth = maxCol - minCol + 1;
-            const shapeHeight = maxRow - minRow + 1;
-            left = Math.max(FIRST_PLAYABLE_COL, 
-                          Math.min(left, FIRST_PLAYABLE_COL + PLAYABLE_COLS - shapeWidth));
-            top = Math.max(0, Math.min(top, ROWS - shapeHeight));
-            
-            // Position the ghost
-            ghostPiece.style.left = `${boardRect.left + left * cellSize}px`;
-            ghostPiece.style.top = `${boardRect.top + top * cellSize}px`;
-            
-            // Show opacity based on placement validity
-            ghostPiece.style.opacity = canPlacePiece(currentShape, left, top) ? 0.5 : 0.3;
-        }
-
-        // Create the visual piece being dragged
-        function createDraggingPiece(shape, color) {
-            draggingPiece = document.createElement("div");
-            draggingPiece.className = "dragging-piece";
-            
-            // Find shape bounds
-            let minCol = 4, maxCol = 0, minRow = 4, maxRow = 0;
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        minCol = Math.min(minCol, colIndex);
-                        maxCol = Math.max(maxCol, colIndex);
-                        minRow = Math.min(minRow, rowIndex);
-                        maxRow = Math.max(maxRow, rowIndex);
-                    }
-                });
-            });
-            
-            // Set dragging piece size
-            const width = (maxCol - minCol + 1) * cellSize;
-            const height = (maxRow - minRow + 1) * cellSize;
-            draggingPiece.style.width = `${width}px`;
-            draggingPiece.style.height = `${height}px`;
-            
-            // Create dragging blocks
-            shape.forEach((row, rowIndex) => {
-                row.forEach((cell, colIndex) => {
-                    if (cell) {
-                        const block = document.createElement("div");
-                        block.className = "dragging-block";
-                        block.style.backgroundColor = color;
-                        block.style.gridColumn = colIndex + 1;
-                        block.style.gridRow = rowIndex + 1;
-                        draggingPiece.appendChild(block);
-                    }
-                });
-            });
-            
-            document.body.appendChild(draggingPiece);
-        }
-
-        // Place the current piece on the board
-        function placePiece() {
-            if (!draggingPiece || !currentShape || !ghostPiece || gameOver) return;
-            
-            const boardRect = board.getBoundingClientRect();
-            const ghostRect = ghostPiece.getBoundingClientRect();
-            
-            // Calculate grid position
-            const left = Math.round((ghostRect.left - boardRect.left) / cellSize);
-            const top = Math.round((ghostRect.top - boardRect.top) / cellSize);
-            
-            // Check if placement is valid
-            if (canPlacePiece(currentShape, left, top)) {
-                lockPiece(currentShape, currentColor, left, top);
-                
-                // Remove the placed piece from queue
-                const index = nextPieces.indexOf(currentPieceIndex);
-                if (index !== -1) {
-                    nextPieces.splice(index, 1);
-                    nextPieceRotations.splice(index, 1);
-                    
-                    // Add new random piece
-                    let newPiece;
-                    let attempts = 0;
-                    do {
-                        newPiece = Math.floor(Math.random() * SHAPES.length);
-                        attempts++;
-                        if (attempts > 100) break; // Prevent infinite loops
-                    } while (!hasPossiblePlacement(newPiece));
-                    
-                    nextPieces.push(newPiece);
-                    nextPieceRotations.push(0);
-                    renderNextPieces();
-                    checkGameOver();
-                }
-            } else {
-                // If placement failed, regenerate pieces
-                generateNextPieces();
-            }
-            
-            // Clean up
-            if (draggingPiece) {
-                draggingPiece.remove();
-                draggingPiece = null;
-            }
-            if (ghostPiece) {
-                ghostPiece.remove();
-                ghostPiece = null;
-            }
-        }
-
-        // Check if a piece can be placed at a position
-        function canPlacePiece(shape, left, top) {
-            for (let row = 0; row < shape.length; row++) {
-                for (let col = 0; col < shape[row].length; col++) {
-                    if (shape[row][col]) {
-                        const boardCol = left + col;
-                        const boardRow = top + row;
-                        
-                        // Check bounds
-                        if (boardCol < FIRST_PLAYABLE_COL || 
-                            boardCol >= FIRST_PLAYABLE_COL + PLAYABLE_COLS ||
-                            boardRow < 0 || 
-                            boardRow >= ROWS) {
-                            return false;
-                        }
-                        
-                        // Check for existing blocks
-                        const cellIndex = boardRow * COLS + boardCol;
-                        if (cells[cellIndex].classList.contains("filled")) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-
-        // Lock a piece in place on the board
-        function lockPiece(shape, color, left, top) {
-            let blocksPlacedCount = 0;
-            
-            for (let row = 0; row < shape.length; row++) {
-                for (let col = 0; col < shape[row].length; col++) {
-                    if (shape[row][col]) {
-                        const boardCol = left + col;
-                        const boardRow = top + row;
-                        
-                        if (boardCol >= FIRST_PLAYABLE_COL && 
-                            boardCol < FIRST_PLAYABLE_COL + PLAYABLE_COLS && 
-                            boardRow >= 0 && 
-                            boardRow < ROWS) {
-                            
-                            const cellIndex = boardRow * COLS + boardCol;
-                            cells[cellIndex].classList.add("filled");
-                            cells[cellIndex].style.backgroundColor = color;
-                            cells[cellIndex].classList.add("animate-drop");
-                            setTimeout(() => {
-                                cells[cellIndex].classList.remove("animate-drop");
-                            }, 200);
-                            blocksPlacedCount++;
-                        }
-                    }
-                }
-            }
-            
-            // Update score
-            blocksPlaced += blocksPlacedCount;
-            score += 10 * blocksPlacedCount;
-            updateScore();
-            
-            // Check for completed lines
-            checkLines();
-        }
-
-        // Check for completed lines
-        function checkLines() {
-            let linesCleared = 0;
-            
-            // Check rows
-            for (let row = 0; row < ROWS; row++) {
-                let rowComplete = true;
-                for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
-                    const cellIndex = row * COLS + col;
-                    if (!cells[cellIndex].classList.contains("filled")) {
-                        rowComplete = false;
-                        break;
-                    }
-                }
-                
-                if (rowComplete) {
-                    // Animate line clear
-                    for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
-                        const cellIndex = row * COLS + col;
-                        cells[cellIndex].classList.add("animate-line");
-                        setTimeout(() => {
-                            cells[cellIndex].classList.remove("filled", "animate-line");
-                            cells[cellIndex].style.backgroundColor = "";
-                        }, 500);
-                    }
-                    linesCleared++;
-                }
-            }
-            
-            // Check columns
-            for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
-                let isColumnEmpty = true;
-                
-                for (let row = 0; row < ROWS; row++) {
-                    const cellIndex = row * COLS + col;
-                    if (!cells[cellIndex].classList.contains("filled")) {
-                        isColumnEmpty = false;
-                        break;
-                    }
-                }
-                
-                if (isColumnEmpty) {
-                    // Animate column clear
-                    for (let row = 0; row < ROWS; row++) {
-                        const cellIndex = row * COLS + col;
-                        cells[cellIndex].classList.add("animate-line");
-                        setTimeout(() => {
-                            cells[cellIndex].classList.remove("filled", "animate-line");
-                            cells[cellIndex].style.backgroundColor = "";
-                        }, 500);
-                    }
-                    linesCleared++;
-                }
-            }
-            
-            // Update score if lines were cleared
-            if (linesCleared > 0) {
-                lines += linesCleared;
-                score += 100 * linesCleared;
-                updateScore();
-                
-                // Check for game over after animation
-                setTimeout(() => {
-                    checkGameOver();
-                }, 500);
-            }
-        }
-
-        // Check if there are any possible placements left
-        function hasPossiblePlacement(pieceIndex) {
-            const shape = SHAPES[pieceIndex];
-            
-            // Check all possible rotations
-            for (let rotation = 0; rotation < 4; rotation++) {
-                let rotatedShape = shape;
-                for (let r = 0; r < rotation; r++) {
-                    rotatedShape = rotateMatrix(rotatedShape);
-                }
-                
-                // Check all possible positions
-                for (let col = FIRST_PLAYABLE_COL; col < FIRST_PLAYABLE_COL + PLAYABLE_COLS; col++) {
-                    for (let row = 0; row < ROWS; row++) {
-                        if (canPlacePiece(rotatedShape, col, row)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-
-        // Update score display
-        function updateScore() {
-            scoreElement.textContent = score;
-            linesElement.textContent = lines;
-            blocksElement.textContent = blocksPlaced;
-        }
-
-        // Show game over screen
-        function showGameOver() {
-            gameOver = true;
-            gameOverElement.classList.add("show");
-        }
-
-        // Check if game should end
-        function checkGameOver() {
-            const hasPossibleMoves = nextPieces.some(pieceIndex => {
-                return hasPossiblePlacement(pieceIndex);
-            });
-            
-            if (!hasPossibleMoves) {
-                showGameOver();
-            }
-        }
-
-        // Reset the game
-        function resetGame() {
-            score = 0;
-            lines = 0;
-            blocksPlaced = 0;
-            gameOver = false;
-            
-            // Clear the board
-            cells.forEach(cell => {
-                cell.classList.remove("filled", "animate-drop", "animate-line");
-                cell.style.backgroundColor = "";
-            });
-            
-            // Generate new pieces
-            generateNextPieces();
-            gameOverElement.classList.remove("show");
-        }
-
-        // Handle window resize
-        function handleResize() {
-            initBoard();
-        }
-
-        // Initialize the game
-        function initGame() {
-            initBoard();
-            generateNextPieces();
-            
-            // Event listeners
-            window.addEventListener("resize", handleResize);
-            restartBtn.addEventListener("click", resetGame);
-            
-            rotateBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                rotateNextPieces();
-            });
-            
-            rotateBtn.addEventListener("touchstart", function(e) {
-                e.preventDefault();
-                rotateNextPieces();
-            }, {passive: false});
-        }
-        
-        // Start the game when loaded
-        window.addEventListener("load", initGame);
-    })();
-    </script>
-  </body>
+  <script>
+    // [Paste your full JavaScript here]
+  </script>
+</body>
 </html>
