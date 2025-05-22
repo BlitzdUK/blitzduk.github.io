@@ -75,7 +75,7 @@
     }
 
     .action-card {
-      top: 180px; /* Moved further down */
+      top: 180px;
     }
 
     .device-card h2,
@@ -184,14 +184,14 @@
   </main>
 
   <footer class="text-center p-4">
-    � 2025 Real-Time Device Tracking Web App | Powered by Leaflet & OpenStreetMap
+    © 2025 Real-Time Device Tracking Web App | Powered by Leaflet & OpenStreetMap
     <p class="mt-2">
       Contact: 
       <a href="https://m.me/blitzdmedia " target="_blank">Facebook</a> |
       <a href="https://t.me/blitzd " target="_blank">Telegram</a>
     </p>
     <p class="mt-2 text-sm text-yellow-300">
-      ?? <strong>Disclaimer:</strong> This service should not be relied upon in an emergency situation or when yours or anybody else�s safety is at risk.
+      ⚠️ <strong>Disclaimer:</strong> This service should not be relied upon in an emergency situation or when yours or anybody else’s safety is at risk.
     </p>
   </footer>
 
@@ -205,7 +205,7 @@
 
     // Initialize map
     const map = L.map('map', {
-      zoomControl: false // Optional: disable default zoom control
+      zoomControl: false
     }).setView([53.335671, -2.235709], 18);
 
     // Set up dark tile layer
@@ -219,7 +219,7 @@
       const lon = parseFloat(data.locationLongitude);
       const address = data.geolocationFullName || 'Current Location';
 
-      // Update map view to max zoom (18)
+      // Update map view to max zoom
       map.setView([lat, lon], 18);
 
       // Update or create marker
@@ -268,7 +268,7 @@
 
     // Emergency alert button action
     function sendEmergencyAlert() {
-      alert("?? Emergency alert has been sent! (Simulated)");
+      alert("⚠️ Emergency alert has been sent! (Simulated)");
     }
 
     // SOS Toggle logic
