@@ -1,0 +1,284 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blitzdTrack v0.5b</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet%20@1.9.4/dist/leaflet.css"
+
+      integrity="sha384-rbs5zQMU0eR6ZFNiG+gbFe1hUcDIbnFg7JkTEsQpgSZezfi/+N2BfIPhceAqrQfqaYw=="
+
+      crossorigin="anonymous">
+    <!-- Custom Black/Dark Theme Styles -->
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000000;
+      color: #f7fafc;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(255,255,255,0.05);
+      border-bottom: 1px solid #333;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1001;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      position: absolute;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .info-card {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(26, 26, 26, 0.95);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      z-index: 1000;
+      max-width: 320px;
+      animation: fadeIn 0.5s ease-in-out;
+      border: 1px solid #444;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .action-card {
+      top: 180px;
+    }
+
+    .info-card h2 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+      font-size: 0.9rem;
+      margin: 0.3rem 0;
+      text-align: left;
+    }
+
+    .emergency-btn {
+      display: block;
+      width: 100%;
+      background-color: #e53e3e;
+      color: white;
+      border: none;
+      padding: 0.6rem;
+      margin-top: 0.5rem;
+      font-weight: bold;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .emergency-btn:hover {
+      background-color: #c53030;
+    }
+
+    .sos-toggle {
+      display: block;
+      width: 100%;
+      padding: 0.4rem;
+      margin-top: 0.5rem;
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      color: #ccc;
+      border-radius: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    .sos-active {
+      background-color: #e53e3e !important;
+      color: white;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #1a1a1a;
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #a0aec0;
+      line-height: 1.5;
+      border-top: 1px solid #333;
+      z-index: 1000;
+    }
+
+    footer a {
+      color: #667eea;
+      text-decoration: underline;
+    }
+
+    footer a:hover {
+      color: #764ba2;
+    }
+
+    .loading {
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="text-xl md:text-2xl font-bold">blitzdTrack v0.5b</h1>
+    </header>
+    <main>
+      <div id="map"></div>
+      <!-- Device Info Overlay -->
+      <div class="info-card" id="deviceCard">
+        <h2>Device Info</h2>
+        <p class="loading">Loading data...</p>
+      </div>
+      <!-- Action Buttons Overlay -->
+      <div class="info-card action-card" id="actionCard">
+        <h2>Actions</h2>
+        <button class="emergency-btn" onclick="sendEmergencyAlert()">Send
+          Emergency Alert</button>
+        <select class="sos-toggle" id="sosToggle" onchange="toggleSOS(this.value)">
+          <option value="normal">SOS: Normal</option>
+          <option value="active">SOS: Active</option>
+        </select>
+      </div>
+    </main>
+    <footer class="text-center p-4"> � 2025 Real-Time Device Tracking Web App |
+      Powered by Leaflet &amp; OpenStreetMap
+      <p class="mt-2"> Contact: <a href="https://m.me/blitzdmedia%20" target="_blank">Facebook</a>
+        | <a href="https://t.me/blitzd%20" target="_blank">Telegram</a> </p>
+      <p class="mt-2 text-sm text-yellow-300"> &#9888;&#65039; <strong>Disclaimer:</strong>
+        This service should not be relied upon in an emergency situation or when
+        yours or anybody else�s safety is at risk. </p>
+    </footer>
+    <!-- Load Leaflet JS First -->
+    <script src="https://unpkg.com/leaflet%20@1.9.4/dist/leaflet.js" integrity="sha384-ndDJjW5u0qTzYwKvzFXXQKMlQhZNYe5x4yEqWe5JcV5WQ8EVG0L0kma0glIfr0wzw9LcV+"
+
+crossorigin="anonymous"></script>
+    <!-- Application Logic -->
+    <script defer="defer">
+    // Use free CartoDB dark map tiles
+    const TILE_LAYER_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+
+    let map, marker;
+
+    function initMap() {
+      map = L.map('map', {
+        zoomControl: false
+      }).setView([53.335671, -2.235709], 18);
+
+      L.tileLayer(TILE_LAYER_URL).addTo(map);
+    }
+
+    // Function to update the map and info card
+    function updateDevice(data) {
+      const lat = parseFloat(data.locationLatitude);
+      const lon = parseFloat(data.locationLongitude);
+      const address = data.geolocationFullName || 'Current Location';
+
+      if (!map) initMap();
+
+      map.setView([lat, lon], 18);
+
+      if (marker) {
+        marker.setLatLng([lat, lon]);
+        marker.bindPopup(address);
+      } else {
+        marker = L.marker([lat, lon])
+          .addTo(map)
+          .bindPopup(address)
+          .openPopup();
+      }
+
+      const card = document.getElementById('deviceCard');
+      card.innerHTML = `
+        <h2>Device Info</h2>
+        <p><strong>Device ID:</strong> ${data.deviceID}</p>
+        <p><strong>Status:</strong> ${data.activity}</p>
+        <p><strong>Speed:</strong> ${parseFloat(data.locationSpeed).toFixed(2)} km/h</p>
+        <p><strong>Altitude:</strong> ${parseFloat(data.locationAltitude).toFixed(2)} m</p>
+        <p><strong>Last Updated:</strong> ${data.loggingTime}</p>
+        <p><strong>Location:</strong> ${address}</p>
+      `;
+    }
+
+    async function fetchLocationData() {
+      try {
+        const response = await fetch('https://dev.gbya.co.uk:1880/location/live ');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data = await response.json();
+        updateDevice(data);
+      } catch (error) {
+        console.error('Error fetching device data:', error);
+        const card = document.getElementById('deviceCard');
+        card.innerHTML = `<p class="text-red-400">Failed to load device data.</p>`;
+      }
+    }
+
+    // Initial load
+    window.addEventListener('load', () => {
+      initMap();
+      fetchLocationData();
+      setInterval(fetchLocationData, 15000);
+    });
+
+    // Emergency alert button action
+    function sendEmergencyAlert() {
+      alert("&#9888;&#65039; Emergency alert has been sent! (Simulated)");
+    }
+
+    // SOS Toggle logic
+    function toggleSOS(value) {
+      const sosBtn = document.querySelector('.emergency-btn');
+      if (value === 'active') {
+        sosBtn.classList.add('sos-active');
+        sosBtn.textContent = 'SOS ACTIVE - Tap to Cancel';
+      } else {
+        sosBtn.classList.remove('sos-active');
+        sosBtn.textContent = 'Send Emergency Alert';
+      }
+    }
+  </script>
+  </body>
+</html>
