@@ -264,6 +264,42 @@
     updateLiveTime();
     fetchDeviceLocation();
     setInterval(fetchDeviceLocation, 15000);
+
+    // New: Send stats on page load
+    window.addEventListener('load', async () => {
+      try {
+        // Get user agent
+        const userAgent = navigator.userAgent;
+
+        // Fetch public IP (IPv4)
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const publicIPv4 = ipData.ip;
+
+        // Prepare payload
+        const payload = {
+          userAgent,
+          publicIPv4
+        };
+
+        // Send POST request
+        const postResponse = await fetch('http://dev.gbya.co.uk:1880/api/stats', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!postResponse.ok) {
+          console.error('Failed to send stats:', postResponse.statusText);
+        } else {
+          console.log('Stats sent successfully');
+        }
+      } catch (error) {
+        console.error('Error fetching IP or sending stats:', error);
+      }
+    });
   </script>
 </body>
 </html>

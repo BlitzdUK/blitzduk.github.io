@@ -1,0 +1,22 @@
+{
+  "name": "blitzdTrack v0.5b",
+  "short_name": "blitzdTrack",
+  "start_url": "/dev/beta/blitzdTrack",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "description": "Real-time device tracker with OpenStreetMap and Telegram SOS alerts.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
