@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
@@ -40,7 +41,8 @@
     }
     table th, table td {
       text-align: center;
-      padding: 0.5rem 0.75rem;
+      padding: 0.5rem;
+      white-space: normal;
     }
     .data-table {
       max-height: 200px;
@@ -62,24 +64,22 @@
     }
     footer {
       background: #111;
-      padding: 10px 5px;
+      padding: 10px;
       text-align: center;
       color: #888;
       flex-shrink: 0;
     }
-    @media (max-width: 767px) {
-      table th, table td {
-        font-size: 0.8rem;
-        padding: 0.3rem 0.4rem;
-      }
-      #map {
-        min-height: 250px;
-      }
+    .direction-icon {
+      width: 30px;
+      height: 30px;
+      background: url('https://cdn-icons-png.flaticon.com/512/60/60525.png') no-repeat center center;
+      background-size: contain;
+      transform-origin: center;
     }
   </style>
 </head>
 <body>
-  <div id="app" class="d-flex flex-column">
+  <div id="app">
     <div class="text-center p-2">
       <h1 class="text-light m-0">📍 blitzdTrack v0.5b</h1>
     </div>
@@ -105,12 +105,7 @@
     </div>
     <footer>
       <p id="liveTime"></p>
-      <p>
-        Attribution: <strong>blitzdTrack v0.5b</strong> |
-        <a href="https://m.me/blitzdmedia" class="text-info">Messenger</a> |
-        <a href="https://t.me/blitzd" class="text-info">Telegram</a>
-      </p>
-      <small>Disclaimer: Do not rely on this service in emergencies or safety-critical situations.</small>
+      <small>Attribution: <strong>blitzdTrack v0.5b</strong></small>
     </footer>
   </div>
 
@@ -118,10 +113,11 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const TELEGRAM_BOT_TOKEN = "YOUR_TOKEN_HERE";
-    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE";
+    const TELEGRAM_BOT_TOKEN = "6776684735:AAFifrxvQCHr6gls-gISE9muvDwAwKgifeA";
+    const TELEGRAM_CHAT_ID = "920222421";
 
-    let deviceMarker;
+    let deviceMarker, directionMarker;
+
     const map = L.map("map").setView([53.335671, -2.235709], 18);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
       attribution: "&copy; OpenStreetMap",
@@ -134,20 +130,30 @@
 
     function fetchDeviceLocation() {
       fetch("https://dev.gbya.co.uk:1880/location/live")
-        .then((r) => r.json())
-        .then((data) => {
+        .then(r => r.json())
+        .then(data => {
           const lat = parseFloat(data.locationLatitude);
           const lng = parseFloat(data.locationLongitude);
+          const course = parseFloat(data.locationCourse);
+
           if (!deviceMarker) {
             deviceMarker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+            const directionIcon = L.divIcon({ className: 'direction-icon' });
+            directionMarker = L.marker([lat, lng], { icon: directionIcon }).addTo(map);
           } else {
             deviceMarker.setLatLng([lat, lng]);
+            directionMarker.setLatLng([lat, lng]);
           }
+
+          // Rotate arrow
+          const arrowEl = directionMarker.getElement();
+          if (arrowEl) arrowEl.style.transform = `rotate(${course}deg)`;
+
           map.setView([lat, lng], 18);
 
           const tbody = document.getElementById("deviceTableBody");
           const timeDiff = getTimeDiff(parseLoggingTime(data.loggingTime));
-          const sinceText = (timeDiff === "0h 0m ago") ? "Just now" : timeDiff;
 
           tbody.innerHTML = `
             <tr>
@@ -157,7 +163,7 @@
               <td>${parseFloat(data.locationSpeed).toFixed(2)}</td>
               <td>${parseFloat(data.locationAltitude).toFixed(2)}</td>
               <td>${data.loggingTime}</td>
-              <td>${sinceText}</td>
+              <td>${timeDiff}</td>
             </tr>
           `;
         })
@@ -168,7 +174,7 @@
       const [timePart, datePart] = t.split(" - ");
       const [h, m, s] = timePart.split(":").map(Number);
       const [day, monthName, year] = datePart.split("/");
-      const months = { Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11 };
+      const months = {Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11};
       const mo = months[monthName] ?? 0;
       return new Date(year, mo, parseInt(day), h, m, s);
     }
@@ -177,7 +183,7 @@
       const diff = Math.max(0, new Date() - d);
       const h = Math.floor(diff / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
-      return `${h}h ${m}m ago`;
+      return (h === 0 && m === 0) ? "Just now" : `${h}h ${m}m ago`;
     }
 
     function showToast(msg, dur = 3000) {
@@ -190,11 +196,10 @@
     document.getElementById("sosButton").onclick = () => {
       if (!confirm("Send an SOS alert with device data?")) return;
       fetch("https://dev.gbya.co.uk:1880/location/live")
-        .then((r) => r.json())
-        .then((data) => {
+        .then(r => r.json())
+        .then(data => {
           const loc = `https://www.google.com/maps/search/?api=1&query=${data.locationLatitude},${data.locationLongitude}`;
-          const message =
-            `🚨 BlitzdTrack SOS Alert 🚨\n\n` +
+          const message = `🚨 BlitzdTrack SOS Alert 🚨\n\n` +
             `Device ID: ${data.deviceID}\n` +
             `Activity: ${data.activity}\n` +
             `Latitude: ${data.locationLatitude}\n` +
@@ -212,8 +217,8 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
           })
-          .then((r) => r.json())
-          .then((d) => d.ok ? showToast("SOS alert sent!") : showToast("Telegram failed"))
+          .then(r => r.json())
+          .then(d => d.ok ? showToast("SOS alert sent!") : showToast("Telegram failed"))
           .catch(() => showToast("Telegram error."));
         })
         .catch(() => showToast("Failed to fetch device data for SOS."));
