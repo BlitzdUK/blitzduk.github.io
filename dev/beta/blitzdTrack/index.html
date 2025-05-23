@@ -1,113 +1,249 @@
-
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>blitzdTrack v0.5b</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#000000" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <title>blitzdTrack</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     html, body {
-      margin: 0;
       height: 100%;
-      background: #000;
-      color: #ddd;
+      margin: 0;
+      background-color: #121212;
+      color: #eee;
+      font-family: Arial, sans-serif;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
-    #app {
-      flex: 1;
+    body, #app {
       display: flex;
       flex-direction: column;
+      align-items: center;
       height: 100vh;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+    nav.navbar {
+      height: 50px;
+      width: 100%;
+      background-color: #212529;
+      color: white;
+      font-weight: 600;
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    #liveTime {
+      font-family: monospace;
+      margin-left: 1rem;
     }
     #map {
-      flex: 1 1 auto;
+      flex: 1 1 50%;
       width: 100%;
-      min-height: 300px;
-    }
-    .leaflet-container {
-      background: #222;
-    }
-    table {
-      color: #ccc;
-      margin: 0;
-      width: 100%;
-      border-collapse: collapse;
-    }
-    table th, table td {
-      text-align: center;
-      padding: 0.5rem;
-      white-space: normal;
+      margin-top: 50px; /* below navbar */
+      max-height: calc(50vh - 25px);
+      border-radius: 0.5rem;
+      box-shadow: 0 0 8px #3399ffaa;
     }
     .data-table {
-      max-height: 200px;
+      flex: 1 1 50%;
+      width: 100%;
+      max-height: calc(50vh - 25px);
+      margin-top: 0.5rem;
       overflow-y: auto;
+      background-color: #1e1e1e;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 8px #3399ffaa;
     }
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #222;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      display: none;
-      z-index: 9999;
+    table.table {
+      width: 100%;
+      table-layout: auto;
+      color: #eee;
+      margin-bottom: 0;
+      border-collapse: separate;
+      border-spacing: 0;
+      text-align: center;
     }
-    .show {
+    table th, table td {
+      vertical-align: middle !important;
+      white-space: nowrap;
+      text-align: center;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #444;
+      user-select: none;
+    }
+    table th.location, table td.location {
+      max-width: 300px;
+      white-space: normal;
+      word-break: break-word;
+    }
+    button.sos-btn {
+      font-size: 1.1rem;
+      padding: 0.2rem 0.6rem;
+      cursor: pointer;
+      min-width: 40px;
+      margin: 0 auto;
       display: block;
     }
     footer {
-      background: #111;
-      padding: 10px;
-      text-align: center;
-      color: #888;
+      height: 70px;
+      width: 100%;
+      background-color: #212529;
+      color: #ccc;
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+      padding: 0.75rem 1rem;
       flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.25rem;
+      align-items: center;
+      text-align: center;
+      user-select: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      z-index: 1000;
     }
-    .direction-icon {
+    footer small {
+      font-weight: 400;
+    }
+    footer a {
+      color: #3399ff;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: #eee;
+      padding: 10px 20px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      font-weight: 600;
+      z-index: 11000;
+      max-width: 90vw;
+      text-align: center;
+      user-select: none;
+    }
+    #toast.show {
+      opacity: 0.9;
+      pointer-events: auto;
+    }
+    .pulsating-ring {
+      position: relative;
       width: 30px;
       height: 30px;
-      background: url('https://cdn-icons-png.flaticon.com/512/60/60525.png') no-repeat center center;
-      background-size: contain;
-      transform-origin: center;
+      border: 3px solid #3399ff;
+      border-radius: 50%;
+      background: rgba(51, 153, 255, 0.3);
+      box-sizing: border-box;
+      animation: pulse 2s infinite;
+      filter: drop-shadow(0 0 5px #3399ff);
+      margin: 0 auto;
+    }
+    .pulsating-ring::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 42px;
+      height: 42px;
+      border: 2px solid #3399ff;
+      border-radius: 50%;
+      animation: pulse-border 2s infinite;
+      opacity: 0.6;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+    }
+    @keyframes pulse-border {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
     }
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-dark bg-dark">
+    <span>blitzdTrack</span>
+    <span id="liveTime">00:00:00</span>
+  </nav>
+
   <div id="app">
-    <div class="text-center p-2">
-      <h1 class="text-light m-0">📍 blitzdTrack v0.5b</h1>
-    </div>
     <div id="map"></div>
+
     <div class="data-table">
       <table class="table table-dark table-striped mb-0">
         <thead>
           <tr>
-            <th>Device ID</th>
-            <th>Activity</th>
-            <th>Location</th>
+            <th>DeviceID</th>
+            <th>Status</th>
+            <th class="location">Location</th>
             <th>Speed</th>
-            <th>Altitude</th>
-            <th>Last Seen</th>
-            <th>Since</th>
+            <th>Alt</th>
+            <th>Last seen</th>
+            <th>SOS</th>
           </tr>
         </thead>
         <tbody id="deviceTableBody"></tbody>
       </table>
     </div>
-    <div class="text-center p-2">
-      <button id="sosButton" class="btn btn-danger">🚨 Send SOS</button>
-    </div>
-    <footer>
-      <p id="liveTime"></p>
-      <small>Attribution: <strong>blitzdTrack v0.5b</strong></small>
-    </footer>
   </div>
+
+  <footer>
+    <small>
+      Disclaimer: This service is for informational purposes only and should not be relied upon for emergencies or critical safety decisions.
+    </small>
+    <div>
+      Powered by blitzdTrack v0.5b | Contact us
+      <a href="https://m.me/blitzdmedia" target="_blank" rel="noopener noreferrer">Messenger</a> |
+      <a href="https://t.me/blitzd" target="_blank" rel="noopener noreferrer">Telegram</a>
+    </div>
+  </footer>
 
   <div id="toast" class="toast"></div>
 
@@ -116,74 +252,81 @@
     const TELEGRAM_BOT_TOKEN = "6776684735:AAFifrxvQCHr6gls-gISE9muvDwAwKgifeA";
     const TELEGRAM_CHAT_ID = "920222421";
 
-    let deviceMarker, directionMarker;
+    let deviceMarker;
 
     const map = L.map("map").setView([53.335671, -2.235709], 18);
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution: "&copy; OpenStreetMap",
+      attribution: "&copy; OpenStreetMap contributors",
     }).addTo(map);
 
-    const customIcon = L.icon({
-      iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-      iconSize: [40, 40],
+    const pulsatingIcon = L.divIcon({
+      className: "",
+      html: '<div class="pulsating-ring"></div>',
+      iconSize: [42, 42],
+      iconAnchor: [21, 21],
+      popupAnchor: [0, -21],
     });
-
-    function fetchDeviceLocation() {
-      fetch("https://dev.gbya.co.uk:1880/location/live")
-        .then(r => r.json())
-        .then(data => {
-          const lat = parseFloat(data.locationLatitude);
-          const lng = parseFloat(data.locationLongitude);
-          const course = parseFloat(data.locationCourse);
-
-          if (!deviceMarker) {
-            deviceMarker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
-
-            const directionIcon = L.divIcon({ className: 'direction-icon' });
-            directionMarker = L.marker([lat, lng], { icon: directionIcon }).addTo(map);
-          } else {
-            deviceMarker.setLatLng([lat, lng]);
-            directionMarker.setLatLng([lat, lng]);
-          }
-
-          // Rotate arrow
-          const arrowEl = directionMarker.getElement();
-          if (arrowEl) arrowEl.style.transform = `rotate(${course}deg)`;
-
-          map.setView([lat, lng], 18);
-
-          const tbody = document.getElementById("deviceTableBody");
-          const timeDiff = getTimeDiff(parseLoggingTime(data.loggingTime));
-
-          tbody.innerHTML = `
-            <tr>
-              <td>${data.deviceID}</td>
-              <td>${data.activity}</td>
-              <td>${data.geolocationFullName}</td>
-              <td>${parseFloat(data.locationSpeed).toFixed(2)}</td>
-              <td>${parseFloat(data.locationAltitude).toFixed(2)}</td>
-              <td>${data.loggingTime}</td>
-              <td>${timeDiff}</td>
-            </tr>
-          `;
-        })
-        .catch(() => showToast("Failed to fetch device data."));
-    }
 
     function parseLoggingTime(t) {
       const [timePart, datePart] = t.split(" - ");
       const [h, m, s] = timePart.split(":").map(Number);
       const [day, monthName, year] = datePart.split("/");
-      const months = {Jan:0, Feb:1, Mar:2, Apr:3, May:4, Jun:5, Jul:6, Aug:7, Sep:8, Oct:9, Nov:10, Dec:11};
+      const months = {
+        Jan: 0,
+        Feb: 1,
+        Mar: 2,
+        Apr: 3,
+        May: 4,
+        Jun: 5,
+        Jul: 6,
+        Aug: 7,
+        Sep: 8,
+        Oct: 9,
+        Nov: 10,
+        Dec: 11,
+      };
       const mo = months[monthName] ?? 0;
       return new Date(year, mo, parseInt(day), h, m, s);
     }
 
     function getTimeDiff(d) {
-      const diff = Math.max(0, new Date() - d);
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      return (h === 0 && m === 0) ? "Just now" : `${h}h ${m}m ago`;
+      const now = new Date();
+      let diffMs = Math.max(0, now - d);
+
+      const oneMinute = 60000;
+      const oneHour = 3600000;
+      const oneDay = 86400000;
+      const oneWeek = 7 * oneDay;
+      const oneMonth = 30 * oneDay;
+      const oneYear = 365 * oneDay;
+
+      const years = Math.floor(diffMs / oneYear);
+      diffMs -= years * oneYear;
+
+      const months = Math.floor(diffMs / oneMonth);
+      diffMs -= months * oneMonth;
+
+      const days = Math.floor(diffMs / oneDay);
+      diffMs -= days * oneDay;
+
+      const hours = Math.floor(diffMs / oneHour);
+      diffMs -= hours * oneHour;
+
+      const minutes = Math.floor(diffMs / oneMinute);
+
+      if (years > 0) {
+        return `${years}y ${months}mo ago`;
+      } else if (months > 0) {
+        return `${months}mo ${days}d ago`;
+      } else if (days > 0) {
+        return `${days}d ${hours}h ago`;
+      } else if (hours > 0) {
+        return `${hours}h ${minutes}m ago`;
+      } else if (minutes > 0) {
+        return `${minutes}m ago`;
+      } else {
+        return "Just now";
+      }
     }
 
     function showToast(msg, dur = 3000) {
@@ -193,45 +336,61 @@
       setTimeout(() => toast.classList.remove("show"), dur);
     }
 
-    document.getElementById("sosButton").onclick = () => {
-      if (!confirm("Send an SOS alert with device data?")) return;
+    function fetchDeviceLocation() {
       fetch("https://dev.gbya.co.uk:1880/location/live")
-        .then(r => r.json())
-        .then(data => {
-          const loc = `https://www.google.com/maps/search/?api=1&query=${data.locationLatitude},${data.locationLongitude}`;
-          const message = `🚨 BlitzdTrack SOS Alert 🚨\n\n` +
-            `Device ID: ${data.deviceID}\n` +
-            `Activity: ${data.activity}\n` +
-            `Latitude: ${data.locationLatitude}\n` +
-            `Longitude: ${data.locationLongitude}\n` +
-            `Speed: ${data.locationSpeed} m/s\n` +
-            `Course: ${data.locationCourse}\n` +
-            `Altitude: ${data.locationAltitude} m\n` +
-            `Pressure: ${data.altimeterPressure}\n` +
-            `Last Seen: ${data.loggingTime}\n` +
-            `Location: ${data.geolocationFullName}\n\n` +
-            `📍 [Open in Maps](${loc})`;
+        .then((r) => r.json())
+        .then((data) => {
+          const lat = parseFloat(data.locationLatitude);
+          const lng = parseFloat(data.locationLongitude);
 
-          fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
-          })
-          .then(r => r.json())
-          .then(d => d.ok ? showToast("SOS alert sent!") : showToast("Telegram failed"))
-          .catch(() => showToast("Telegram error."));
+          if (!deviceMarker) {
+            deviceMarker = L.marker([lat, lng], { icon: pulsatingIcon }).addTo(map);
+          } else {
+            deviceMarker.setLatLng([lat, lng]);
+          }
+
+          map.setView([lat, lng], 18);
+
+          const tbody = document.getElementById("deviceTableBody");
+          const lastSeen = getTimeDiff(parseLoggingTime(data.loggingTime));
+
+          tbody.innerHTML = `
+            <tr>
+              <td>${data.deviceID}</td>
+              <td>${data.activity}</td>
+              <td class="location">${data.geolocationFullName}</td>
+              <td>${parseFloat(data.locationSpeed).toFixed(2)}</td>
+              <td>${parseFloat(data.locationAltitude).toFixed(2)}</td>
+              <td>${lastSeen}</td>
+              <td><button class="btn btn-danger sos-btn" onclick="sendSOS('${data.deviceID}')">SOS</button></td>
+            </tr>
+          `;
         })
-        .catch(() => showToast("Failed to fetch device data for SOS."));
-    };
+        .catch(() => showToast("Failed to fetch device data."));
+    }
+
+    function sendSOS(deviceId) {
+      const message = `SOS alert from device ${deviceId}! Immediate attention required.`;
+
+      fetch(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(
+          message
+        )}`
+      )
+        .then(() => showToast("SOS alert sent."))
+        .catch(() => showToast("Failed to send SOS alert."));
+    }
 
     function updateLiveTime() {
-      document.getElementById("liveTime").textContent = `Live Time: ${new Date().toLocaleTimeString()}`;
+      const now = new Date();
+      document.getElementById("liveTime").textContent = now.toLocaleTimeString();
     }
 
     setInterval(updateLiveTime, 1000);
     updateLiveTime();
+
     fetchDeviceLocation();
-    setInterval(fetchDeviceLocation, 15000);
+    setInterval(fetchDeviceLocation, 5000);
   </script>
 </body>
 </html>
