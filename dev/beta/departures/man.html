@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manchester Piccadilly Departures</title>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manchester Piccadilly Departures</title>
+    <style>
     body {
       font-family: 'Courier New', monospace;
       background-color: #000;
@@ -151,32 +151,33 @@
       color: #ff0000;
     }
   </style>
-</head>
-<body>
-  <div class="departure-board">
-    <div class="header">NATIONAL RAIL DEPARTURES</div>
-    <div class="station-name" id="station-name">MANCHESTER PICCADILLY</div>
-    <table>
-      <thead>
-        <tr>
-          <th class="platform">PLAT</th>
-          <th class="time">TIME</th>
-          <th class="destination">DESTINATION</th>
-          <th class="status">STATUS</th>
-          <th class="eta">ETA</th>
-        </tr>
-      </thead>
-      <tbody id="departures-container">
-        <tr><td colspan="5" class="loading">Loading departures...</td></tr>
-      </tbody>
-    </table>
-    <div class="last-updated" id="last-updated">Last updated: --:--</div>
-  </div>
-
-  <script>
+  </head>
+  <body>
+    <div class="departure-board">
+      <div class="header">NATIONAL RAIL DEPARTURES</div>
+      <div class="station-name" id="station-name">MANCHESTER PICCADILLY</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="platform">PLAT</th>
+            <th class="time">TIME</th>
+            <th class="destination">DESTINATION</th>
+            <th class="status">STATUS</th>
+            <th class="eta">ETA</th>
+          </tr>
+        </thead>
+        <tbody id="departures-container">
+          <tr>
+            <td colspan="5" class="loading">Loading departures...</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="last-updated" id="last-updated">Last updated: --:--</div>
+    </div>
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
       const stationCode = 'MAN';
-      const apiUrl = `https://api.leddepartureboard.com/api/LiveDepartures/GetLatestDepatures?stationCode= ${stationCode}&count=5`;
+      const apiUrl = `https://api.leddepartureboard.com/api/LiveDepartures/GetLatestDepatures?stationCode=${stationCode}&count=1`;
       const departuresContainer = document.getElementById('departures-container');
       const stationNameElement = document.getElementById('station-name');
       const lastUpdatedElement = document.getElementById('last-updated');
@@ -307,5 +308,6 @@
       }
     });
   </script>
-</body>
+    
+  </body>
 </html>
