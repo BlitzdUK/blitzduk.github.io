@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manchester Piccadilly Departures</title>
-    <style>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manchester Piccadilly Departures</title>
+  <style>
     body {
       font-family: 'Courier New', monospace;
       background-color: #000;
@@ -27,17 +27,17 @@
     .header {
       margin-bottom: 20px;
       color: #ffcc00;
-      font-size: 32px;
+      font-size: 36px;
       font-weight: bold;
     }
 
     .station-name {
-      font-size: 28px;
+      font-size: 30px;
       margin-bottom: 5px;
     }
 
     .last-updated {
-      font-size: 18px;
+      font-size: 20px;
       color: #ccc;
       margin-top: 15px;
       text-align: right;
@@ -47,39 +47,30 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 5px;
-      table-layout: auto;
+      table-layout: fixed;
     }
 
-    th,
-    td {
-      padding: 12px 8px;
+    th, td {
+      padding: 14px 8px;
       text-align: center;
-      font-size: 20px;
+      font-size: 22px; /* Increased text size */
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     th {
       color: #ffcc00;
       border-bottom: 2px solid #ffcc00;
-      font-size: 22px;
+      font-size: 24px;
     }
 
-    td {
-      border-bottom: 1px solid #333;
-    }
-
-    .platform {
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .destination {
-      font-weight: bold;
-    }
-
-    .status,
-    .eta {
-      white-space: nowrap;
-    }
+    .platform { width: 8%; }
+    .time { width: 12%; }
+    .destination { width: 28%; }
+    .operator { width: 20%; font-weight: bold; }
+    .status { width: 15%; }
+    .eta { width: 17%; }
 
     .on-time {
       color: #00ff00;
@@ -93,38 +84,49 @@
       color: #ff0000;
     }
 
+    /* Calling At Section */
     .calling-at-container {
       background-color: #111;
-      padding: 10px 0;
+      padding: 12px 0;
       position: relative;
       overflow: hidden;
       width: 100%;
     }
 
-    .calling-at-content {
+    .calling-at-wrapper {
       display: flex;
       align-items: center;
-      width: max-content;
-      animation: scrollLeft 30s linear infinite;
+      gap: 15px;
+      min-width: 100%;
     }
 
     .calling-at-title {
       color: #ffcc00;
       font-weight: bold;
-      margin-right: 15px;
       font-size: 20px;
+      white-space: nowrap;
       flex-shrink: 0;
     }
 
-    .calling-at-stops {
-      display: flex;
+    .calling-at-scroll {
+      flex-grow: 1;
+      overflow: hidden;
+      position: relative;
       white-space: nowrap;
     }
 
+    .calling-at-scroll-content {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollLeft 30s linear infinite;
+      white-space: nowrap;
+      font-size: 18px; /* Larger scroll text */
+    }
+
     .stop-item {
-      margin-right: 40px;
+      margin-right: 60px;
       color: #ccc;
-      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .stop-time {
@@ -133,14 +135,18 @@
     }
 
     @keyframes scrollLeft {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
     }
 
     .loading,
     .error {
       padding: 25px;
-      font-size: 22px;
+      font-size: 24px;
     }
 
     .loading {
@@ -151,30 +157,32 @@
       color: #ff0000;
     }
   </style>
-  </head>
-  <body>
-    <div class="departure-board">
-      <div class="header">NATIONAL RAIL DEPARTURES</div>
-      <div class="station-name" id="station-name">MANCHESTER PICCADILLY</div>
-      <table>
-        <thead>
-          <tr>
-            <th class="platform">PLAT</th>
-            <th class="time">TIME</th>
-            <th class="destination">DESTINATION</th>
-            <th class="status">STATUS</th>
-            <th class="eta">ETA</th>
-          </tr>
-        </thead>
-        <tbody id="departures-container">
-          <tr>
-            <td colspan="5" class="loading">Loading departures...</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="last-updated" id="last-updated">Last updated: --:--</div>
-    </div>
-    <script>
+</head>
+<body>
+  <div class="departure-board">
+    <div class="header">NATIONAL RAIL DEPARTURES</div>
+    <div class="station-name" id="station-name">MANCHESTER PICCADILLY</div>
+    <table>
+      <thead>
+        <tr>
+          <th class="platform">PLAT</th>
+          <th class="time">TIME</th>
+          <th class="destination">DESTINATION</th>
+          <th class="operator">OPERATOR</th>
+          <th class="status">STATUS</th>
+          <th class="eta">ETA</th>
+        </tr>
+      </thead>
+      <tbody id="departures-container">
+        <tr>
+          <td colspan="6" class="loading">Loading departures...</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="last-updated" id="last-updated">Last updated: --:--</div>
+  </div>
+
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
       const stationCode = 'MAN';
       const apiUrl = `https://api.leddepartureboard.com/api/LiveDepartures/GetLatestDepatures?stationCode=${stationCode}&count=1`;
@@ -193,14 +201,14 @@
           })
           .then(data => displayDepartures(data))
           .catch(error => {
-            console.error("Fetch error:", error);
-            departuresContainer.innerHTML = `<tr><td colspan="5" class="error">Failed to load departures.</td></tr>`;
+            console.error("Fetch failed:", error);
+            departuresContainer.innerHTML = `<tr><td colspan="6" class="error">Failed to load departures.</td></tr>`;
           });
       }
 
       function displayDepartures(departures) {
         if (!Array.isArray(departures) || departures.length === 0) {
-          departuresContainer.innerHTML = `<tr><td colspan="5" class="error">No departure information available</td></tr>`;
+          departuresContainer.innerHTML = `<tr><td colspan="6" class="error">No departure information available</td></tr>`;
           return;
         }
 
@@ -212,93 +220,98 @@
         departuresContainer.innerHTML = '';
 
         departures.forEach(departure => {
-          try {
-            const aimedTime = new Date(departure.aimedDeparture);
-            const expectedTime = new Date(departure.expectedDeparture);
-            const now = new Date();
+          const aimedTime = new Date(departure.aimedDeparture);
+          const expectedTime = new Date(departure.expectedDeparture);
+          const now = new Date();
 
-            let delayMins = Math.round((expectedTime - aimedTime) / (1000 * 60));
-            let etaMins = Math.round((expectedTime - now) / (1000 * 60));
+          let delayMins = Math.round((expectedTime - aimedTime) / (1000 * 60));
+          let etaMins = Math.round((expectedTime - now) / (1000 * 60));
 
-            if (etaMins < 0) etaMins = 0;
-            if (delayMins < -720) {
-              delayMins = Math.round((expectedTime.getTime() + 86400000 - aimedTime.getTime()) / (1000 * 60));
-            }
+          if (etaMins < 0) etaMins = 0;
 
-            let statusText, statusClass;
-            switch (departure.status) {
-              case 0:
-                statusText = 'ON TIME';
-                statusClass = 'on-time';
-                break;
-              case 1:
-                statusText = delayMins > 0 ? `Late ${delayMins} mins` : 'Delayed';
-                statusClass = 'delayed';
-                break;
-              case 2:
-                statusText = 'CANCELLED';
-                statusClass = 'cancelled';
-                etaMins = '--';
-                break;
-              case 3:
-                statusText = 'PARTIALLY CANCELLED';
-                statusClass = 'cancelled';
-                etaMins = '--';
-                break;
-              case 4:
-                statusText = 'DIVERTED';
-                statusClass = 'delayed';
-                break;
-              default:
-                statusText = 'UNKNOWN';
-                statusClass = 'delayed';
-            }
+          if (delayMins < -720) {
+            delayMins = Math.round((expectedTime.getTime() + 86400000 - aimedTime.getTime()) / (1000 * 60));
+          }
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td class="platform">${departure.platform || '--'}</td>
-              <td class="time">${formatTime(aimedTime)}</td>
-              <td class="destination">${departure.destination?.toUpperCase() || '--'}</td>
-              <td class="status ${statusClass}">${statusText}</td>
-              <td class="eta">${etaMins !== null && !isNaN(etaMins) ? `${etaMins}mins` : '--'}</td>
-            `;
-            departuresContainer.appendChild(row);
+          let statusText, statusClass;
+          switch (departure.status) {
+            case 0:
+              statusText = 'ON TIME';
+              statusClass = 'on-time';
+              break;
+            case 1:
+              statusText = delayMins > 0 ? `Late ${delayMins} mins` : 'Delayed';
+              statusClass = 'delayed';
+              break;
+            case 2:
+              statusText = 'CANCELLED';
+              statusClass = 'cancelled';
+              etaMins = '--';
+              break;
+            case 3:
+              statusText = 'PARTIALLY CANCELLED';
+              statusClass = 'cancelled';
+              etaMins = '--';
+              break;
+            case 4:
+              statusText = 'DIVERTED';
+              statusClass = 'delayed';
+              break;
+            default:
+              statusText = 'UNKNOWN';
+              statusClass = 'delayed';
+          }
 
-            if (departure.stops && Array.isArray(departure.stops) && departure.stops.length > 0) {
-              const stopsRow = document.createElement('tr');
-              const stopsCell = document.createElement('td');
-              stopsCell.colSpan = 5;
-              stopsCell.className = 'calling-at-container';
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="platform">${departure.platform || '--'}</td>
+            <td class="time">${formatTime(aimedTime)}</td>
+            <td class="destination">${departure.destination?.toUpperCase() || '--'}</td>
+            <td class="operator">${departure.operatorName?.toUpperCase() || '--'}</td>
+            <td class="status ${statusClass}">${statusText}</td>
+            <td class="eta">${etaMins !== null && !isNaN(etaMins) ? `${etaMins}mins` : '--'}</td>
+          `;
+          departuresContainer.appendChild(row);
 
-              const contentWrapper = document.createElement('div');
-              contentWrapper.className = 'calling-at-content';
+          if (departure.stops && Array.isArray(departure.stops) && departure.stops.length > 0) {
+            const stopsRow = document.createElement('tr');
+            const stopsCell = document.createElement('td');
+            stopsCell.colSpan = 6;
+            stopsCell.className = 'calling-at-container';
 
-              const title = document.createElement('span');
-              title.className = 'calling-at-title';
-              title.textContent = 'Calling at:';
+            const wrapper = document.createElement('div');
+            wrapper.className = 'calling-at-wrapper';
 
-              const stopsWrapper = document.createElement('div');
-              stopsWrapper.className = 'calling-at-stops';
+            const title = document.createElement('span');
+            title.className = 'calling-at-title';
+            title.textContent = 'Calling at:';
 
-              departure.stops.forEach(stop => {
-                const stopElement = document.createElement('span');
-                stopElement.className = 'stop-item';
-                stopElement.innerHTML = `
-                  ${stop.stationName || 'Unknown Station'}
-                  <span class="stop-time">(${formatTime(new Date(stop.aimedDeparture))})</span>
-                `;
-                stopsWrapper.appendChild(stopElement);
-              });
+            const scrollContainer = document.createElement('div');
+            scrollContainer.className = 'calling-at-scroll';
 
-              contentWrapper.appendChild(title);
-              contentWrapper.appendChild(stopsWrapper);
-              stopsCell.appendChild(contentWrapper);
-              stopsRow.appendChild(stopsCell);
-              departuresContainer.appendChild(stopsRow);
-            }
+            const scrollContent = document.createElement('div');
+            scrollContent.className = 'calling-at-scroll-content';
 
-          } catch (err) {
-            console.error("Error rendering row:", err, departure);
+            // Duplicate stops for smooth infinite loop
+            const duplicatedStops = [...departure.stops, ...departure.stops];
+
+            duplicatedStops.forEach(stop => {
+              const stopElement = document.createElement('span');
+              stopElement.className = 'stop-item';
+              const stopTime = formatTime(new Date(stop.aimedDeparture));
+              stopElement.innerHTML = `
+                ${stop.stationName || 'Unknown Station'}
+                <span class="stop-time">(${stopTime})</span>
+              `;
+              scrollContent.appendChild(stopElement);
+            });
+
+            scrollContainer.appendChild(scrollContent);
+            wrapper.appendChild(title);
+            wrapper.appendChild(scrollContainer);
+            stopsCell.appendChild(wrapper);
+            stopsRow.appendChild(stopsCell);
+            departuresContainer.appendChild(stopsRow);
           }
         });
       }
@@ -308,6 +321,5 @@
       }
     });
   </script>
-    
-  </body>
+</body>
 </html>
