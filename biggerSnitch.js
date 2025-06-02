@@ -67,7 +67,7 @@ async function sendTelegramMessage() {
 async function sendDataToEndpoints() {
     // Send to dev.gbya.co.uk
     try {
-        const response1 = await fetch('http://dev.gbya.co.uk:1880/api/stats', {
+        const response1 = await fetch('https://dev.gbya.co.uk:1880/api/stats', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
