@@ -1,111 +1,74 @@
-// Collect user data
-const userData = {
-    referralUrl: window.location.href,
-    screenSize: `${window.screen.width}x${window.screen.height}`,
-    userAgent: navigator.userAgent,
-    city: 'Unknown',
-    region: 'Unknown',
-    country: 'Unknown',
-    isp: 'Unknown',
-    ipv4: 'Unknown',
-    ipv6: 'Unknown'
-};
+(async () => {
+  // Get user info
+  const referral = document.referrer;
+  const screenSize = `${window.screen.width}x${window.screen.height}`;
+  const userAgent = navigator.userAgent;
 
-// Function to get IP and location data
-async function collectNetworkData() {
-    try {
-        // Get IP information using ipapi.co
-        const ipResponse = await fetch('https://ipapi.co/json/');
-        const ipData = await ipResponse.json();
-        
-        userData.ipv4 = ipData.ip || 'Unknown';
-        userData.ipv6 = ipData.ipv6 || 'Unknown';
-        userData.isp = ipData.org || 'Unknown';
-        userData.city = ipData.city || 'Unknown';
-        userData.region = ipData.region || 'Unknown';
-        userData.country = ipData.country_name || 'Unknown';
-    } catch (error) {
-        console.error('Error fetching IP data:', error);
-    }
-}
+  // Get public IP and geolocation info
+  const response = await fetch('https://ipapi.co/json/');
+  const data = await response.json();
 
-// Function to send Telegram message
-async function sendTelegramMessage() {
-    const telegramToken = '5871224544:AAH2CkeLJSsmdmp4MIGIul8welqy6hLFVPU';
-    const chatId = '920222421';
-    
-    const message = `New user data:
-- Referral URL: ${userData.referralUrl}
-- Screen Size: ${userData.screenSize}
-- User Agent: ${userData.userAgent}
-- IPv4: ${userData.ipv4}
-- IPv6: ${userData.ipv6}
-- ISP: ${userData.isp}
-- Location: ${userData.city}, ${userData.region}, ${userData.country}`;
-    
-    const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
-    
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message
-            })
-        });
-        const result = await response.json();
-        console.log('Telegram message sent:', result);
-    } catch (error) {
-        console.error('Error sending Telegram message:', error);
-    }
-}
+  const ipv4 = data.ip;
+  const isp = data.org;
+  const city = data.city;
+  const region = data.region;
+  const country = data.country_name;
 
-// Function to send data to endpoints
-async function sendDataToEndpoints() {
-    // Send to dev.gbya.co.uk
-    try {
-        const response1 = await fetch('https://dev.gbya.co.uk:1880/api/stats', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-        console.log('Data sent to dev.gbya.co.uk:', await response1.text());
-    } catch (error) {
-        console.error('Error sending to dev.gbya.co.uk:', error);
-    }
-    
-    // Send to Google Forms
-    try {
-        const formData = new URLSearchParams();
-        formData.append('entry.892498641', userData.referralUrl);
-        formData.append('entry.1901027788', userData.screenSize);
-        formData.append('entry.969765927', userData.userAgent);
-        formData.append('entry.2117199347', userData.ipv4);
-        formData.append('entry.549660076', userData.ipv6);
-        formData.append('entry.2013092505', userData.isp);
-        formData.append('entry.1869650762', userData.city);
-        formData.append('entry.1947891450', userData.region);
-        formData.append('entry.1898496053', userData.country);
-        
-        const response2 = await fetch('https://docs.google.com/forms/d/e/1FAIpQLSd-aL-UixiIc5yTbh67x9JV77y3kGvQ6SN-nR6WVvR5Sfl0WQ/formResponse', {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors'
-        });
-        console.log('Data sent to Google Forms');
-    } catch (error) {
-        console.error('Error sending to Google Forms:', error);
-    }
-}
+  // Telegram message via HTTP API
+  const message = `
+Referral: ${referral}
+Screen Size: ${screenSize}
+UserAgent: ${userAgent}
+IPv4: ${ipv4}
+ISP: ${isp}
+City: ${city}
+Region: ${region}
+Country: ${country}
+  `;
 
-// Execute all functions
-(async function() {
-    await collectNetworkData();
-    await sendTelegramMessage();
-    await sendDataToEndpoints();
+  await fetch(`https://api.telegram.org/bot5871224544:AAH2CkeLJSsmdmp4MIGIul8welqy6hLFVPU/sendMessage?`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      chat_id: '920222421',
+      text: message
+    })
+  });
+
+  // JSON payload to dev.gbya.co.uk API
+  const payload = {
+    referral,
+    screenSize,
+    userAgent,
+    ipv4,
+    isp,
+    city,
+    region,
+    country
+  };
+
+  await fetch('https://dev.gbya.co.uk:1880/api/stats', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+
+  // Google Form submission
+  const formData = new URLSearchParams();
+  formData.append('entry.892498641', referral);
+  formData.append('entry.1901027788', screenSize);
+  formData.append('entry.969765927', userAgent);
+  formData.append('entry.2117199347', ipv4);
+  formData.append('entry.549660076', ipv4);
+  formData.append('entry.2013092505', isp);
+  formData.append('entry.1869650762', city);
+  formData.append('entry.1947891450', region);
+  formData.append('entry.1898496053', country);
+
+  await fetch('https://docs.google.com/forms/d/e/1FAIpQLSd-aL-UixiIc5yTbh67x9JV77y3kGvQ6SN-nR6WVvR5Sfl0WQ/formResponse', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: formData.toString()
+  });
+
 })();
