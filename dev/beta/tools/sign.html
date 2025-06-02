@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Signing Tool</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        textarea, input { width: 100%; margin-bottom: 10px; }
+        button { padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        #output { margin-top: 20px; padding: 10px; border: 1px solid #ddd; }
+        .container { display: flex; flex-direction: column; gap: 15px; }
+        #loading { display: none; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>File Signing Tool</h1>
+    <div class="container">
+        <div id="loading">Loading Python environment... (this may take a moment)</div>
+        
+        <div>
+            <h3>1. Select File to Sign</h3>
+            <input type="file" id="fileInput">
+        </div>
+        
+        <div>
+            <h3>2. Enter PEM Certificate (with private key)</h3>
+            <textarea id="pemContent" rows="10" placeholder="Paste your fullchain.pem content here..."></textarea>
+        </div>
+        
+        <button id="signBtn" disabled>Sign File & Generate Hash</button>
+        
+        <div id="output">
+            <h3>Results:</h3>
+            <div id="hashResult"></div>
+            <div id="signatureStatus"></div>
+            <div id="downloadLinks"></div>
+        </div>
+    </div>
+
+    <script>
+        let pyodide;
+        async function initializePyodide() {
+            document.getElementById('loading').style.display = 'block';
+            pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
+            });
+            await pyodide.loadPackage(["cryptography"]);
+            document.getElementById('signBtn').disabled = false;
+            document.getElementById('loading').style.display = 'none';
+            console.log("Pyodide initialized");
+        }
+        
+        // Start loading Pyodide immediately
+        initializePyodide();
+
+        document.getElementById("signBtn").addEventListener("click", async function() {
+            const fileInput = document.getElementById("fileInput");
+            const pemContent = document.getElementById("pemContent").value;
+            
+            if (!fileInput.files.length || !pemContent) {
+                alert("Please select a file and provide PEM content");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = async function(e) {
+                const fileData = e.target.result;
+                const fileBytes = new Uint8Array(fileData);
+                
+                try {
+                    // Create Python objects from JS data
+                    pyodide.runPython(`
+                        import js
+                        file_bytes = bytes(js.fileBytes.to_py())
+                        pem_content = js.pemContent
+                    `);
+                    
+                    // Run the signing and hashing code
+                    const results = await pyodide.runPythonAsync(`
+                        import hashlib
+                        from cryptography.hazmat.backends import default_backend
+                        from cryptography.hazmat.primitives import hashes as py_hashes
+                        from cryptography.hazmat.primitives.asymmetric import padding
+                        from cryptography.hazmat.primitives.serialization import load_pem_private_key
+                        
+                        # Generate SHA-256 hash
+                        sha256_hash = hashlib.sha256(file_bytes).hexdigest()
+                        
+                        # Sign the file
+                        try:
+                            private_key = load_pem_private_key(
+                                pem_content.encode(),
+                                password=None,
+                                backend=default_backend()
+                            )
+                            
+                            signature = private_key.sign(
+                                file_bytes,
+                                padding.PSS(
+                                    mgf=padding.MGF1(py_hashes.SHA256()),
+                                    salt_length=padding.PSS.MAX_LENGTH
+                                ),
+                                py_hashes.SHA256()
+                            )
+                            
+                            # Convert to hex for display
+                            signature_hex = signature.hex()
+                            success = True
+                        except Exception as e:
+                            signature_hex = str(e)
+                            success = False
+                        
+                        # Return results
+                        {
+                            "filename": js.file.name,
+                            "hash": sha256_hash,
+                            "signature": signature_hex,
+                            "success": success
+                        }
+                    `);
+                    
+                    // Display results
+                    document.getElementById("hashResult").innerHTML = `
+                        <strong>SHA-256 Hash:</strong> ${results.hash}
+                    `;
+                    
+                    document.getElementById("signatureStatus").innerHTML = results.success ?
+                        `<strong>Signature created successfully</strong>` :
+                        `<strong style="color:red">Signature failed:</strong> ${results.signature}`;
+                    
+                    // Create download links if successful
+                    if (results.success) {
+                        document.getElementById("downloadLinks").innerHTML = `
+                            <p>
+                                <a href="#" id="downloadSig">Download Signature File (.sig)</a> | 
+                                <a href="#" id="downloadHash">Download Hash File (.sha256)</a>
+                            </p>
+                        `;
+                        
+                        // Set up download handlers
+                        document.getElementById("downloadSig").addEventListener("click", function(e) {
+                            e.preventDefault();
+                            const blob = new Blob([new Uint8Array(results.signature.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))], 
+                                {type: 'application/octet-stream'});
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `${results.filename}.sig`;
+                            a.click();
+                        });
+                        
+                        document.getElementById("downloadHash").addEventListener("click", function(e) {
+                            e.preventDefault();
+                            const blob = new Blob([results.hash], {type: 'text/plain'});
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `${results.filename}.sha256`;
+                            a.click();
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error during signing:", error);
+                    document.getElementById("signatureStatus").innerHTML = 
+                        `<strong style="color:red">Error:</strong> ${error.message}`;
+                }
+            };
+            
+            // Store JS variables for Python to access
+            window.fileBytes = fileBytes;
+            window.pemContent = pemContent;
+            window.file = file;
+            
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+</html>

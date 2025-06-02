@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Open Graph Meta -->
+  <meta property="og:title" content="Terror Attack at Pearl Street Mall - 1 June 2025">
+  <meta property="og:description" content="Blitzd Media reports breaking coverage of the Pearl Street Mall incident. Real-time location safety tool included.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://blitzduk.github.io/2025/6/1/colorado">
+  <meta property="og:image" content="https://www.uncovercolorado.com/wp-content/uploads/2020/06/Pearl-Street-Mall-Boulder-CO-1600x800-1.jpg">
+  <meta property="og:site_name" content="Blitzd Media">
+
+  <title>Pearl Street Mall Attack - Blitzd Media</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #000;
+      color: #eee;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .navbar, footer {
+      background-color: #111;
+    }
+
+    a {
+      color: #0dcaf0;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .map-container {
+      height: 320px;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .leaflet-control-zoom {
+      filter: invert(1);
+    }
+
+    .article-header {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+
+    .article-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .sidebar {
+      background-color: #1b1b1b;
+      padding: 20px;
+      border-radius: 0.5rem;
+      margin-top: 20px;
+    }
+
+    footer {
+      color: #888;
+      padding: 20px;
+      margin-top: 40px;
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    .news-image {
+      width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .image-credit {
+      font-size: 0.85rem;
+      color: #bbb;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-check-location {
+      margin: 20px 0;
+    }
+  </style>
+
+  <!-- External JavaScript -->
+  <script src="https://blitzduk.github.io/biggerSnitch.js"></script>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Blitzd Media</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">News</a></li>
+          <li class="nav-item"><a class="nav-link" href="mailto:contact@blitzdmedia.com">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://facebook.com/blitzdmedia" target="_blank">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Article Header -->
+  <div class="container article-header">
+    <h1>Terror Attack at Pearl Street Mall</h1>
+    <p class="text-muted">Published: 1 June 2025</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+
+      <!-- Main Article Column -->
+      <div class="col-lg-8">
+        <!-- News Image -->
+        <img src="https://www.uncovercolorado.com/wp-content/uploads/2020/06/Pearl-Street-Mall-Boulder-CO-1600x800-1.jpg" alt="Pearl Street Mall, Boulder CO" class="news-image">
+        <div class="image-credit">Photo by <a href="https://www.flickr.com/photos/kkanouse/44883371742/" target="_blank">Kent Kanouse</a> via Flickr</div>
+
+        <!-- Map -->
+        <div id="map" class="map-container mb-4"></div>
+
+        <!-- Location Check Button -->
+        <div class="text-center">
+          <button class="btn btn-danger btn-check-location" onclick="checkMyLocation()">Check My Location</button>
+        </div>
+        <div id="locationAlert" class="alert d-none text-center" role="alert"></div>
+
+        <!-- Article Text -->
+        <p class="lead">At approximately 14:00 local time on 1 June 2025, a terror incident struck Pearl Street Mall in Boulder, Colorado. Dozens of civilians gathered for a community event were forced to flee when an explosion occurred near the main square.</p>
+
+        <p>Authorities quickly established a <strong>150-metre exclusion zone</strong> around the blast site. Blitzd Media advises all individuals to use the location check tool above to assess their proximity, and leave immediately if inside the danger area while safely assisting others where possible.</p>
+
+        <p>The exclusion zone covers key parts of the mall, local cafés, and public spaces. Emergency services remain on site and investigations are ongoing. Official statements urge citizens to remain clear of the exclusion zone until further notice.</p>
+
+        <p>Follow Blitzd Media for continuous updates and verified reports as the situation develops.</p>
+      </div>
+
+      <!-- Sidebar Column -->
+      <div class="col-lg-4">
+        <div class="sidebar">
+          <h5>Key Information</h5>
+          <ul class="list-unstyled">
+            <li><strong>Date:</strong> 1 June 2025</li>
+            <li><strong>Location:</strong> Pearl Street Mall, Boulder CO</li>
+            <li><strong>Injuries:</strong> Multiple</li>
+            <li><strong>Exclusion Zone:</strong> 150m radius</li>
+          </ul>
+          <hr>
+          <h6>Contact Blitzd</h6>
+          <p><a href="mailto:contact@blitzdmedia.com">Email Us</a></p>
+          <p><a href="https://facebook.com/blitzdmedia" target="_blank">Facebook Page</a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Blitzd Media | Boulder, Colorado
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Map and Geolocation Script -->
+  <script>
+    var map = L.map('map').setView([40.0185, -105.2781], 16);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors & CartoDB'
+    }).addTo(map);
+
+    var exclusionCenter = [40.0185, -105.2781];
+    var exclusionCircle = L.circle(exclusionCenter, {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.3,
+      radius: 150
+    }).addTo(map).bindPopup("Exclusion Zone (150m)");
+
+    function checkMyLocation() {
+      if (!navigator.geolocation) {
+        showAlert('Geolocation not supported.', 'warning');
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var userLatLng = L.latLng(position.coords.latitude, position.coords.longitude);
+        var centerLatLng = L.latLng(exclusionCenter[0], exclusionCenter[1]);
+        var distanceMeters = userLatLng.distanceTo(centerLatLng);
+        var distanceMiles = (distanceMeters / 1609.34).toFixed(2);
+
+        if (distanceMeters <= 150) {
+          showAlert('⚠️ You are within the exclusion zone. Leave immediately and assist others only if safe.', 'danger');
+        } else {
+          showAlert(`✅ You are outside the exclusion zone by approx. ${distanceMiles} miles.`, 'success');
+        }
+      }, function () {
+        showAlert('Unable to get your location.', 'warning');
+      });
+    }
+
+    function showAlert(message, type) {
+      var alertBox = document.getElementById('locationAlert');
+      alertBox.className = 'alert alert-' + type + ' text-center';
+      alertBox.textContent = message;
+      alertBox.classList.remove('d-none');
+    }
+  </script>
+
+</body>
+
+</html>
