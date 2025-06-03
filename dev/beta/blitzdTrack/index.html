@@ -1,102 +1,183 @@
+
 <!DOCTYPE html>
-<html lang="en-GB">
-<head>
-  <meta charset="UTF-8">
-  <title>blitzdTrack</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-  <style>
-    html, body { margin:0; height:100%; background:#121212; color:#eee; overflow:hidden; font-family:sans-serif; }
-    nav { height:50px; display:flex; justify-content:space-between; align-items:center; background:#212529; color:white; padding:0 1rem; position:fixed; top:0; width:100%; z-index:1000;}
-    #map { height:100%; margin-top:50px; }
-    .pulsating-ring {
-      position:relative; width:30px; height:30px;
-      border:3px solid #3399ff; border-radius:50%;
-      background:rgba(51,153,255,0.3);
-      animation:pulse 2s infinite;
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-title" content="BlitzdTrack Dashboard">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://example.com/icon.png">
+    <title>BlitzdTrack Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <!-- Leaflet Map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    .pulsating-ring::after {
-      content:""; position:absolute; top:-6px; left:-6px;
-      width:42px; height:42px; border:2px solid #3399ff;
-      border-radius:50%; animation:pulse-border 2s infinite;
-      opacity:0.6;
+    h1 {
+      margin: 20px 0;
+      text-align: center;
+      color: #e0e0e0;
     }
-    @keyframes pulse {
-      0% { transform:scale(0.9); opacity:1; }
-      50% { transform:scale(1.1); opacity:0.7; }
-      100% { transform:scale(0.9); opacity:1; }
+    #map {
+      width: 100%;
+      height: 500px;
+      border-radius: 8px;
+      margin-bottom: 20px;
     }
-    @keyframes pulse-border {
-      0% { transform:scale(1); opacity:0.6; }
-      50% { transform:scale(1.3); opacity:0; }
-      100% { transform:scale(1); opacity:0.6; }
+    table {
+      margin-bottom: 20px;
+    }
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+      color: #fff;
+    }
+    th {
+      background-color: #333;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #1e1e1e;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: #252525;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: auto;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .navbar-dark .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
     }
   </style>
-</head>
-<body>
-  <nav><span>blitzdTrack</span><span id="liveTime"></span></nav>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
-    const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid"> <a class="navbar-brand" href="#">BlitzdTrack
+          Dashboard</a> </div>
+    </nav>
+    <div class="container mt-4">
+      <div id="map" class="mb-4"></div>
+      <table class="table table-dark table-striped table-hover text-center">
+        <thead>
+          <tr>
+            <th>DeviceID</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Geolocation</th>
+            <th>Speed (MPH)</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody id="data-table-body">
+          <!-- Data dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <footer>
+      <p>© 2025 Blitzd Media | <a href="https://m.me/blitzdmedia" target="_blank">Contact</a></p>
+    </footer>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet Map JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+    const API_URL = 'https://dev.gbya.co.uk:1880/data/heltec';
+    const OWM_API_URL = 'https://app.owm.io/app/1.1/geo/reverse';
+    const OWM_APPID = 'dd8770c04bfc20b2f1885e5f1c901125';
+    const DEVICE_ID = '011006FD-129A-458E-8A98-7283010A3558';
 
-    const map = L.map("map").setView([53.335671, -2.235709], 17);
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(map);
+    const map = L.map('map').setView([53.335709, -2.235694], 17);
 
-    const pulsatingIcon = L.divIcon({
-      html: '<div class="pulsating-ring"></div>',
-      iconSize: [42,42],
-      iconAnchor: [21,21]
-    });
+    L.tileLayer('https://tile.jawg.io/03ccc699-d21b-4ac2-8956-d916a1c5c520/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-    let marker = L.marker([53.335671, -2.235709], { icon: pulsatingIcon }).addTo(map);
+    let marker;
 
-    function updateLiveTime(){
-      const now = new Date();
-      document.getElementById("liveTime").textContent = now.toLocaleTimeString();
+    async function fetchGeolocation(lat, lon) {
+      try {
+        const response = await fetch(`${OWM_API_URL}?lat=${lat}&lon=${lon}&appid=${OWM_APPID}&deviceid=${DEVICE_ID}`);
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        const data = await response.json();
+        return data?.[0]?.full_name || 'Unknown Location';
+      } catch (error) {
+        console.error('Error fetching geolocation:', error);
+        return 'Error Fetching Location';
+      }
     }
-    setInterval(updateLiveTime, 1000);
-    updateLiveTime();
 
-    function fetchLocation(){
-      fetch("https://dev.gbya.co.uk:1880/location/live")
-      .then(r=>r.json())
-      .then(data=>{
-        const lat = parseFloat(data.locationLatitude);
-        const lon = parseFloat(data.locationLongitude);
-        marker.setLatLng([lat,lon]);
-        map.setView([lat,lon], 18);
+    async function updateTable(data) {
+      const { lat, lon, id, status, sp, ts } = data;
+      const geolocation = await fetchGeolocation(lat, lon);
 
-        window.latestData = data; // store for SOS button
-      });
+      document.getElementById('data-table-body').innerHTML = `
+        <tr>
+          <td>${id}</td>
+          <td>${lat}</td>
+          <td>${lon}</td>
+          <td>${geolocation}</td>
+          <td>${sp}</td>
+          <td>${status}</td>
+          <td>${ts}</td>
+        </tr>
+      `;
     }
-    setInterval(fetchLocation, 5000);
-    fetchLocation();
 
-    function sendSOS(){
-      if(!window.latestData) return alert("No data yet.");
-      const d = window.latestData;
-      const osmLink = `https://www.openstreetmap.org/?mlat=${d.locationLatitude}&mlon=${d.locationLongitude}#map=18/${d.locationLatitude}/${d.locationLongitude}`;
-      const msg = `🚨 BlitzdTrack SOS Alert 🚨
+    async function fetchAndUpdate() {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        const data = await response.json();
+        const { lat, lon, id, status, sp, ts } = data;
 
-Device ID: ${d.deviceID}
-Activity: ${d.activity}
-Latitude: ${d.locationLatitude}
-Longitude: ${d.locationLongitude}
-Speed: ${parseFloat(d.locationSpeed).toFixed(6)} m/s
-Course: ${parseFloat(d.locationCourse).toFixed(3)}
-Altitude: ${parseFloat(d.locationAltitude).toFixed(6)} m
-Pressure: ${parseFloat(d.locationPressure).toFixed(6)}
-Last Seen: ${d.loggingTime}
-Location: ${d.geolocationFullName}
+        if (!marker) {
+          marker = L.marker([lat, lon]).addTo(map);
+        } else {
+          marker.setLatLng([lat, lon]);
+        }
 
-📍 Open in Maps (${osmLink})`;
+        marker.bindPopup(`
+          <b>Device ID:</b> ${id}<br>
+          <b>Status:</b> ${status}<br>
+          <b>Last Updated:</b> ${ts}
+        `).openPopup();
 
-      fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(msg)}`)
-      .then(r=>r.ok ? alert("SOS sent.") : alert("Failed to send."));
+        map.setView([lat, lon], 15);
+        updateTable(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
+
+    setInterval(fetchAndUpdate, 5000);
+    fetchAndUpdate();
   </script>
-  <button onclick="sendSOS()" style="position:fixed;bottom:20px;right:20px;padding:10px 20px;font-size:1rem;border:none;border-radius:5px;background:#ff0033;color:white;cursor:pointer;z-index:1000;">🚨 SOS</button>
-</body>
+  </body>
 </html>
