@@ -1,0 +1,196 @@
+<html data-bs-theme="dark" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BlitzdTrack Device Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      crossorigin="">
+    <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #000;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      color: #ddd;
+      padding: 1rem;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+    .sidebar h5 {
+      color: #fff;
+    }
+    .content {
+      margin-left: 250px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      background-color: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+    #map {
+      flex: 1;
+      width: 100%;
+    }
+    .footer {
+      background-color: #1a1a1a;
+      color: #aaa;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      border-top: 1px solid #333;
+      font-size: 0.85rem;
+    }
+    /* Custom popup styling */
+    .leaflet-popup-content-wrapper {
+      background: #222;
+      color: #eee;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .leaflet-popup-tip {
+      background: #222;
+    }
+    .leaflet-popup-content {
+      margin: 8px 12px;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+    /* Pulsing radar marker */
+    .pulse-marker {
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 255, 255, 0.3);
+      border: 2px solid cyan;
+      border-radius: 50%;
+      position: relative;
+    }
+    .pulse-marker::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: pulse 1.5s infinite;
+      z-index: -1;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      70% {
+        transform: scale(3.5);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+  </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h5>blitzdTrack</h5>
+      <hr>
+      <p><span style="color: rgb(221, 221, 221); font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(17, 17, 17); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Live
+          device tracking using demo data.</span></p>
+    </div>
+    <div class="content">
+      <nav class="navbar navbar-dark px-3"> <span class="navbar-brand">Device
+          Tracker</span> </nav>
+      <div id="map"></div>
+      <div class="footer"> © 2025 BlitzdTrack — Demo by Blitzd | Last updated: <span
+          id="lastUpdated">—</span> </div>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = L.map('map').setView([60.8, -0.82], 17);
+
+      // Custom Jawg tile layer (your latest requested one)
+      L.tileLayer(
+        'https://tile.jawg.io/d3dd7b47-82c9-41b0-a313-18d0d310a806/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f',
+        {
+          maxZoom: 22,
+          attribution:
+            '<a href="https://jawg.io" target="_blank" style="color:#aaa;">&copy; Jawg</a> | &copy; OpenStreetMap contributors',
+        }
+      ).addTo(map);
+
+      const lastUpdatedEl = document.getElementById('lastUpdated');
+      let marker;
+
+      const pulseIcon = L.divIcon({
+        className: 'pulse-marker',
+        iconSize: [20, 20],
+      });
+
+      async function fetchAndUpdate() {
+        try {
+          const response = await fetch('https://dev.gbya.co.uk:1880/api/gps/simulation');
+          if (!response.ok) throw new Error('Network response was not ok');
+          const data = await response.json();
+
+          const lat = data.lat;
+          const lon = data.lon;
+          const speedMph = (data.speed * 2.23694).toFixed(1);
+
+          const labelContent = `
+deviceID: ${data.name}
+geolocation: ${data.full_name}
+coords: ${lat.toFixed(6)}, ${lon.toFixed(6)}
+Speed: ${speedMph} mph
+Local time: ${data.timestamp}
+          `.trim();
+
+          if (marker) {
+            marker.setLatLng([lat, lon]);
+            marker.getPopup().setContent(labelContent);
+          } else {
+            marker = L.marker([lat, lon], { icon: pulseIcon })
+              .addTo(map)
+              .bindPopup(labelContent)
+              .openPopup();
+          }
+
+          // Smooth fly to location at zoom 17
+          map.flyTo([lat, lon], 17, {
+            animate: true,
+            duration: 1.5
+          });
+
+          // Update last updated time
+          const now = new Date();
+          lastUpdatedEl.textContent = now.toLocaleTimeString();
+
+        } catch (error) {
+          console.error('Failed to fetch data:', error);
+        }
+      }
+
+      fetchAndUpdate();
+      setInterval(fetchAndUpdate, 5000);
+    });
+  </script>
+  </body>
+</html>
