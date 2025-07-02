@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html data-bs-theme="dark" lang="en">
   <head>
@@ -255,3 +256,250 @@
   });
 </script> </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BlitzdTrack Device Tracker</title>
+  <script src="https://blitzduk.github.io/dev/osint/unique.js"></script>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
+
+  <style>
+    html, body { height: 100%; margin: 0; background-color: #000; overflow: hidden; }
+    .sidebar {
+      width: 300px; height: 100vh; position: fixed; top: 0; left: 0;
+      background-color: #111; color: #ddd; padding: 1rem; overflow-y: auto; z-index: 1000;
+      font-size: 0.9rem; text-align: center; display: flex; flex-direction: column; align-items: center;
+    }
+    .sidebar h5 { color: #fff; width: 100%; text-align: center; margin-bottom: 1rem; }
+    .sidebar p { width: 100%; margin-bottom: 0.5rem; }
+    .content { margin-left: 300px; height: 100vh; display: flex; flex-direction: column; }
+    .navbar { background-color: #1a1a1a; border-bottom: 1px solid #333; }
+    #map { flex: 1; width: 100%; }
+    .footer {
+      background-color: #1a1a1a; color: #aaa; padding: 0.5rem 1rem;
+      text-align: center; border-top: 1px solid #333; font-size: 0.85rem;
+    }
+    .leaflet-popup-content-wrapper {
+      background: #222;
+      color: #eee;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 350px !important;
+      min-width: 280px;
+      white-space: normal !important;
+    }
+    .leaflet-popup-tip {
+      background: #222;
+    }
+    .leaflet-popup-content {
+      margin: 8px 12px;
+      font-size: 0.95rem;
+      white-space: normal !important;
+      padding: 0;
+      margin: 0;
+      word-break: break-word;
+      text-align: center; /* Center all text */
+    }
+
+    /* Flex wrap lines inside popup label, all text centered */
+    .leaflet-popup-content div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.3em;
+      margin: 0;
+      text-align: center;
+    }
+    .leaflet-popup-content strong {
+      flex: 0 0 auto;
+      font-weight: 700;
+      text-align: center;
+    }
+    .leaflet-popup-content div span.value {
+      flex: 1 1 auto;
+      white-space: normal;
+      word-break: break-word;
+      text-align: center; /* Center value text */
+    }
+
+    .pulse-marker {
+      width: 20px; height: 20px;
+      background: rgba(0, 255, 255, 0.3);
+      border: 2px solid cyan;
+      border-radius: 50%;
+      position: relative;
+    }
+    .pulse-marker::after {
+      content: "";
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.5);
+      position: absolute;
+      top: 0; left: 0;
+      animation: pulse 1.5s infinite;
+      z-index: -1;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      70% { transform: scale(3.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    @keyframes pulse-red {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    .speed-alert {
+      color: #ff4c4c !important;
+      animation: pulse-red 0.8s infinite;
+      font-weight: 700;
+    }
+
+    .device-table {
+      margin-top: 1rem;
+      color: #eee;
+      width: 100%;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .device-table th, .device-table td {
+      border-top: none !important;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .device-table th {
+      color: cyan;
+      font-weight: 600;
+    }
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h5>BlitzdTrack</h5>
+  <hr />
+  <p>Live device tracking demo.</p>
+  <p>Refreshes data every 5 seconds.</p>
+
+  <table class="table table-dark device-table">
+    <tbody>
+      <tr><th>Device ID</th><td id="device-id">—</td></tr>
+      <tr><th>Geolocation</th><td id="device-location">—</td></tr>
+      <tr><th>Coords</th><td id="device-coords">—</td></tr>
+      <tr><th>Road Type</th><td id="device-road">—</td></tr>
+      <tr><th>Speed</th><td id="device-speed">—</td></tr>
+      <tr><th>Speed Limit</th><td id="device-limit">—</td></tr>
+      <tr><th>Local Time</th><td id="device-time">—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content">
+  <nav class="navbar navbar-dark px-3"><span class="navbar-brand">Device Tracker</span></nav>
+  <div id="map"></div>
+  <div class="footer">
+    &copy; 2025 BlitzdTrack — Demo by Blitzd | Last updated: <span id="lastUpdated">—</span><br>
+    <small>
+      Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" style="color:#aaa;">OpenStreetMap contributors</a>,
+      rendered with <a href="https://www.leafletjs.com/" target="_blank" style="color:#aaa;">Leaflet</a>,
+      styled using <a href="https://www.jawg.io/" target="_blank" style="color:#aaa;">Jawg Maps</a>.
+      Geolocation data via <a href="https://overpass-api.de/" target="_blank" style="color:#aaa;">Overpass API</a>.
+    </small>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultZoom = 17;
+    let map = L.map('map').setView([60.8, -0.82], defaultZoom);
+
+    L.tileLayer(
+      'https://tile.jawg.io/d3dd7b47-82c9-41b0-a313-18d0d310a806/{z}/{x}/{y}{r}.png?access-token=dA27QiwVssZo1ZLAatgwM9aEk8d6CxksH2hXPPwDFffSqsNOVaY7n3LQeBfvmx3f',
+      { maxZoom: 22 }
+    ).addTo(map);
+
+    const lastUpdatedEl = document.getElementById('lastUpdated');
+    const el = id => document.getElementById(id);
+    let marker, initialLoad = true, userZoomChanged = false;
+
+    map.on('zoomend', () => { if (!initialLoad) userZoomChanged = true; });
+
+    const pulseIcon = L.divIcon({ className: 'pulse-marker', iconSize: [20, 20] });
+
+    async function fetchAndUpdate() {
+      try {
+        const response = await fetch('https://dev.gbya.co.uk:1880/api/gps/simulation');
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
+
+        const { lat, lon, name, full_name, speed, speed_limit_mph, road_type, timestamp } = data;
+        const speedMph = speed.toFixed(1);
+        const overSpeed = speed > speed_limit_mph;
+
+        // Label without local time and centered text
+        const labelContent = `
+<span class="${overSpeed ? 'speed-alert' : ''}" style="display:block; text-align:center;">
+  <div><strong>deviceID:</strong> <span class="value">${name}</span></div>
+  <div><strong>coords:</strong> <span class="value">${lat.toFixed(6)}, ${lon.toFixed(6)}</span></div>
+  <div><strong>Road type:</strong> <span class="value">${road_type}</span></div>
+  <div><strong>Speed:</strong> <span class="value">${speedMph} mph</span></div>
+  <div><strong>Speed limit:</strong> <span class="value">${speed_limit_mph} mph</span></div>
+</span>`;
+
+        if (!marker) {
+          marker = L.marker([lat, lon], { icon: pulseIcon }).addTo(map).bindPopup(labelContent);
+        } else {
+          marker.setLatLng([lat, lon]).setPopupContent(labelContent);
+        }
+
+        if (initialLoad || !userZoomChanged) {
+          map.flyTo([lat, lon], defaultZoom, { duration: 1.5 });
+          initialLoad = false;
+        } else {
+          map.panTo([lat, lon], { animate: true, duration: 1.5 });
+        }
+
+        // Update sidebar
+        el('device-id').textContent = name;
+        el('device-location').textContent = full_name;
+        el('device-coords').textContent = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+        el('device-road').textContent = road_type;
+        el('device-speed').textContent = `${speedMph} mph`;
+        el('device-limit').textContent = `${speed_limit_mph} mph`;
+        el('device-time').textContent = timestamp;
+
+        lastUpdatedEl.textContent = new Date().toLocaleTimeString();
+
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+      }
+    }
+
+    fetchAndUpdate();
+    setInterval(fetchAndUpdate, 5000);
+  });
+</script>
+
+</body>
+</html>
+>>>>>>> 138e8d7ece3b8f0298d7ca2818ec0be9bcc875c7
