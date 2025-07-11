@@ -175,6 +175,23 @@
       padding: 1rem 1.25rem;
       font-size: 1rem;
       margin-top: 1rem;
+      opacity: 1;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease forwards;
     }
 
     footer {
@@ -269,6 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestions.innerHTML = '';
         result.textContent = `Provider: ${row[1] || 'No details available'}`;
         result.classList.remove('d-none');
+
+        // Animate alert box fade-in
+        result.classList.remove('fade-in');
+        void result.offsetWidth; // Trigger reflow
+        result.classList.add('fade-in');
       });
       suggestions.appendChild(li);
     });
