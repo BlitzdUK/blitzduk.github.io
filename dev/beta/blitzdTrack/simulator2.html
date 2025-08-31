@@ -129,10 +129,9 @@
   </head>
   <body>
     <div class="sidebar">
-      <h5>BlitzdTrack</h5>
+      <h5>blitzdTrack</h5>
       <hr />
-      <p>Live device tracking demo.</p>
-      <p>Refreshes data every 5 seconds.</p>
+      <p>Live device tracking.</p>
       <table class="table table-dark device-table" id="device-info-table">
         <tbody>
           <tr><th>Device ID</th><td id="device-id">—</td></tr>
@@ -212,7 +211,7 @@
           }
         }
         fetchAndUpdate();
-        setInterval(fetchAndUpdate, 5000);
+        setInterval(fetchAndUpdate, 1000);
       });
     </script>
     <script type="module">
