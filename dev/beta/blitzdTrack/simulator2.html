@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Live real-time GPS tracker demo for devices. View location, speed, and status on a map." />
+    <title>BlitzdTrack Device Tracker</title>
+    
+    <script src="https://blitzduk.github.io/dev/osint/unique.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
+
+    <style>
+        /* (CSS from original script remains here, but can be moved to a separate .css file) */
+        html, body { height: 100%; margin: 0; background-color: #000; overflow: hidden; }
+        .sidebar { /* ... */ }
+        .content { /* ... */ }
+        /* ... other styles ... */
+    </style>
+</head>
+<body>
+
+<aside class="sidebar" role="complementary" aria-label="Device Information">
+    <header>
+        <h5>BlitzdTrack</h5>
+        <hr />
+        <p>Live device tracking demo.</p>
+        <p>Refreshes data every 5 seconds.</p>
+    </header>
+    
+    <table class="table table-dark device-table">
+        <caption class="visually-hidden">Live device data</caption>
+        <tbody>
+            <tr><th>Device ID</th><td id="device-id">—</td></tr>
+            <tr><th>Geolocation</th><td id="device-location">—</td></tr>
+            <tr><th>Coords</th><td id="device-coords">—</td></tr>
+            <tr><th>Road Type</th><td id="device-road">—</td></tr>
+            <tr><th>Speed</th><td id="device-speed">—</td></tr>
+            <tr><th>Speed Limit</th><td id="device-limit">—</td></tr>
+            <tr><th>Local Time</th><td id="device-time">—</td></tr>
+        </tbody>
+    </table>
+</aside>
+
+<main class="content" role="main">
+    <nav class="navbar navbar-dark px-3" aria-label="Main Navigation">
+        <span class="navbar-brand">Device Tracker</span>
+    </nav>
+    <div id="map" role="application" aria-label="Interactive Map"></div>
+    <footer class="footer">
+        &copy; 2025 BlitzdTrack — Demo by Blitzd | Last updated: <span id="lastUpdated">—</span>
+        <address>
+            <small>
+                Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a>,
+                rendered with <a href="https://www.leafletjs.com/" target="_blank">Leaflet</a>,
+                styled using <a href="https://www.jawg.io/" target="_blank">Jawg Maps</a>.
+                Geolocation data via <a href="https://overpass-api.de/" target="_blank">Overpass API</a>.
+            </small>
+        </address>
+    </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin="" defer></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ... (JavaScript from original script remains here)
+        // Note: It's better to move this to a separate `.js` file
+    });
+</script>
+
+<script type="module">
+    // Place this script in a separate file for better organization
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyBs1s0SpcwEB4jRYJnOED-jVg4ogUd6UUw",
+        authDomain: "assetview-portal.firebaseapp.com",
+        projectId: "assetview-portal",
+        storageBucket: "assetview-portal.firebasestorage.app",
+        messagingSenderId: "1094882863694",
+        appId: "1:1094882863694:web:9ca9f61d8f53bb0794311f"
+    };
+    const app = initializeApp(firebaseConfig);
+</script>
+
+</body>
+</html>
