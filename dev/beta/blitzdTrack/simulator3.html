@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html data-bs-theme="dark" lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BlitzdTrack Device Tracker</title>
     <script src="https://blitzduk.github.io/dev/osint/unique.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" crossorigin="" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      crossorigin="">
     <style>
       html, body { height: 100%; margin: 0; background-color: #000; overflow: hidden; }
       .sidebar {
@@ -130,33 +132,57 @@
   <body>
     <div class="sidebar">
       <h5>blitzdTrack</h5>
-      <hr />
+      <hr>
       <p>Live device tracking.</p>
       <table class="table table-dark device-table" id="device-info-table">
         <tbody>
-          <tr><th>Device ID</th><td id="device-id">—</td></tr>
-          <tr><th>Driver ID</th><td id="device-driver">—</td></tr>
-          <tr><th>Geolocation</th><td id="device-location">—</td></tr>
-          <tr><th>Coords</th><td id="device-coords">—</td></tr>
-          <tr><th>Road Type</th><td id="device-road">—</td></tr>
-          <tr><th>Speed</th><td id="device-speed">—</td></tr>
-          <tr><th>Speed Limit</th><td id="device-limit">—</td></tr>
-          <tr><th>Local Time</th><td id="device-time">—</td></tr>
+          <tr>
+            <th>Device ID</th>
+            <td id="device-id">—</td>
+          </tr>
+          <tr>
+            <th>Driver ID</th>
+            <td id="device-driver">—</td>
+          </tr>
+          <tr>
+            <th>Geolocation</th>
+            <td id="device-location">—</td>
+          </tr>
+          <tr>
+            <th>Coords</th>
+            <td id="device-coords">—</td>
+          </tr>
+          <tr>
+            <th>Road Type</th>
+            <td id="device-road">—</td>
+          </tr>
+          <tr>
+            <th>Speed</th>
+            <td id="device-speed">—</td>
+          </tr>
+          <tr>
+            <th>Speed Limit</th>
+            <td id="device-limit">—</td>
+          </tr>
+          <tr>
+            <th>Local Time</th>
+            <td id="device-time">—</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="content">
-      <nav class="navbar navbar-dark px-3"><span class="navbar-brand">Device Tracker</span></nav>
+      <nav class="navbar navbar-dark px-3"><span class="navbar-brand">Device
+          Tracker</span></nav>
       <div id="map"></div>
-      <div class="footer">
-        &copy; 2025 BlitzdTrack — Demo by Blitzd | Last updated: <span id="lastUpdated">—</span><br>
-        <small>
-          Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" style="color:#aaa;">OpenStreetMap contributors</a>,
-          rendered with <a href="https://www.leafletjs.com/" target="_blank" style="color:#aaa;">Leaflet</a>,
-          styled using <a href="https://www.jawg.io/" target="_blank" style="color:#aaa;">Jawg Maps</a>.
-          Geolocation data via <a href="https://overpass-api.de/" target="_blank" style="color:#aaa;">Overpass API</a>.
-        </small>
-      </div>
+      <div class="footer"> © 2025 blitzdTrack — Blitzd Media | Last
+        updated: <span id="lastUpdated">—</span><br>
+        <small> Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank"
+            style="color:#aaa;">OpenStreetMap contributors</a>, rendered with <a
+            href="https://www.leafletjs.com/" target="_blank" style="color:#aaa;">Leaflet</a>,
+          styled using <a href="https://www.jawg.io/" target="_blank" style="color:#aaa;">Jawg
+            Maps</a>. Geolocation data via <a href="https://overpass-api.de/" target="_blank"
+            style="color:#aaa;">Overpass API</a>. </small> </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" crossorigin=""></script>
