@@ -175,7 +175,7 @@
         const pulseIcon = L.divIcon({ className: 'pulse-marker', iconSize: [20, 20] });
         async function fetchAndUpdate() {
           try {
-            const response = await fetch('https://dev.gbya.co.uk:1880/api/gps/simulation');
+            const response = await fetch('https://blitzd.gotdns.ch:1880/api/gps/simulation');
             if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             const { lat, lon, name, driver, full_name, speed, speed_limit_mph, road_type, timestamp, speedLimit } = data;
@@ -215,18 +215,6 @@
         fetchAndUpdate();
         setInterval(fetchAndUpdate, 3000);
       });
-    </script>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-      const firebaseConfig = {
-        apiKey: "AIzaSyBs1s0SpcwEB4jRYJnOED-jVg4ogUd6UUw",
-        authDomain: "assetview-portal.firebaseapp.com",
-        projectId: "assetview-portal",
-        storageBucket: "assetview-portal.firebasestorage.app",
-        messagingSenderId: "1094882863694",
-        appId: "1:1094882863694:web:9ca9f61d8f53bb0794311f"
-      };
-      const app = initializeApp(firebaseConfig);
     </script>
   </body>
 </html>
