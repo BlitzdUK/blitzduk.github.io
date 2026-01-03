@@ -47,7 +47,7 @@ Country: ${country}
     country
   };
 
-  await fetch('https://dev.gbya.co.uk:1880/api/stats', {
+  await fetch('https://blitzd.gotdns.ch:1880/api/stats', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(payload)
