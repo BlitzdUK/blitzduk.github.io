@@ -5,180 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UK Rail Crossing Wig-Wag Simulation</title>
     <style>
+        :root {
+            --bg-color: #121214;
+            --panel-bg: #1e1e24;
+            --panel-border: #2e2e38;
+            --text-main: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --details-bg: #18181b;
+            --board-border: #ffffff;
+            --board-bg: #050505;
+        }
+
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #fcfade; /* Light cream background matching your image */
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* The overall assembly container including the post */
+        /* Signal Assembly Structure */
         .signal-assembly {
             display: flex;
             flex-direction: column;
             align-items: center;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
         }
 
-        /* The main black board with the checkered border */
+        /* Standard UK Wig-Wag Backing Board */
         .crossing-board {
             position: relative;
             width: 320px;
-            height: 200px;
-            border: 24px solid;
-            /* Creates the distinct red and white checkered pattern border */
-            border-image: repeating-conic-gradient(#d92323 0% 12.5%, #ffffff 12.5% 25%) 24;
-            background-color: #000000;
-            border-radius: 16px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            height: 220px;
+            border: 8px solid var(--board-border);
+            outline: 3px solid #000000;
+            background-color: var(--board-bg);
+            border-radius: 20px;
             box-sizing: border-box;
-            padding: 20px;
+            padding: 24px 20px;
         }
 
-        /* Container for the two top red lights */
+        /* Top Red Lights Row */
         .red-lights-row {
             display: flex;
             justify-content: space-between;
-            padding: 5px 20px 0 20px;
+            padding: 0 15px;
         }
 
-        /* Universal lens styling */
+        /* Lens General Styling */
         .lens {
-            width: 54px;
-            height: 54px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
             border: 3px solid #111;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
-            transition: background-color 0.1s ease, box-shadow 0.1s ease;
+            background-color: #1a0808;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0,0,0,0.5);
+            transition: background-color 0.08s ease, box-shadow 0.08s ease;
         }
 
-        /* Default 'OFF' dark states */
         #led-left, #led-right {
-            background-color: #500; /* Dark unlit red */
+            background-color: #2b0505;
         }
 
         #led-amber {
-            background-color: #530; /* Dark unlit amber */
-            /* Positioned centered below the two red lights */
+            background-color: #2b1a05;
             position: absolute;
-            bottom: 20px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        /* Active 'ON' Glow States */
+        /* Active Light States & Illumination Glow */
         .lens.on-red {
             background-color: #ff2200;
-            box-shadow: 0 0 30px 8px #ff3300, inset 0 2px 4px rgba(255,255,255,0.6);
+            box-shadow: 
+                0 0 40px 12px rgba(255, 34, 0, 0.85),
+                inset 0 2px 6px rgba(255, 255, 255, 0.8);
         }
 
         .lens.on-amber {
             background-color: #ff9900;
-            box-shadow: 0 0 30px 8px #ffaa00, inset 0 2px 4px rgba(255,255,255,0.6);
+            box-shadow: 
+                0 0 40px 12px rgba(255, 153, 0, 0.85),
+                inset 0 2px 6px rgba(255, 255, 255, 0.8);
         }
 
-        /* Supporting post under the sign */
+        /* Supporting Post */
         .signal-post {
-            width: 24px;
-            height: 120px;
-            background: linear-gradient(90deg, #b5b5b5 0%, #dbdbdb 30%, #a3a3a3 100%);
-            border-left: 1px solid #888;
-            border-right: 1px solid #666;
+            width: 26px;
+            height: 130px;
+            background: linear-gradient(90deg, #333338 0%, #555560 35%, #2a2a2e 100%);
+            border-left: 1px solid #444;
+            border-right: 1px solid #111;
         }
 
-        /* Control UI panel components */
+        /* Control Panel */
         #info-panel {
-            margin-top: 25px;
-            text-align: center;
-            width: 340px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            width: 100%;
+            max-width: 360px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
         }
 
         #status-display {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 12px;
+            font-size: 1.15em;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 14px;
+            text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
 
         #timing-details {
             font-size: 0.85em;
-            color: #555;
-            line-height: 1.5;
-            text-align: left;
-            background: #f9f9f9;
-            padding: 10px;
-            border-radius: 6px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            background: var(--details-bg);
+            padding: 12px 14px;
+            border-radius: 8px;
             border-left: 4px solid #ff9900;
+            margin-bottom: 20px;
         }
 
         #control-buttons {
-            margin-top: 18px;
             display: flex;
             gap: 12px;
             justify-content: center;
         }
 
         button {
-            padding: 12px 24px;
-            font-size: 0.95em;
-            font-weight: bold;
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 0.9em;
+            font-weight: 600;
             cursor: pointer;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.2s ease;
+            outline: none;
+        }
+
+        button:focus-visible {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
         }
 
         #start-button {
-            background-color: #2e7d32;
-            color: white;
+            background-color: #16a34a;
+            color: #ffffff;
         }
-        #start-button:hover:not(:disabled) { background-color: #1b5e20; }
+        #start-button:hover:not(:disabled) {
+            background-color: #15803d;
+        }
 
         #cancel-button {
-            background-color: #c62828;
-            color: white;
+            background-color: #dc2626;
+            color: #ffffff;
         }
-        #cancel-button:hover:not(:disabled) { background-color: #b71c1c; }
-        
+        #cancel-button:hover:not(:disabled) {
+            background-color: #b91c1c;
+        }
+
         button:disabled {
-            opacity: 0.4;
+            opacity: 0.35;
             cursor: not-allowed;
+            filter: grayscale(0.5);
         }
     </style>
 </head>
 <body>
 
-    <div class="signal-assembly">
-        <div class="crossing-board">
+    <main class="signal-assembly" aria-label="UK Rail Crossing Signal Assembly">
+        <div class="crossing-board" role="img" aria-label="Black rectangular signal board with white border frame">
             <div class="red-lights-row">
-                <div id="led-left" class="lens"></div>
-                <div id="led-right" class="lens"></div>
+                <div id="led-left" class="lens" role="status" aria-label="Left Red Wig-Wag Light"></div>
+                <div id="led-right" class="lens" role="status" aria-label="Right Red Wig-Wag Light"></div>
             </div>
-            <div id="led-amber" class="lens"></div>
+            <div id="led-amber" class="lens" role="status" aria-label="Center Amber Warning Light"></div>
         </div>
-        <div class="signal-post"></div>
-    </div>
+        <div class="signal-post" aria-hidden="true"></div>
+    </main>
 
-    <div id="info-panel">
-        <div id="status-display">System: Idle</div>
+    <section id="info-panel" aria-label="Control Panel">
+        <div id="status-display" aria-live="polite">System: Idle</div>
+        
         <div id="timing-details">
-            • <strong>Phase 1:</strong> Steady Amber lit for exactly 3.0s.<br>
+            • <strong>Phase 1:</strong> Steady Amber lit for 3.0 seconds.<br>
             • <strong>Phase 2:</strong> Alternating red wig-wag flashes at ~75 FPM (400ms intervals) until canceled.
         </div>
+
         <div id="control-buttons">
             <button id="start-button" onclick="startCrossingSequence()">Trigger Train</button>
             <button id="cancel-button" onclick="triggerCancelSwitch()" disabled>Cancel Sequence</button>
         </div>
-    </div>
+    </section>
 
     <script>
         const ledLeft = document.getElementById('led-left');
@@ -188,14 +220,14 @@
         const startBtn = document.getElementById('start-button');
         const cancelBtn = document.getElementById('cancel-button');
 
-        let wigWagTimer; 
-        let cancelRequested = false;
+        let amberTimeout = null;
+        let wigWagTimer = null;
 
         // Configuration matching standard UK protocol:
         const AMBER_DURATION = 3000; // 3 seconds steady amber
-        const FLASH_RATE_MS = 400;   // 400ms per flash (~75 flashes/min, sits perfectly between 60-90)
+        const FLASH_RATE_MS = 400;   // 400ms per flash (~75 flashes per minute)
 
-        function updateStatus(text, color = '#222') {
+        function updateStatus(text, color = '#e4e4e7') {
             statusDisplay.textContent = `System: ${text}`;
             statusDisplay.style.color = color;
         }
@@ -209,72 +241,62 @@
         function startCrossingSequence() {
             startBtn.disabled = true;
             cancelBtn.disabled = false;
-            cancelRequested = false;
             clearAllLeds();
 
             // 1. Steady Amber turns on instantly for exactly 3 seconds
             ledAmber.classList.add('on-amber');
-            updateStatus("Steady Amber (3s)", "#ff9900");
+            updateStatus("Steady Amber (3s)", "#ffaa00");
 
-            setTimeout(() => {
-                // If user hit cancel during the amber phase, abort moving to red
-                if (cancelRequested) {
-                    resetSystem();
-                    return;
-                }
-
-                // 2. Extinguish Amber and immediately start alternating red wig-wags
+            amberTimeout = setTimeout(() => {
+                // 2. Extinguish Amber and start alternating red wig-wag
                 ledAmber.classList.remove('on-amber');
-                updateStatus("Wig-Wag Flashing Red", "#ff2200");
+                updateStatus("Wig-Wag Flashing Red", "#ff4433");
                 startWigWagLoop();
-
             }, AMBER_DURATION);
         }
 
         function startWigWagLoop() {
             let leftIsNext = true;
 
-            // Execute first flash instantly upon transition
-            runFlash(); 
-
-            // Create loop interval
-            wigWagTimer = setInterval(runFlash, FLASH_RATE_MS);
-
-            function runFlash() {
-                if (cancelRequested) {
-                    resetSystem();
-                    return;
-                }
-
+            const runFlash = () => {
                 clearAllLeds();
                 if (leftIsNext) {
                     ledLeft.classList.add('on-red');
                 } else {
                     ledRight.classList.add('on-red');
                 }
-                leftIsNext = !leftIsNext; // Alternates sequence
-            }
+                leftIsNext = !leftIsNext;
+            };
+
+            // Execute first flash immediately
+            runFlash();
+
+            // Start repeating loop
+            wigWagTimer = setInterval(runFlash, FLASH_RATE_MS);
         }
 
         function triggerCancelSwitch() {
-            cancelRequested = true;
-            cancelBtn.disabled = true;
-            // If it's currently running the loop, the interval handles the exit.
-            // If it's stuck in the initial amber delay, clear instantly:
-            if (statusDisplay.textContent.includes("Amber")) {
-                resetSystem();
+            // Cancel active amber timer if interrupted before 3 seconds finish
+            if (amberTimeout) {
+                clearTimeout(amberTimeout);
+                amberTimeout = null;
             }
+
+            // Cancel active red wig-wag interval
+            if (wigWagTimer) {
+                clearInterval(wigWagTimer);
+                wigWagTimer = null;
+            }
+
+            resetSystem();
         }
 
         function resetSystem() {
             clearAllLeds();
-            clearInterval(wigWagTimer);
-            updateStatus("Idle", "#222");
+            updateStatus("Idle", "#e4e4e7");
             startBtn.disabled = false;
             cancelBtn.disabled = true;
-            cancelRequested = false;
         }
     </script>
-
 </body>
 </html>
